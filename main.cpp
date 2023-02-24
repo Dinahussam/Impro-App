@@ -1,4 +1,5 @@
 #include "noise.cpp"
+#include "remove_noise.cpp"
 
 int main()
 {
@@ -28,7 +29,10 @@ int main()
     // imshow("Display", image2);
     // waitKey(0);
     Mat image3 = image2.clone();
-    Add_Gaussian_Noise(image2, image3, 125, 25, 1);
+    // Add_Gaussian_Noise(image2, image3, 125, 25, 1);
+    Add_Salt_And_Pepper_Noise(image2, image3, 0.05);
+
+    Add_Median_Filter(image3, image2);
     // Add_Uniform_Noise(image2, image3, 250, 0.5);
     // namedWindow("Anwar", WINDOW_AUTOSIZE);
     hconcat(image2, image3, image3);
