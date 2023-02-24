@@ -1,5 +1,5 @@
-#include "noise.cpp"
-#include "remove_noise.cpp"
+#include "Noise/noise.hpp"
+#include "Noise/remove_noise.hpp"
 
 int main()
 {
@@ -24,18 +24,26 @@ int main()
     //     image_ptr +=3;
 
     // }
+    Mat image4;
+    image4.create(image.cols+2, image.rows+2, 0);
+    // image4 = image.clone();
+    // cout << image.size() << endl;;
+    cout << (int) image4.at<uchar>(2,2) << endl;
 
-    Convert_To_Gray(image, image2);
+    // hconcat(image, image4, image4);
+    // imshow("Display", image4);
+    // waitKey(0);
+    // Convert_To_Gray(image, image2);
     // imshow("Display", image2);
     // waitKey(0);
-    Mat image3 = image2.clone();
+    // Mat image3 = image2.clone();
     // Add_Gaussian_Noise(image2, image3, 125, 25, 1);
-    Add_Salt_And_Pepper_Noise(image2, image3, 0.05);
+    // Add_Salt_And_Pepper_Noise(image2, image3, 0.05);
 
-    Add_Median_Filter(image3, image2);
+    // Add_Median_Filter(image3, image2);
     // Add_Uniform_Noise(image2, image3, 250, 0.5);
     // namedWindow("Anwar", WINDOW_AUTOSIZE);
-    hconcat(image2, image3, image3);
-    imshow("Display", image3);
-    waitKey(0);
+    // hconcat(image2, image3, image3);
+    // imshow("Display", image3);
+    // waitKey(0);
 }

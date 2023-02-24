@@ -1,9 +1,4 @@
-#include <iostream>
-// #include <bits/stdc++.h>
-#include <opencv2/opencv.hpp>
-
-using namespace cv;
-using namespace std;
+#include "remove_noise.hpp"
 
 void Swap_Elements(unsigned char *first_element, unsigned char *second_element){
     unsigned char temp = *first_element;
