@@ -1,11 +1,12 @@
 #include "noise.cpp"
+#include "remove_noise.cpp"
 
 int main()
 {
 
     Mat image;
     Mat image2;
-    image = imread("D:\\College life\\Advanced projects\\CV_Task1\\lenna.png");
+    image = imread("C:\\Users\\Anwar\\Desktop\\SBME 2024\\YEAR 3 (2022-2023)\\SEMESTER 2\\Computer Vision\\Tasks\\Task 1\\CV_task1_team15\\lenna.png");
 
     // Mat_<double> image2;
     // image2.size() = image.size();
@@ -28,7 +29,10 @@ int main()
     // imshow("Display", image2);
     // waitKey(0);
     Mat image3 = image2.clone();
-    Add_Gaussian_Noise(image2, image3, 125, 25, 1);
+    // Add_Gaussian_Noise(image2, image3, 125, 25, 1);
+    Add_Salt_And_Pepper_Noise(image2, image3, 0.05);
+
+    Add_Median_Filter(image3, image2);
     // Add_Uniform_Noise(image2, image3, 250, 0.5);
     // namedWindow("Anwar", WINDOW_AUTOSIZE);
     hconcat(image2, image3, image3);
