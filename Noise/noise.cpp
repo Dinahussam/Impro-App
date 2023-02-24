@@ -1,6 +1,9 @@
-#include "noise.hpp"
+#include <iostream>
+#include <time.h>
+#include <opencv2/opencv.hpp>
 
-
+using namespace cv;
+using namespace std;
 
 void Add_Gaussian_Noise(const Mat &src, Mat &dst, unsigned char gaussian_mean, unsigned char gaussian_STD, float noise_intensity){
     Mat noisy_image = Mat::zeros(src.rows, src.cols, 0);

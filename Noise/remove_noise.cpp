@@ -1,6 +1,11 @@
-#include "remove_noise.hpp"
+#include <iostream>
+#include <opencv2/opencv.hpp>
 
-void Swap_Elements(unsigned char *first_element, unsigned char *second_element){
+using namespace cv;
+using namespace std;
+
+void Swap_Elements(unsigned char *first_element, unsigned char *second_element)
+{
     unsigned char temp = *first_element;
     *first_element = *second_element; 
     *second_element = temp; 
@@ -15,7 +20,8 @@ void Bubble_Sort(unsigned char array[], unsigned char size)
                 Swap_Elements(&array[second_index], &array[second_index + 1]);
 }
 
-void Add_Median_Filter(const Mat &src, Mat &dst){
+void Add_Median_Filter(const Mat &src, Mat &dst)
+{
     unsigned char window[9];
 
     src.copyTo(dst);
