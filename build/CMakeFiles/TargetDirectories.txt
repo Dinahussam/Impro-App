@@ -1,9 +1,0 @@
-C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/Experimental.dir
-C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/Nightly.dir
-C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/Continuous.dir
-C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/NightlyMemoryCheck.dir
-C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/Task1.dir
-C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/PACKAGE.dir
-C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/RUN_TESTS.dir
-C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/ZERO_CHECK.dir
