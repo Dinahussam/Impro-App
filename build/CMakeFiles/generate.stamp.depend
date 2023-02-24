@@ -1,0 +1,38 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeCXXInformation.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeCommonLanguageInclude.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeGenericSystem.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeInitializeConfigs.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeLanguageInformation.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeRCInformation.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeSystemSpecificInformation.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CMakeSystemSpecificInitialize.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CPack.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CPackComponent.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CTest.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CTestTargets.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/CTestUseLaunchers.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/Compiler/MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/Compiler/MSVC-CXX.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/Compiler/MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/DartConfiguration.tcl.in
+C:/Program Files/CMake/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/FindPackageMessage.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/Platform/Windows-MSVC-C.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/Platform/Windows-MSVC-CXX.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/Platform/Windows-MSVC.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/Platform/Windows.cmake
+C:/Program Files/CMake/share/cmake-3.26/Modules/Platform/WindowsPaths.cmake
+C:/Program Files/CMake/share/cmake-3.26/Templates/CPackConfig.cmake.in
+C:/Users/Anwar/Desktop/OpenCv/opencv/build/x64/vc16/lib/OpenCVConfig-version.cmake
+C:/Users/Anwar/Desktop/OpenCv/opencv/build/x64/vc16/lib/OpenCVConfig.cmake
+C:/Users/Anwar/Desktop/OpenCv/opencv/build/x64/vc16/lib/OpenCVModules-debug.cmake
+C:/Users/Anwar/Desktop/OpenCv/opencv/build/x64/vc16/lib/OpenCVModules-release.cmake
+C:/Users/Anwar/Desktop/OpenCv/opencv/build/x64/vc16/lib/OpenCVModules.cmake
+C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/CMakeLists.txt
+C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/3.26.0-rc4/CMakeCCompiler.cmake
+C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/3.26.0-rc4/CMakeCXXCompiler.cmake
+C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/3.26.0-rc4/CMakeRCCompiler.cmake
+C:/Users/Anwar/Desktop/SBME 2024/YEAR 3 (2022-2023)/SEMESTER 2/Computer Vision/Tasks/Task 1/CV_task1_team15/build/CMakeFiles/3.26.0-rc4/CMakeSystem.cmake
