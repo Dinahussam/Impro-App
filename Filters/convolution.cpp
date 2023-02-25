@@ -77,6 +77,8 @@ Mat convolute_mono(const Mat &src , const Mat &kernel)
                     conv_sum += padded_img.at<uchar>(i+m-1,j+n-1) * new_kernel.at<float>(m,n);
                 }
             }
+            // absolute of conv_sum
+            conv_sum = abs(conv_sum);
             convoluted_img.at<uchar>(i-1,j-1) = (int)conv_sum;
         }
     }
