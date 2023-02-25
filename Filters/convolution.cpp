@@ -19,7 +19,7 @@ Mat transform_kernel(const Mat &src){
 }
 
 
-void Padd_Image(const Mat &src){
+Mat Padd_Image(const Mat &src){
     Mat padding_img = Mat::zeros(Size(src.rows+2,src.cols+2),src.type());
 
     // Padding ----------------------------------------------------
@@ -34,5 +34,5 @@ void Padd_Image(const Mat &src){
             }
         }
     }
-    return padding_img
+    return padding_img;
 }
