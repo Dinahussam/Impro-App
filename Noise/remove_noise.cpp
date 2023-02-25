@@ -1,8 +1,13 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 using namespace cv;
 using namespace std;
+
+
+/*------------------------------- Median filter -----------------------------------*/
 
 void Swap_Elements(unsigned char *first_element, unsigned char *second_element)
 {
@@ -48,3 +53,33 @@ void Add_Median_Filter(const Mat &src, Mat &dst)
         }   
     }
 }
+
+
+/*---------------------------------- Average filter ----------------------------------*/
+
+
+void Add_Average_Filter(const Mat &src, Mat &dst)
+    {
+       src.copyTo(dst);
+       cout << src.rows << endl;
+       cout << src.cols << endl;
+        for (int i = 0; i < src.rows-3; i++) 
+        { 
+            for (int j = 0; j < src.cols-3; j++) 
+            { 
+                 Scalar intensity1 = 0;
+                 Scalar intensity2 ;
+             for (int p = 0; p<3; p++) 
+                { 
+            
+                for (int q = 0; q<3; q++) 
+                    { 
+                        intensity1 = src.at<uchar>(i+p,j+q); 
+                        intensity2.val[0] +=intensity1.val[0];
+                    }
+                }
+            dst.at<uchar>(i+(3-1)/2,j+(3-1)/2)=intensity2.val[0]/(3*3);
+            
+            } 
+        }
+    }
