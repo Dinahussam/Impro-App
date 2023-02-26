@@ -1,5 +1,7 @@
 #include "Noise/noise.cpp"
 #include "Noise/remove_noise.cpp"
+#include "Filters/convolution.cpp"
+#include "Filters/sobel.cpp
 
 int main()
 {
