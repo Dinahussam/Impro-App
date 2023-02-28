@@ -68,7 +68,7 @@ Mat Padd_RGB(const Mat &src){
 }
 
 
-Mat Convolute_2d_Mono(const Mat &src , const Mat &kernel, unsigned char target_app ,int padding_margin)
+Mat Convolute_2d_Mono(const Mat &src , const Mat &kernel, int target_app ,int padding_margin)
 {
     Mat padded_img = Padd_Mono(src,padding_margin);
     // cout << padded_img << endl;

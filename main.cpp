@@ -14,16 +14,16 @@ Mat Gaussian_Filter(const Mat &src)
 
     // float gaussian_data[9] = {1,2,1,2,4,2,1,2,1};
     float gaussian_data[25] = {1,4,7,4,1,4,16,26,16,4,7, 26, 41, 26, 7,4,16,26,16,4, 1,4,7,4,1};
-    Mat kernel_sobel_y = Mat(5, 5, CV_32F, gaussian_data);
+    Mat gaussian_kernel = Mat(5, 5, CV_32F, gaussian_data);
     if (src.type() == 16)
     {
-        Mat convoluted_y = Convolute_2d_RGB(src, kernel_sobel_y);
-        return convoluted_y;
+        Mat convoluted = Convolute_2d_RGB(src, gaussian_kernel);
+        return convoluted;
     }
     else if (src.type() == 0)
     {
-        Mat convoluted_y = Convolute_2d_Mono(src, kernel_sobel_y,GAUSSIAN_FILTER_5,2);
-        return convoluted_y;
+        Mat convoluted = Convolute_2d_Mono(src, gaussian_kernel,GAUSSIAN_FILTER_5,2);
+        return convoluted;
     }
     else
     {
@@ -31,6 +31,34 @@ Mat Gaussian_Filter(const Mat &src)
         return src;
     }
 }
+
+Mat Robert_Edge(const Mat &src)
+{
+
+    // float robert_data[4] = {1,0,0,-1};
+    float robert_data[9] = {0,0,0,0,1,0,0,0,-1};
+    Mat robert_kernel = Mat(3, 3, CV_32F, robert_data);
+    if (src.type() == 16)
+    {
+        Mat convoluted = Convolute_2d_RGB(src, robert_kernel);
+        return convoluted;
+    }
+    else if (src.type() == 0)
+    {
+        Mat convoluted = Convolute_2d_Mono(src, robert_kernel,1,2);
+        return convoluted;
+    }
+    else
+    {
+        cout << "Error: Image type not supported" << endl;
+        return src;
+    }
+}
+
+
+
+
+
 
 int main()
 {
@@ -88,6 +116,9 @@ int main()
 
     Mat sobel_x = Detect_Edges_Sobel_X(image2);
 
+    Mat robert = Robert_Edge(image2);
+
+
     // imshow("Display", image2);
     // waitKey(0);
 
@@ -107,9 +138,9 @@ int main()
 
     // gaussian_Filter(image2, GaussianFilterImg);
 
-    // Mat filtered = Gaussian_Filter(image2);
+    Mat filtered = Gaussian_Filter(image2);
 
-    GaussianBlur(image2, image3, Size(3, 3), 0);
+    GaussianBlur(image2, image3, Size(5, 5), 0);
 
 //Showing Median Filter Img ------------------------------------------------------------------    
     // hconcat(image2, image3, image3);
@@ -129,12 +160,14 @@ int main()
     namedWindow("Gaussian_Noise", WINDOW_AUTOSIZE);
     imshow("Gaussian_Noise", image3);
 
-    // namedWindow("Gaussian-Filter", WINDOW_AUTOSIZE);
-    // imshow("Gaussian-Filter", filtered);
+    namedWindow("Gaussian_Filter_Implmented", WINDOW_AUTOSIZE);
+    imshow("Gaussian_Filter_Implmented", filtered);
 
     
     namedWindow("sobel_x", WINDOW_AUTOSIZE);
     imshow("sobel_x", sobel_x);
+    namedWindow("robert", WINDOW_AUTOSIZE);
+    imshow("robert", robert);
     
     waitKey(0);
 }
