@@ -41,7 +41,7 @@ int main()
     Mat AvgFilterImg;
     Mat GaussianFilterImg;
 // --------------------------------------- Img Read ---------------------------------------
-    image = imread("C:\\Users\\Anwar\\Desktop\\SBME 2024\\YEAR 3 (2022-2023)\\SEMESTER 2\\Computer Vision\\Tasks\\Task 1\\CV_task1_team15\\lenna.png");
+    image = imread("I:\\SBME 6th Term\\Computer Vision\\Projects & Tasks\\Project 1\\CV_task1_team15\\sudoku.png");
 
 /* If image not found */
     if (!image.data)                                                                          
@@ -83,10 +83,10 @@ int main()
 
 /* Convert Img To Gray Scale */
     Convert_To_Gray(image, image2);
-    Mat padded_img = Padd_Mono(image2,5);
+    // Mat padded_img = Padd_Mono(image2,5);
     
 
-// Mat sobel_x =Detect_Edges_Sobel_X(image2);
+    Mat sobel_x = Detect_Edges_Sobel_X(image2);
 
     // imshow("Display", image2);
     // waitKey(0);
@@ -107,7 +107,7 @@ int main()
 
     // gaussian_Filter(image2, GaussianFilterImg);
 
-    Mat filtered = Gaussian_Filter(image2);
+    // Mat filtered = Gaussian_Filter(image2);
 
     GaussianBlur(image2, image3, Size(3, 3), 0);
 
@@ -129,12 +129,12 @@ int main()
     namedWindow("Gaussian_Noise", WINDOW_AUTOSIZE);
     imshow("Gaussian_Noise", image3);
 
-    namedWindow("Gaussian-Filter", WINDOW_AUTOSIZE);
-    imshow("Gaussian-Filter", filtered);
+    // namedWindow("Gaussian-Filter", WINDOW_AUTOSIZE);
+    // imshow("Gaussian-Filter", filtered);
 
     
     namedWindow("sobel_x", WINDOW_AUTOSIZE);
-    imshow("sobel_x", padded_img);
+    imshow("sobel_x", sobel_x);
     
     waitKey(0);
 }

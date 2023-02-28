@@ -28,7 +28,7 @@ Mat transform_kernel(const Mat &src){
     return transformed_kernel;
 }
 
-Mat Padd_Mono(const Mat &src ,uchar padding_margin){
+Mat Padd_Mono(const Mat &src ,int padding_margin){
     Mat padding_img = Mat::zeros(Size(src.cols+ padding_margin*2,src.rows+padding_margin*2),src.type());
 
     // Padding ----------------------------------------------------
@@ -68,7 +68,7 @@ Mat Padd_RGB(const Mat &src){
 }
 
 
-Mat Convolute_2d_Mono(const Mat &src , const Mat &kernel, unsigned char target_app ,uchar padding_margin)
+Mat Convolute_2d_Mono(const Mat &src , const Mat &kernel, unsigned char target_app ,int padding_margin)
 {
     Mat padded_img = Padd_Mono(src,padding_margin);
     // cout << padded_img << endl;
@@ -83,12 +83,14 @@ Mat Convolute_2d_Mono(const Mat &src , const Mat &kernel, unsigned char target_a
     cout << "H= " << h << endl;
     cout << "w= " << w << endl;
 
-    
+    try {
+
+    int i;
     float conv_sum;
 // convolute image
-    for (int i =padding_margin;i<(padded_img.rows-padding_margin-1) ; i++)
+    for ( i =padding_margin;i<(padded_img.rows-padding_margin) ; i++)
     {
-        for (int j = 1 ; j<padded_img.cols-padding_margin-1 ; j++)
+        for (int j = padding_margin ; j<(padded_img.cols-padding_margin) ; j++)
         {
             conv_sum = 0;
     // cout<< "$$$$$$$$$$$$$$$$$$$$" << endl;
@@ -106,6 +108,13 @@ Mat Convolute_2d_Mono(const Mat &src , const Mat &kernel, unsigned char target_a
             convoluted_img.at<uchar>(i-padding_margin,j-padding_margin) = (int)conv_sum;
         }
     }
+    throw i; 
+    }
+    catch(int i)
+    {
+        cout << "An exception occurred. Exception Nr. " << i << endl;
+    }
+
     return convoluted_img;
 }
 
