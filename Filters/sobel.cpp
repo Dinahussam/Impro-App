@@ -1,6 +1,6 @@
 #include <opencv2/opencv.hpp>
 #include <cmath>
-
+#include "convolution.cpp"
 
 using namespace cv;
 using namespace std;
@@ -17,7 +17,7 @@ Mat Detect_Edges_Sobel_X(const Mat &src)
     }
     else if (src.type() == 0)
     {
-        Mat convoluted_x = Convolute_2d_Mono(src, kernel_sobel_x);
+        Mat convoluted_x = Convolute_2d_Mono(src, kernel_sobel_x,SOBEL_DETECTION,1);
         return convoluted_x;
     }
     else
@@ -38,7 +38,7 @@ Mat Detect_Edges_Sobel_Y(const Mat &src)
     }
     else if (src.type() == 0)
     {
-        Mat convoluted_y = Convolute_2d_Mono(src, kernel_sobel_y);
+        Mat convoluted_y = Convolute_2d_Mono(src, kernel_sobel_y,SOBEL_DETECTION,1);
         return convoluted_y;
     }
     else
