@@ -6,6 +6,8 @@
 #include "Filters/prewitt.hpp"
 #include "Filters/robert.hpp"
 
+#include "Frequency/frequency.hpp"
+
 int main()
 {
 
