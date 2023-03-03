@@ -60,7 +60,7 @@ int main()
     // Mat padded_img = Padd_Mono(image2,5);
     
 
-    Mat sobel_x = Detect_Edges_Sobel_X(image2);
+    // Mat sobel_x = Detect_Edges_Sobel_X(image2);
 
     Mat robert = Robert_Edge(image2);
 
@@ -110,8 +110,9 @@ int main()
     imshow("Gaussian_Filter_Implmented", filtered);
 
     
-    namedWindow("sobel_x", WINDOW_AUTOSIZE);
-    imshow("sobel_x", sobel_x);
+    // namedWindow("sobel_x", WINDOW_AUTOSIZE);
+    // imshow("sobel_x", sobel_x);
+
     namedWindow("robert", WINDOW_AUTOSIZE);
     imshow("robert", robert);
     

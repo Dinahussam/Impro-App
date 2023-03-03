@@ -24,11 +24,11 @@ Mat Padd_Mono(const Mat &src ,int padding_margin);
 
 Mat Padd_RGB(const Mat &src ,int padding_margin);
 
-Mat Convolute_2d(const Mat &src, const Mat &kernel, int kernel_type, int padding_margin);
+Mat Convolute_2d(const Mat &src, const Mat &kernel, int target_app = 1, int padding_margin = 1);
 
-Mat Convolute_2d_Mono(const Mat &src, const Mat &kernel, int kernel_type, int padding_margin);
+Mat Convolute_2d_Mono(const Mat &src, const Mat &kernel, int target_app, int padding_margin);
 
-Mat Convolute_2d_RGB(const Mat &src, const Mat &kernel, int kernel_type, int padding_margin);
+Mat Convolute_2d_RGB(const Mat &src, const Mat &kernel, int target_app, int padding_margin);
 
 
 #endif

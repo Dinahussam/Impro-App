@@ -124,7 +124,6 @@ void gaussian_Filter(const Mat &src, Mat &dst)
             dst.at<uchar>(i + (3 - 1) / 2, j + (3 - 1) / 2) = intensity2.val[0] / (16);
         }
     }
-    cout << "000000000000";
 }
 
 /*---------------------------------- Gaussian filter ----------------------------------*/
