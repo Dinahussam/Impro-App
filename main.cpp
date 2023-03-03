@@ -1,64 +1,10 @@
-#include "Noise/noise.cpp"
-// #include "Noise/remove_noise.cpp"
-// #include "Filters/convolution.cpp"
+#include "Noise/noise.hpp"
+#include "Noise/remove_noise.hpp"
 
-#include "Filters/sobel.cpp"
-
-// #include "Noise/gaussian.cpp"
-// #include "Filters/convolution.cpp"
-// #include "Filters/sobel.cpp
-// #include "Filters/prewitt.cpp"
-
-Mat Gaussian_Filter(const Mat &src)
-{
-
-    // float gaussian_data[9] = {1,2,1,2,4,2,1,2,1};
-    float gaussian_data[25] = {1,4,7,4,1,4,16,26,16,4,7, 26, 41, 26, 7,4,16,26,16,4, 1,4,7,4,1};
-    Mat gaussian_kernel = Mat(5, 5, CV_32F, gaussian_data);
-    if (src.type() == 16)
-    {
-        Mat convoluted = Convolute_2d_RGB(src, gaussian_kernel);
-        return convoluted;
-    }
-    else if (src.type() == 0)
-    {
-        Mat convoluted = Convolute_2d_Mono(src, gaussian_kernel,GAUSSIAN_FILTER_5,2);
-        return convoluted;
-    }
-    else
-    {
-        cout << "Error: Image type not supported" << endl;
-        return src;
-    }
-}
-
-Mat Robert_Edge(const Mat &src)
-{
-
-    // float robert_data[4] = {1,0,0,-1};
-    float robert_data[9] = {0,0,0,0,1,0,0,0,-1};
-    Mat robert_kernel = Mat(3, 3, CV_32F, robert_data);
-    if (src.type() == 16)
-    {
-        Mat convoluted = Convolute_2d_RGB(src, robert_kernel);
-        return convoluted;
-    }
-    else if (src.type() == 0)
-    {
-        Mat convoluted = Convolute_2d_Mono(src, robert_kernel,1,2);
-        return convoluted;
-    }
-    else
-    {
-        cout << "Error: Image type not supported" << endl;
-        return src;
-    }
-}
-
-
-
-
-
+#include "Filters/sobel.hpp"
+#include "Filters/gaussian.hpp"
+#include "Filters/prewitt.hpp"
+#include "Filters/robert.hpp"
 
 int main()
 {
@@ -69,7 +15,7 @@ int main()
     Mat AvgFilterImg;
     Mat GaussianFilterImg;
 // --------------------------------------- Img Read ---------------------------------------
-    image = imread("I:\\SBME 6th Term\\Computer Vision\\Projects & Tasks\\Project 1\\CV_task1_team15\\sudoku.png");
+    image = imread("C:\\Users\\Omar Saad\\Documents\\GitHub\\CV_task1_team15\\Images\\sudoku.png");
 
 /* If image not found */
     if (!image.data)                                                                          

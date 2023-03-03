@@ -1,9 +1,5 @@
-#include <iostream>
-#include <time.h>
-#include <opencv2/opencv.hpp>
+#include "noise.hpp"
 
-using namespace cv;
-using namespace std;
 
 void Add_Gaussian_Noise(const Mat &src, Mat &dst, unsigned char gaussian_mean, unsigned char gaussian_STD, float noise_intensity){
     Mat noisy_image = Mat::zeros(src.rows, src.cols, 0);
@@ -15,7 +11,7 @@ void Add_Gaussian_Noise(const Mat &src, Mat &dst, unsigned char gaussian_mean, u
 
 
 
-void adjust_threshold (Mat src, Mat dst, unsigned char threshold_value, unsigned char maximum_value = 255, unsigned char minimum_value = 0){
+void adjust_threshold (Mat src, Mat dst, unsigned char threshold_value, unsigned char maximum_value /* = 255 */, unsigned char minimum_value /* = 0 */){
     for (int row = 0; row < src.rows; row++)
     {
         for (int col = 0; col < src.cols; col++)
