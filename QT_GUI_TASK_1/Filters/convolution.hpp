@@ -8,7 +8,7 @@
  *******************************************************************************/
 
 #define SOBEL_DETECTION     (1u)
-#define PREWITT_DETECTION   (1u)
+#define PREWITT_DETECTION   (2u)
 #define ROBERT_EDGE_DETECTION (1u)
 #define GAUSSIAN_FILTER_3     (16u)
 #define GAUSSIAN_FILTER_5     (273u)
