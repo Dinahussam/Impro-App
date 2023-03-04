@@ -4,14 +4,14 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 
-INCLUDEPATH += C:\apps\opencv\release\install\include
+INCLUDEPATH += C:\Users\Anwar\Desktop\OpenCv\opencv\release\install\include
 
-LIBS += C:\apps\opencv\release\bin\libopencv_core460.dll
-LIBS += C:\apps\opencv\release\bin\libopencv_highgui460.dll
-LIBS += C:\apps\opencv\release\bin\libopencv_imgcodecs460.dll
-LIBS += C:\apps\opencv\release\bin\libopencv_imgproc460.dll
-LIBS += C:\apps\opencv\release\bin\libopencv_calib3d460.dll
-LIBS += C:\apps\opencv\release\bin\libopencv_calib3d460.dll
+LIBS += C:\Users\Anwar\Desktop\OpenCv\opencv\release\bin\libopencv_core470.dll
+LIBS += C:\Users\Anwar\Desktop\OpenCv\opencv\release\bin\libopencv_highgui470.dll
+LIBS += C:\Users\Anwar\Desktop\OpenCv\opencv\release\bin\libopencv_imgcodecs470.dll
+LIBS += C:\Users\Anwar\Desktop\OpenCv\opencv\release\bin\libopencv_imgproc470.dll
+LIBS += C:\Users\Anwar\Desktop\OpenCv\opencv\release\bin\libopencv_calib3d470.dll
+LIBS += C:\Users\Anwar\Desktop\OpenCv\opencv\release\bin\libopencv_calib3d470.dll
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.

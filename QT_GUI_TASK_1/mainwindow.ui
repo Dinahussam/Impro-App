@@ -6,26 +6,112 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1307</width>
+    <height>611</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QToolButton" name="BrowseButton">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>1060</x>
       <y>30</y>
-      <width>75</width>
+      <width>80</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>PushButton</string>
+     <string>Browse Files</string>
     </property>
+    <property name="icon">
+     <iconset theme="appointment-new">
+      <normaloff>.</normaloff>.</iconset>
+    </property>
+   </widget>
+   <widget class="QLabel" name="InputImage">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>60</y>
+      <width>371</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>InputImage</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="AddNoise">
+    <property name="geometry">
+     <rect>
+      <x>870</x>
+      <y>170</y>
+      <width>201</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Salt and pepper noise</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Gaussian noise</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Uniform noise</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QLabel" name="OutputImage">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>60</y>
+      <width>371</width>
+      <height>371</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>OutputImage</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="RemoveNoise">
+    <property name="geometry">
+     <rect>
+      <x>1080</x>
+      <y>170</y>
+      <width>201</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>Average Filter (Smoothing)</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Gaussian Filter (Bluring)</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Median Filter</string>
+     </property>
+    </item>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -33,8 +119,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>22</height>
+     <width>1307</width>
+     <height>21</height>
     </rect>
    </property>
   </widget>
