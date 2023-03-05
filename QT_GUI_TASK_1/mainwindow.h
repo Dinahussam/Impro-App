@@ -20,6 +20,12 @@ private slots:
 
     void on_BrowseButton_clicked();
 
+    void on_AddNoise_activated(int index);
+
+    void on_AddNoise_currentIndexChanged(int index);
+
+    void on_RemoveNoise_activated(int index);
+
 private:
     Ui::MainWindow *ui;
 };

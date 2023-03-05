@@ -25,6 +25,7 @@ SOURCES += \
     Filters/sobel.cpp \
     Noise/noise.cpp \
     Noise/remove_noise.cpp \
+    imageClass.cpp \
     main.cpp \
     mainwindow.cpp
 
@@ -37,6 +38,7 @@ HEADERS += \
     Filters/sobel.hpp \
     Noise/noise.hpp \
     Noise/remove_noise.hpp \
+    imageClass.hpp \
     mainwindow.h
 
 FORMS += \
