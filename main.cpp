@@ -6,25 +6,38 @@
 #include "Filters/prewitt.hpp"
 #include "Filters/robert.hpp"
 
+// #include "Noise/Threshold.hpp"
+#include "Noise/Threshold.cpp"
+
 int main()
 {
-
+    Mat M;
     Mat image;
     Mat image2;
     Mat image3;
     Mat AvgFilterImg;
     Mat GaussianFilterImg;
-// --------------------------------------- Img Read ---------------------------------------
-    image = imread("C:\\Users\\Omar Saad\\Documents\\GitHub\\CV_task1_team15\\Images\\sudoku.png");
+    // --------------------------------------- Img Read ---------------------------------------
+    // image = imread("D:\\College life\\Advanced projects\\CV_Task1\\Images\\lenna.png");
 
-/* If image not found */
-    if (!image.data)                                                                          
-        {  
-        cout << "No image data \n";  
-        return -1;  
-        } 
+    /* If image not found */
+    // if (!image.data)
+    // {
+    //     cout << "No image data \n";
+    //     return -1;
+    // }
 
-//------------------------------------------------------------------------------------------
+    M.create(10, 10, 1);
+    image.create(10, 10, 0);
+    // cout << "M = " << endl
+    //      << M << endl
+    //      << endl;
+
+    Mat K = local_adaptive_threshold(M, image);
+
+    cout << K;
+
+    //------------------------------------------------------------------------------------------
     // float data[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};
     // Create_Kernel(3, data);
     // imshow("Display", image);
@@ -55,66 +68,62 @@ int main()
     // imshow("Display", image4);
     // waitKey(0);
 
-/* Convert Img To Gray Scale */
-    Convert_To_Gray(image, image2);
+    /* Convert Img To Gray Scale */
+    // Convert_To_Gray(image, image2);
     // Mat padded_img = Padd_Mono(image2,5);
-    
 
     // Mat sobel_x = Detect_Edges_Sobel_X(image2);
 
-    Mat robert = Robert_Edge(image2);
-
+    // Mat robert = Robert_Edge(image2);
 
     // imshow("Display", image2);
     // waitKey(0);
 
-// Add Noise To the Img --------------------------------------------------------------------
+    // Add Noise To the Img --------------------------------------------------------------------
     // Add_Salt_And_Pepper_Noise(image2, image2, (float)0.05);
-
 
     // Add_Uniform_Noise(image2, image3, 250, 0.5);
     // namedWindow("Anwar", WINDOW_AUTOSIZE);
 
     // Add_Gaussian_Noise(image2, image3, 125, 25, 0.2);
 
-// Apply Filters To Noised Img -------------------------------------------------------------
+    // Apply Filters To Noised Img -------------------------------------------------------------
     // Add_Median_Filter(image2, image3);
 
     // Add_Average_Filter(image2,AvgFilterImg);
 
     // gaussian_Filter(image2, GaussianFilterImg);
 
-    Mat filtered = Gaussian_Filter(image2);
+    // Mat filtered = Gaussian_Filter(image2);
 
-    GaussianBlur(image2, image3, Size(5, 5), 0);
+    // GaussianBlur(image2, image3, Size(5, 5), 0);
 
-//Showing Median Filter Img ------------------------------------------------------------------    
-    // hconcat(image2, image3, image3);
-    // namedWindow("Median-Filter", WINDOW_AUTOSIZE);
-    // imshow("Median-Filter", image3);
+    // Showing Median Filter Img ------------------------------------------------------------------
+    //  hconcat(image2, image3, image3);
+    //  namedWindow("Median-Filter", WINDOW_AUTOSIZE);
+    //  imshow("Median-Filter", image3);
 
-//Showing Average Filter Img ------------------------------------------------------------------
-    // hconcat(image2, AvgFilterImg, AvgFilterImg);
-    // namedWindow("Average-Filter", WINDOW_AUTOSIZE);
-    // imshow("Average-Filter", AvgFilterImg);
+    // Showing Average Filter Img ------------------------------------------------------------------
+    //  hconcat(image2, AvgFilterImg, AvgFilterImg);
+    //  namedWindow("Average-Filter", WINDOW_AUTOSIZE);
+    //  imshow("Average-Filter", AvgFilterImg);
 
-//Showing gaussian Filter Img ------------------------------------------------------------------
+    // Showing gaussian Filter Img ------------------------------------------------------------------
 
-    namedWindow("Original", WINDOW_AUTOSIZE);
-    imshow("Original", image2);
+    // namedWindow("Original", WINDOW_AUTOSIZE);
+    // imshow("Original", image2);
     // hconcat(image3, filtered, filtered);
-    namedWindow("Gaussian_Noise", WINDOW_AUTOSIZE);
-    imshow("Gaussian_Noise", image3);
+    // namedWindow("Gaussian_Noise", WINDOW_AUTOSIZE);
+    // imshow("Gaussian_Noise", image3);
 
-    namedWindow("Gaussian_Filter_Implmented", WINDOW_AUTOSIZE);
-    imshow("Gaussian_Filter_Implmented", filtered);
+    // namedWindow("Gaussian_Filter_Implmented", WINDOW_AUTOSIZE);
+    // imshow("Gaussian_Filter_Implmented", filtered);
 
-    
     // namedWindow("sobel_x", WINDOW_AUTOSIZE);
     // imshow("sobel_x", sobel_x);
 
-    namedWindow("robert", WINDOW_AUTOSIZE);
-    imshow("robert", robert);
-    
-    waitKey(0);
+    // namedWindow("robert", WINDOW_AUTOSIZE);
+    // imshow("robert", robert);
+
+    // waitKey(0);
 }
