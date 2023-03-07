@@ -13,4 +13,5 @@ void fourier_shifting(const Mat &fourier_input_img, Mat &fourier_output_img);
 
 void calculateDFT(Mat &scr, Mat &dst);
 
+
 #endif
