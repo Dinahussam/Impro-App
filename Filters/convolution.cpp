@@ -26,13 +26,13 @@ Mat transform_kernel(const Mat &src){
 /*****************************************************************************************************************************************/
 
 Mat Padd_Mono(const Mat &src ,int padding_margin){
-    Mat padding_img = Mat::zeros(Size(src.cols+ padding_margin*2,src.rows+padding_margin*2),src.type());
+    Mat padding_img = Mat::zeros(Size(src.cols+ padding_margin*2,src.rows+padding_margin*2),CV_32FC1);
     // Padding ----------------------------------------------------
     for( int i=0; i<src.rows; i++)
     {
         for(int j=0; j<src.cols; j++)
         {
-            padding_img.at<uchar>(i+padding_margin,j+padding_margin) = src.at<uchar>(i,j);
+            padding_img.at<float>(i+padding_margin,j+padding_margin) = src.at<uchar>(i,j);
         }
     }
     return padding_img;
@@ -62,13 +62,14 @@ Mat Padd_RGB(const Mat &src ,int padding_margin){
 
 Mat Convolute_2d(const Mat &src , const Mat &kernel, int target_app ,int padding_margin)
 {
-        Mat convoluted_img = Mat::zeros(Size(src.cols,src.rows),src.type());
+    Mat convoluted_img = Mat::zeros(Size(src.cols,src.rows),CV_32FC1);
     if (src.type() == 16)
     {
         convoluted_img = Convolute_2d_RGB(src, kernel,target_app,padding_margin);
     }
     else if (src.type() == 0)
     {
+        // Mat convoluted_img = Mat::zeros(Size(src.cols,src.rows),src.type());
         convoluted_img = Convolute_2d_Mono(src, kernel,target_app,padding_margin);
     }
         else
@@ -88,7 +89,7 @@ Mat Convolute_2d_Mono(const Mat &src , const Mat &kernel, int target_app ,int pa
 
     Mat new_kernel =  transform_kernel(kernel);
 
-    Mat convoluted_img = Mat::zeros(Size(src.cols,src.rows),src.type());
+    Mat convoluted_img = Mat::zeros(Size(src.cols,src.rows),CV_32FC1);
 
     int h = kernel.rows /2;
     int w = kernel.cols /2;
@@ -104,12 +105,14 @@ Mat Convolute_2d_Mono(const Mat &src , const Mat &kernel, int target_app ,int pa
             {
                 for(int n = 0 ; n<kernel.cols ; n++)
                 {
-                    conv_sum += padded_img.at<uchar>(i+m-h,j+n-w) * new_kernel.at<float>(m,n);
+                    conv_sum += padded_img.at<float>(i+m-h,j+n-w) * new_kernel.at<float>(m,n);
                 }
             }
             // absolute of conv_sum
-            conv_sum = abs(conv_sum)/target_app;
-            convoluted_img.at<uchar>(i-padding_margin,j-padding_margin) = (int)conv_sum;
+            // conv_sum = abs(conv_sum)/target_app;
+            conv_sum = conv_sum/target_app;
+
+            convoluted_img.at<float>(i-padding_margin,j-padding_margin) = conv_sum;
         }
     }
     return convoluted_img;
