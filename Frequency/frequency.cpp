@@ -76,6 +76,7 @@ void calculateDFT(Mat &scr, Mat &dst)
 	complexImg.copyTo(dst);
 }
 
+
 /* --------------------------- Applying Filtering ------------------------------*/
 
 void filtering(Mat &scr, Mat &dst, Mat &constructionFilter)
