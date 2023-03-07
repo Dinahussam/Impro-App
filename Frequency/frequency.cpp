@@ -69,9 +69,8 @@ void calculateDFT(Mat &scr, Mat &dst)
 	Mat planes[] = { scr, Mat::zeros(scr.size(), CV_32F) };
 	Mat complexImg;
 	merge(planes, 2, complexImg);
-    cout<<"output----------------------------"<<endl;
-    cout<<complexImg<<endl;
-
+    // cout<<"output----------------------------"<<endl;
+    // cout<<complexImg<<endl;
 	dft(complexImg, complexImg);
 	complexImg.copyTo(dst);
 }
@@ -81,7 +80,7 @@ void calculateDFT(Mat &scr, Mat &dst)
 
 void filtering(Mat &scr, Mat &dst, Mat &constructionFilter)
 {
-	fourier_shifting(constructionFilter, constructionFilter);
+	// fourier_shifting(constructionFilter, constructionFilter);
 	Mat planesH[] = { Mat_<float>(constructionFilter.clone()), Mat_<float>(constructionFilter.clone()) };
 
 	Mat planes_dft[] = { scr, Mat::zeros(scr.size(), CV_32F) };
@@ -113,32 +112,58 @@ void Add_Low_Frequency_Filter(const Mat &src, Mat &dst)
     // cout << "************** Img after convertion for data type***************" << endl ;
     // cout << fLoat_Image << endl;
 
+    // expand input image to optimal size
+	Mat padded;
+	int m = getOptimalDFTSize(fLoat_Image.rows);
+	int n = getOptimalDFTSize(fLoat_Image.cols);
+	copyMakeBorder(fLoat_Image, padded, 0, m - fLoat_Image.rows, 0, n - fLoat_Image.cols, BORDER_CONSTANT, Scalar::all(0));
+
 
     Mat fourierImage;
-	calculateDFT(fLoat_Image, fourierImage);
+	calculateDFT(padded, fourierImage);
+
+
+    Mat real, imaginary;
+	Mat planes[] = { real, imaginary };
+
+	split(fourierImage, planes);
+	Mat mag_image;
+	magnitude(planes[0], planes[1], mag_image);
+
+	// switch to a logarithmic scale
+	mag_image += Scalar::all(1);
+	log(mag_image, mag_image);
+	mag_image = mag_image(Rect(0, 0, mag_image.cols & -2, mag_image.rows & -2));
+
+	Mat shifted_DFT;
+	fourier_shifting(mag_image, shifted_DFT);
+
+	normalize(shifted_DFT, shifted_DFT, 0, 1, NORM_MINMAX);
+
+     shifted_DFT.copyTo(dst);
 
     // cout << "************** Img after fourier***************" << endl ;
     // cout << fourierImage << endl;
 
-	Mat filter_construction = Filter_Construction(fourierImage ,5);
+	// Mat filter_construction = Filter_Construction(fourierImage ,5);
 
     // filtering
-	Mat complexIH;
-	filtering(fourierImage, complexIH, filter_construction);
+	// Mat complexIH;
+	// filtering(fourierImage, complexIH, filter_construction);
 
 
-    Mat inverseImage;
-    dft(fourierImage, inverseImage, DFT_INVERSE|DFT_REAL_OUTPUT);
+    // Mat inverseImage;
+    // dft(fourierImage, inverseImage, DFT_INVERSE|DFT_REAL_OUTPUT);
 
     // cout << "************** Img after inverse fourier***************" << endl ;
     // cout << inverseImage << endl;
 
-    normalize(inverseImage, inverseImage, 0, 1, NORM_MINMAX);
+    // normalize(inverseImage, inverseImage, 0, 1, NORM_MINMAX);
 
-    Mat OutputImage;
-    inverseImage.convertTo(OutputImage, CV_8U);
+    // Mat OutputImage;
+    // inverseImage.convertTo(OutputImage, CV_8U);
 
-    dst.copyTo(OutputImage);
+    // dst.copyTo(OutputImage);
 
     // Print type and channels
     // cout << "*************************" << endl ;
@@ -152,4 +177,20 @@ void Add_Low_Frequency_Filter(const Mat &src, Mat &dst)
 
 
 /*-------------------------------------------Hybrid Images -------------------------------------*/
+
+
+/*
+Mat Masking ( Mat &src, Mat &mask)
+{
+	// Mat masked;
+	Mat masked = Mat::zeros(Size(src.cols,src.rows),src.type());
+	for (int x = 0; x < src.rows; x++)
+		{
+			for (int  y = 0; y < src.cols; y++)
+			{
+				masked.at<uchar>(x, y) = src.at<uchar>(x, y) * mask.at<uchar>(x, y);
+			}
+		}	return masked;
+}
+*/
 
