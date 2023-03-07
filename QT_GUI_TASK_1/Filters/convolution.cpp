@@ -62,7 +62,7 @@ Mat Padd_RGB(const Mat &src ,int padding_margin){
 
 Mat Convolute_2d(const Mat &src , const Mat &kernel, int target_app ,int padding_margin)
 {
-    Mat convoluted_img = Mat::zeros(Size(src.cols,src.rows),src.type());
+        Mat convoluted_img = Mat::zeros(Size(src.cols,src.rows),src.type());
     if (src.type() == 16)
     {
         convoluted_img = Convolute_2d_RGB(src, kernel,target_app,padding_margin);
@@ -95,14 +95,14 @@ Mat Convolute_2d_Mono(const Mat &src , const Mat &kernel, int target_app ,int pa
 
     float conv_sum;
 // convolute image
-    for (int i = padding_margin; i < (padded_img.rows-padding_margin); i++)
+    for (int i =padding_margin;i<(padded_img.rows-padding_margin) ; i++)
     {
-        for (int j = padding_margin; j <(padded_img.cols-padding_margin); j++)
+        for (int j = padding_margin ; j<(padded_img.cols-padding_margin) ; j++)
         {
             conv_sum = 0;
-            for(int m = 0; m < kernel.rows; m++ )
+            for(int m = 0 ; m<kernel.rows;m++ )
             {
-                for(int n = 0; n < kernel.cols ; n++)
+                for(int n = 0 ; n<kernel.cols ; n++)
                 {
                     conv_sum += padded_img.at<uchar>(i+m-h,j+n-w) * new_kernel.at<float>(m,n);
                 }

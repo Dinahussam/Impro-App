@@ -96,39 +96,39 @@ void Add_Average_Filter(const Mat &src, Mat &dst)
         }
     }
 }
-void gaussian_Filter(const Mat &src, Mat &dst)
-{
-    unsigned char data[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};
-    unsigned char data_index = 0;
-    src.copyTo(dst);
-    cout << src.rows << endl;
-    cout << src.cols << endl;
-    for (int i = 0; i < src.rows - 3; i++)
-    {
-        for (int j = 0; j < src.cols - 3; j++)
-        {
-            Scalar intensity1 = 0;
-            Scalar intensity2;
-            for (int p = 0; p < 3; p++)
-            {
+//void gaussian_Filter(const Mat &src, Mat &dst)
+//{
+//    unsigned char data[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};
+//    unsigned char data_index = 0;
+//    src.copyTo(dst);
+//    cout << src.rows << endl;
+//    cout << src.cols << endl;
+//    for (int i = 0; i < src.rows - 3; i++)
+//    {
+//        for (int j = 0; j < src.cols - 3; j++)
+//        {
+//            Scalar intensity1 = 0;
+//            Scalar intensity2;
+//            for (int p = 0; p < 3; p++)
+//            {
 
-                for (int q = 0; q < 3; q++)
-                {
+//                for (int q = 0; q < 3; q++)
+//                {
 
-                    intensity1 = data[data_index] * src.at<uchar>(i + p, j + q);
+//                    intensity1 = data[data_index] * src.at<uchar>(i + p, j + q);
 
-                    intensity2.val[0] += intensity1.val[0];
-                    data_index++;
-                }
-            }
-            dst.at<uchar>(i + (3 - 1) / 2, j + (3 - 1) / 2) = intensity2.val[0] / (16);
-        }
-    }
-}
+//                    intensity2.val[0] += intensity1.val[0];
+//                    data_index++;
+//                }
+//            }
+//            dst.at<uchar>(i + (3 - 1) / 2, j + (3 - 1) / 2) = intensity2.val[0] / (16);
+//        }
+//    }
+//}
 
 /*---------------------------------- Gaussian filter ----------------------------------*/
 
-void Add_Gaussian_Filter(const Mat &src, Mat &dst, int image_type)
+void Add_Gaussian_Filter(const Mat &src, Mat &dst)
 {
 
     unsigned char kernel_data[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};

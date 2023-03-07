@@ -1,11 +1,4 @@
-build-QT_GUI_TASK_1-Desktop_Qt_6_5_0_MinGW_64_bit-Debug
-build/
-CMakeLists.txt
-.vscode/
-QT_GUI_TASK_1/QT_GUI_TASK_1.pro
-
-
-+# This file is used to ignore files which are generated
+# This file is used to ignore files which are generated
 # ----------------------------------------------------------------------------
 
 *~
@@ -78,6 +71,4 @@ CMakeLists.txt.user*
 # --------
 *.dll
 *.exe
-build-QT_GUI_TASK_1-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/.qtc_clangd/
-build-QT_GUI_TASK_1-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/.qmake.stash
-build-QT_GUI_TASK_1-Desktop_Qt_6_4_2_MinGW_64_bit-Debug/debug/
+

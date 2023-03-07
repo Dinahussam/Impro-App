@@ -1,8 +1,8 @@
 #ifndef REMOVE_NOISE
 #define REMOVE_NOISE
 
-#include "../Common.hpp"
-#include "../Filters/convolution.hpp"
+#include "Common.hpp"
+#include "Filters/convolution.hpp"
 
 
 void Swap_Elements(unsigned char *first_element, unsigned char *second_element);
@@ -13,8 +13,9 @@ Mat Create_Kernel(int kernel_size, unsigned char *kernel_data, int image_type);
 
 void Add_Median_Filter(const Mat &src, Mat &dst);
 
-void Add_Mean_Filter(const Mat &src, Mat &dst);
+void Add_Average_Filter(const Mat &src, Mat &dst);
 
 void Add_Gaussian_Filter(const Mat &src, Mat &dst);
+
 
 #endif
