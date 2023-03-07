@@ -7,5 +7,6 @@
         <file>Icons/Histogram.png</file>
         <file>Icons/convert_color_to_gray.png</file>
         <file>Icons/edge_detection.png</file>
+        <file>Icons/Threshold.jpg</file>
     </qresource>
 </RCC>

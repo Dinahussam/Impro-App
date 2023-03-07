@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SaltPepperParameters</class>
- <widget class="QDialog" name="SaltPepperParameters">
+ <class>ThresholdWindow</class>
+ <widget class="QDialog" name="ThresholdWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>300</width>
-    <height>199</height>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>10</y>
+     <width>301</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">font: 900 15pt &quot;Segoe UI Black&quot;;
+color: rgb(0, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>Threshold </string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
@@ -39,32 +59,12 @@ background-color: qlineargradient(x1: 0.5, y1: 1, x2: 0.5, y2: 1, stop: 0 #dadbd
     <string>Apply</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>20</y>
-     <width>301</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">font: 900 15pt &quot;Segoe UI Black&quot;;
-color: rgb(0, 0, 0);</string>
-   </property>
-   <property name="text">
-    <string>Salt and Pepper Parameters</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>101</y>
-     <width>121</width>
+     <y>90</y>
+     <width>131</width>
      <height>20</height>
     </rect>
    </property>
@@ -73,23 +73,26 @@ color: rgb(0, 0, 0);</string>
 color: rgb(0, 0, 0);</string>
    </property>
    <property name="text">
-    <string>Salt/Pepper ratio</string>
+    <string>Threeshold Value</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="SaltandPepperAmount">
+  <widget class="QLineEdit" name="ThresholdValue">
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>100</y>
-     <width>151</width>
-     <height>24</height>
+     <y>90</y>
+     <width>141</width>
+     <height>22</height>
     </rect>
    </property>
    <property name="styleSheet">
     <string notr="true">border-radius: 5px;</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

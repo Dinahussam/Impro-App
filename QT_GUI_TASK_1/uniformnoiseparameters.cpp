@@ -11,18 +11,21 @@ UniformNoiseParameters::UniformNoiseParameters(QWidget *parent) :
 
 UniformNoiseParameters::~UniformNoiseParameters()
 {
+    if(ui->NoiseIntensity->text().isEmpty()) {
+        flag = true;
+    }
     delete ui;
 }
 
 void UniformNoiseParameters::on_pushButton_clicked()
 {
 
-    if(ui->NoiseIntensity->text().isEmpty() || ui->Threshold->text().isEmpty()) {
+    if(ui->NoiseIntensity->text().isEmpty()) {
         QMessageBox::information(this, "Warning", "Please enter all the fields before applying!");
     }
     else{
-        thresholdValue = ui->Threshold->text().toInt();
         noiseIntenisty = ui->NoiseIntensity->text().toFloat();
+        flag = false;
         this->close();
     }
 

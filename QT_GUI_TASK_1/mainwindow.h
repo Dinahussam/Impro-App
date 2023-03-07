@@ -5,6 +5,7 @@
 #include <gaussiannoiseparameters.h>
 #include <saltpepperparameters.h>
 #include <uniformnoiseparameters.h>
+#include <thresholdwindow.h>
 
 
 namespace Ui {
@@ -43,6 +44,12 @@ private slots:
     void on_RobetButton_clicked();
 
     void on_SobelButton_clicked();
+
+    void on_CannyButton_clicked();
+
+    void on_LocalThresholdButton_clicked();
+
+    void on_GlobalThresholdButton_clicked();
 
 private:
     Ui::MainWindow *ui;

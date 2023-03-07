@@ -8,6 +8,7 @@
 #include "Filters/prewitt.hpp"
 #include "Filters/robert.hpp"
 #include "Filters/sobel.hpp"
+#include "Threshold/Thresholding.hpp"
 #include "imageClass.hpp"
 
 
@@ -30,6 +31,7 @@ Mat inputMat = Mat::zeros(1, 1, CV_64F);
 
 Mat filterOutputMat = Mat::zeros(1, 1, CV_64F);
 Mat edgeDetectionOutputMat = Mat::zeros(1, 1, CV_64F);
+Mat thresholdOutputMat = Mat::zeros(1, 1, CV_64F);
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -63,6 +65,8 @@ void MainWindow::on_BrowseButton_clicked()
 
         ui->filter_inputImage->setPixmap(QPixmap::fromImage(QImage(inputMat.data, inputMat.cols, inputMat.rows, inputMat.step, QImage::Format_BGR888)));
         ui->EdgeDetection_inputImage->setPixmap(QPixmap::fromImage(QImage(inputMat.data, inputMat.cols, inputMat.rows, inputMat.step, QImage::Format_BGR888)));
+        ui->Threshold_InputImage->setPixmap(QPixmap::fromImage(QImage(inputMat.data, inputMat.cols, inputMat.rows, inputMat.step, QImage::Format_BGR888)));
+
 
         ui->filter_outputImage->setPixmap(QPixmap::fromImage(QImage(filterOutputMat.data, filterOutputMat.cols, filterOutputMat.rows, filterOutputMat.step, QImage::Format_Grayscale8)));
 
@@ -118,6 +122,8 @@ void MainWindow::on_SaltPepperNoiseButton_clicked()
     SaltPepperParameter.setModal(true);
     SaltPepperParameter.exec();
 
+    if(SaltPepperParameter.flag) return;
+
     Add_Salt_And_Pepper_Noise(filterOutputMat, filterOutputMat, SaltPepperParameter.saltAndPepperAmount);
     ui->filter_outputImage->setPixmap(QPixmap::fromImage(QImage(filterOutputMat.data, filterOutputMat.cols, filterOutputMat.rows, filterOutputMat.step, QImage::Format_Grayscale8)));
 
@@ -132,6 +138,8 @@ void MainWindow::on_GaussianNoiseButton_clicked()
     gaussianParameters.setModal(true);
     gaussianParameters.exec();
 
+    if(gaussianParameters.flag) return;
+
     Add_Gaussian_Noise(filterOutputMat, filterOutputMat, gaussianParameters.gaussianMeanValue, gaussianParameters.gaussianSTDValue, gaussianParameters.noiseIntenisty);
     ui->filter_outputImage->setPixmap(QPixmap::fromImage(QImage(filterOutputMat.data, filterOutputMat.cols, filterOutputMat.rows, filterOutputMat.step, QImage::Format_Grayscale8)));
 }
@@ -144,18 +152,11 @@ void MainWindow::on_UniformNoiseButton_clicked()
     uniformParameters.setModal(true);
     uniformParameters.exec();
 
-    Add_Uniform_Noise(filterOutputMat, filterOutputMat, uniformParameters.thresholdValue, uniformParameters.noiseIntenisty);
+    if(uniformParameters.flag) return;
+
+    Add_Uniform_Noise(filterOutputMat, filterOutputMat, uniformParameters.noiseIntenisty);
     ui->filter_outputImage->setPixmap(QPixmap::fromImage(QImage(filterOutputMat.data, filterOutputMat.cols, filterOutputMat.rows, filterOutputMat.step, QImage::Format_Grayscale8)));
 }
-
-bool MainWindow::checkImage(){
-    if(inputImage.isNull()){
-        QMessageBox::information(this, "Image not uploaded", "Please upload image first!");
-        return true;
-    }
-    else return false;
-}
-
 
 
 
@@ -188,3 +189,45 @@ void MainWindow::on_SobelButton_clicked()
     ui->EdgeDetection_outputImage->setPixmap(QPixmap::fromImage(QImage(edgeDetectionOutputMat.data, edgeDetectionOutputMat.cols, edgeDetectionOutputMat.rows, edgeDetectionOutputMat.step, QImage::Format_Grayscale8)));
 }
 
+
+void MainWindow::on_CannyButton_clicked()
+{
+    if(checkImage()) return;
+
+    Convert_To_Gray(inputMat, edgeDetectionOutputMat);
+}
+
+
+void MainWindow::on_LocalThresholdButton_clicked()
+{
+    if(checkImage()) return;
+
+    Convert_To_Gray(inputMat, thresholdOutputMat);
+    local_adaptive_threshold(thresholdOutputMat, thresholdOutputMat);
+    ui->Threshold_OutputImage->setPixmap(QPixmap::fromImage(QImage(thresholdOutputMat.data, thresholdOutputMat.cols, thresholdOutputMat.rows, thresholdOutputMat.step, QImage::Format_Grayscale8)));
+}
+
+
+void MainWindow::on_GlobalThresholdButton_clicked()
+{
+    if(checkImage()) return;
+
+    Convert_To_Gray(inputMat, thresholdOutputMat);
+
+    ThresholdWindow thresholdInput;
+    thresholdInput.setModal(true);
+    thresholdInput.exec();
+
+    if(thresholdInput.flag) return;
+
+    global_threshold(thresholdOutputMat, thresholdOutputMat, thresholdInput.ThresholdValue);
+    ui->Threshold_OutputImage->setPixmap(QPixmap::fromImage(QImage(thresholdOutputMat.data, thresholdOutputMat.cols, thresholdOutputMat.rows, thresholdOutputMat.step, QImage::Format_Grayscale8)));
+}
+
+bool MainWindow::checkImage(){
+    if(inputImage.isNull()){
+        QMessageBox::information(this, "Image not uploaded", "Please upload image first!");
+        return true;
+    }
+    else return false;
+}

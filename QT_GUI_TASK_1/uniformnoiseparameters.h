@@ -17,6 +17,7 @@ public:
 
     int thresholdValue;
     float noiseIntenisty;
+    bool flag;
 
 private slots:
     void on_pushButton_clicked();

@@ -16,6 +16,9 @@ GaussianNoiseParameters::GaussianNoiseParameters(QWidget *parent) :
 
 GaussianNoiseParameters::~GaussianNoiseParameters()
 {
+    if(ui->GaussianMeanValue->text().isEmpty() || ui->GaussianSTDValue->text().isEmpty() || ui->NoiseIntenistyValue->text().isEmpty()) {
+        flag = true;
+    }
     delete ui;
 }
 
@@ -28,7 +31,7 @@ void GaussianNoiseParameters::on_pushButton_clicked()
         gaussianMeanValue = ui->GaussianMeanValue->text().toInt();
         gaussianSTDValue = ui->GaussianSTDValue->text().toInt();
         noiseIntenisty = ui ->NoiseIntenistyValue->text().toInt();
-
+        flag = false;
         this->close();
     }
 

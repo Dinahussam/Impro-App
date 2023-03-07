@@ -11,6 +11,9 @@ SaltPepperParameters::SaltPepperParameters(QWidget *parent) :
 
 SaltPepperParameters::~SaltPepperParameters()
 {
+    if(ui->SaltandPepperAmount->text().isEmpty()) {
+        flag = true;
+    }
     delete ui;
 }
 
@@ -21,6 +24,7 @@ void SaltPepperParameters::on_pushButton_clicked()
     }
     else{
         saltAndPepperAmount = ui->SaltandPepperAmount->text().toFloat();
+        flag = false;
         this->close();
     }
 }

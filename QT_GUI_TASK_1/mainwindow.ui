@@ -6,14 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1415</width>
-    <height>731</height>
+    <width>1394</width>
+    <height>716</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1394</width>
+    <height>716</height>
+   </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1446</width>
-    <height>731</height>
+    <width>1394</width>
+    <height>716</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -26,7 +32,7 @@
       <x>0</x>
       <y>0</y>
       <width>1451</width>
-      <height>731</height>
+      <height>721</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -52,7 +58,7 @@ QTabBar::tab:selected {
 </string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>3</number>
     </property>
     <property name="iconSize">
      <size>
@@ -71,7 +77,7 @@ QTabBar::tab:selected {
      <widget class="QPushButton" name="BrowseButton">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>60</x>
         <y>20</y>
         <width>181</width>
         <height>61</height>
@@ -255,7 +261,7 @@ QPushButton:hover:!pressed{
      <widget class="QWidget" name="Filtering" native="true">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>30</x>
         <y>100</y>
         <width>241</width>
         <height>251</height>
@@ -376,7 +382,7 @@ border-color: transparent</string>
      <widget class="QWidget" name="Noise" native="true">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>30</x>
         <y>360</y>
         <width>241</width>
         <height>251</height>
@@ -625,7 +631,7 @@ background-color:transparent;</string>
      <widget class="QWidget" name="Prewitt" native="true">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>100</y>
         <width>251</width>
         <height>111</height>
@@ -690,7 +696,7 @@ border-color: transparent</string>
      <widget class="QWidget" name="Robert" native="true">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>220</y>
         <width>251</width>
         <height>121</height>
@@ -755,7 +761,7 @@ QPushButton:hover:!pressed{
      <widget class="QWidget" name="Sobel" native="true">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>360</y>
         <width>251</width>
         <height>121</height>
@@ -820,7 +826,7 @@ QPushButton:hover:!pressed{
      <widget class="QWidget" name="Canny" native="true">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>20</x>
         <y>490</y>
         <width>251</width>
         <height>121</height>
@@ -879,6 +885,255 @@ QPushButton:hover:!pressed{
        </property>
        <property name="text">
         <string>Canny Edge Technique</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="ThresholdTab">
+     <attribute name="icon">
+      <iconset resource="Icons.qrc">
+       <normaloff>:/Icons/Threshold.jpg</normaloff>:/Icons/Threshold.jpg</iconset>
+     </attribute>
+     <attribute name="title">
+      <string>Threshold</string>
+     </attribute>
+     <widget class="QFrame" name="ImagesFrame_3">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>50</y>
+        <width>1121</width>
+        <height>571</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: transparent;
+border-radius:5px;</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="outputImageLabel_3">
+       <property name="geometry">
+        <rect>
+         <x>750</x>
+         <y>10</y>
+         <width>191</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+color: black;
+background-color:transparent;</string>
+       </property>
+       <property name="text">
+        <string>Output </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="inputImageLabel_3">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>10</y>
+         <width>191</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+color: black;
+background-color:transparent;</string>
+       </property>
+       <property name="text">
+        <string>Input</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="Threshold_InputImage">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>50</y>
+         <width>512</width>
+         <height>512</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 4px solid black;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="Threshold_OutputImage">
+       <property name="geometry">
+        <rect>
+         <x>580</x>
+         <y>50</y>
+         <width>512</width>
+         <height>512</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 4px solid black;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="LocalThershold" native="true">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>150</y>
+        <width>241</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 2px solid;
+border-radius: 5px;</string>
+      </property>
+      <widget class="QPushButton" name="LocalThresholdButton">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>100</y>
+         <width>151</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+border-style: solid;
+border-width: 2px;
+border-radius: 10px;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 20px;
+color: black;
+background-color: rgb(246, 247, 250);
+}
+
+QPushButton:hover:!pressed{
+	background-color: qlineargradient(x1: 0.5, y1: 1, x2: 0.5, y2: 1, stop: 0 #dadbde, stop: 1 #f6f7fa);
+}</string>
+       </property>
+       <property name="text">
+        <string>Apply</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="LocalLabel">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>241</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+color: black;
+background-color:transparent;
+border-color: transparent</string>
+       </property>
+       <property name="text">
+        <string>Local Threshold</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="GlobalThreshold" native="true">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>370</y>
+        <width>241</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 2px solid;
+border-radius: 5px;</string>
+      </property>
+      <widget class="QPushButton" name="GlobalThresholdButton">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>100</y>
+         <width>151</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+border-style: solid;
+border-width: 2px;
+border-radius: 10px;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 20px;
+color: black;
+background-color: rgb(246, 247, 250);
+}
+
+QPushButton:hover:!pressed{
+	background-color: qlineargradient(x1: 0.5, y1: 1, x2: 0.5, y2: 1, stop: 0 #dadbde, stop: 1 #f6f7fa);
+}</string>
+       </property>
+       <property name="text">
+        <string>Apply</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="GlobalLabel">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>241</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+color: black;
+background-color:transparent;
+border-color: transparent</string>
+       </property>
+       <property name="text">
+        <string>Global Threshold</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </widget>

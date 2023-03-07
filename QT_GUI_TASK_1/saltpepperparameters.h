@@ -16,6 +16,7 @@ public:
     ~SaltPepperParameters();
 
     float saltAndPepperAmount;
+    bool flag;
 
 private slots:
     void on_pushButton_clicked();

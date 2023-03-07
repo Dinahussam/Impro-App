@@ -18,6 +18,7 @@ public:
     int gaussianMeanValue;
     int gaussianSTDValue;
     int noiseIntenisty;
+    bool flag;
 
 private slots:
     void on_pushButton_clicked();
