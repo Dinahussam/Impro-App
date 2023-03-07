@@ -54,23 +54,39 @@ int main()
 
 /* Convert Img To Gray Scale */
     Convert_To_Gray(image, image2);
+
     cout << "Type: " << image2.type() << endl;
     cout << "Channels: " << image2.channels() << endl;
 
-    Mat fImage;
-    image2.convertTo(fImage, CV_32F);
+    // cout << "***********************************************************************" << endl ;
 
-    Mat fourierTransform;
-    dft(fImage, fourierTransform, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+    Mat mask = Filter_Construction(image2,50);
+    Mat masked = Masking(image2,mask);
+
+    namedWindow("Mask", WINDOW_AUTOSIZE);
+    imshow("Mask", mask);
+
+    namedWindow("masked", WINDOW_AUTOSIZE);
+    imshow("masked", masked);
+
+
+    // Mat fImage;
+    // image2.convertTo(fImage, CV_32F);
+
+    // Mat fourierTransform;
+    // dft(fImage, fourierTransform, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+
+	Mat fourierImage = calculateDFT(image2);
+
 
     cout << "***********************************************************************" << endl ;
-    cout << "Type: " << fourierTransform.type() << endl;
-    cout << "Channels: " << fourierTransform.channels() << endl;
+    cout << "Type: " << fourierImage.type() << endl;
+    cout << "Channels: " << fourierImage.channels() << endl;
 
     // print one channel of fourierTransform
-    cout << fourierTransform.at<Vec2f>(0, 0)[0] << endl;
+    cout << fourierImage.at<Vec2f>(50, 50)[0] << endl;
 
-    cout << fourierTransform.at<Vec2f>(0, 0)[1] << endl;
+    cout << fourierImage.at<Vec2f>(50, 50)[1] << endl;
     
 
 
@@ -104,7 +120,7 @@ int main()
 
 /* Plotting*/
     namedWindow("Original", WINDOW_AUTOSIZE);
-    imshow("Original", image);
+    imshow("Original", image2);
 
     // namedWindow("Fourier", WINDOW_AUTOSIZE);
     // imshow("Fourier", fourierTransform);
