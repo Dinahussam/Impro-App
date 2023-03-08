@@ -8,5 +8,7 @@
         <file>Icons/convert_color_to_gray.png</file>
         <file>Icons/edge_detection.png</file>
         <file>Icons/Threshold.jpg</file>
+        <file>Icons/hybrid.png</file>
+        <file>Icons/close.png</file>
     </qresource>
 </RCC>
