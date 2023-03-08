@@ -3,11 +3,8 @@
 
 #include "Noise/noise.hpp"
 #include "Noise/remove_noise.hpp"
-#include "Filters/convolution.hpp"
 #include "Filters/gaussian.hpp"
-#include "Filters/prewitt.hpp"
-#include "Filters/robert.hpp"
-#include "Filters/sobel.hpp"
+#include "Filters/edge_detection.hpp"
 #include "Frequency/frequency.hpp"
 #include "Threshold/Thresholding.hpp"
 #include "imageClass.hpp"
@@ -154,8 +151,9 @@ void MainWindow::on_UniformNoiseButton_clicked()
 void MainWindow::on_PrewittButton_clicked()
 {
     if(checkImage(inputImage)) return;
-
-
+    Convert_To_Gray(inputMat, edgeDetectionOutputMat);
+    edgeDetectionOutputMat = Detect_Edges_Prewitt(edgeDetectionOutputMat);
+    updateImage(edgeDetectionOutputMat, ui->EdgeDetection_outputImage, 0);
 }
 
 
@@ -181,6 +179,8 @@ void MainWindow::on_CannyButton_clicked()
 {
     if(checkImage(inputImage)) return;
     Convert_To_Gray(inputMat, edgeDetectionOutputMat);
+    edgeDetectionOutputMat = Detect_Edges_Canny(edgeDetectionOutputMat, 30, 70);
+    updateImage(edgeDetectionOutputMat, ui->EdgeDetection_outputImage, 0);
 }
 
 
@@ -272,6 +272,10 @@ void MainWindow::on_HybridButton_clicked()
     finalHybridImageMat =  Apply_Hybrid_Images(freqImage1Mat, freqImage2Mat);
     updateImage(finalHybridImageMat,  ui->finalHybridImage, 0);
 }
+
+
+
+
 
 // ----------------------------------------------------------- HELPER FUNCTIONS ------------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------
