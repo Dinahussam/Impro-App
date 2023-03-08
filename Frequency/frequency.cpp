@@ -74,6 +74,10 @@ Mat Apply_Fourier_Transform( Mat &src)
 
     return fourierImage;
 }
+
+/*------------------------------------- Apply shifting -------------------------------------*/
+
+
 	
 	
 /* --------------------------------- Applying Filtering ---------------------------------------*/
@@ -83,14 +87,13 @@ Mat Apply_Filtering( Mat &src , float filterRadius, float flag)
 
 	Mat fourierImgInput ;
 	src.copyTo(fourierImgInput);
+
 	Mat real, imaginary;
 	Mat planes[] = { real, imaginary };
 	split(fourierImgInput, planes);
 	
     Mat real_shifted = fourier_shifting(planes[0]);
     Mat imaginary_shifted = fourier_shifting(planes[1]);
-
-	Mat shifted_DFT_plane[] = {real_shifted , imaginary_shifted };
 
     Mat constructionFilter = Filter_Construction(fourierImgInput, filterRadius, flag);
 	Mat ConstructionFilter_copy;
@@ -99,8 +102,8 @@ Mat Apply_Filtering( Mat &src , float filterRadius, float flag)
     Mat planes_construction_filter[] = { ConstructionFilter_copy, ConstructionFilter_copy };
 
     Mat planes_out[] = { Mat::zeros(fourierImgInput.size(), CV_32F), Mat::zeros(fourierImgInput.size(), CV_32F) };
-    planes_out[0] = planes_construction_filter[0].mul(shifted_DFT_plane[0]);
-	planes_out[1] = planes_construction_filter[1].mul(shifted_DFT_plane[1]);
+    planes_out[0] = planes_construction_filter[0].mul(real_shifted);
+	planes_out[1] = planes_construction_filter[1].mul(imaginary_shifted);
     
     Mat real_shifted_img = fourier_shifting(planes_out[0]);
     Mat imaginary_shifted_img = fourier_shifting(planes_out[1]);
@@ -167,8 +170,8 @@ Mat Apply_Hybrid_Images( Mat &src1 ,Mat &src2 , Mat &dst1 , Mat &dst2)
 	resize(dst2, resized_down_img2, Size(down_width, down_height), INTER_LINEAR);
 
 // Apply Low and High pass filters to both images 
-	Mat Low_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img1 , 40, 1);
-	Mat High_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img2, 40 ,0);
+	Mat Low_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img1 , 30, 1);
+	Mat High_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img2, 30 ,0);
 
 	Mat Hybrid = Low_Frequency_Image+High_Frequency_Image;
 	

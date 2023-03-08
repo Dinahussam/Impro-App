@@ -29,8 +29,8 @@ int main()
 // --------------------------------------- Img Read ---------------------------------------
     // image = imread("C:\\Users\\HP Probook\\Documents\\GitHub\\CV_task1_team15\\Images\\sudoku.png");
 
-    src1 = imread("C:\\Users\\HP Probook\\Documents\\GitHub\\CV_task1_team15\\Images\\lenna.png");
-    src2 = imread("C:\\Users\\HP Probook\\Documents\\GitHub\\CV_task1_team15\\Images\\sudoku.png");
+    src1 = imread("C:\\Users\\HP Probook\\Documents\\GitHub\\CV_task1_team15\\Images\\girl.jpg");
+    src2 = imread("C:\\Users\\HP Probook\\Documents\\GitHub\\CV_task1_team15\\Images\\tiger.jpg");
 
 /* If image not found */
     // if (!image.data)                                                                          
