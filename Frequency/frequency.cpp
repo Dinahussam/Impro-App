@@ -4,14 +4,9 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 
-
-
-
-
 /* --------------------------- filter construction ------------------------------*/
 
 Mat Filter_Construction( Mat &scr, float Radius)
-
 {
     // construction filter with same image size and with (1) values
 	Mat filter(scr.size(), CV_32F, Scalar(1));
@@ -95,11 +90,24 @@ void filtering(Mat &scr, Mat &dst, Mat &constructionFilter)
 }
 
 
+Mat Masking ( Mat &src, Mat &mask)
+{
+	// Mat masked;
+	Mat masked = Mat::zeros(Size(src.cols,src.rows),src.type());
+	for (int x = 0; x < src.rows; x++)
+		{
+			for (int  y = 0; y < src.cols; y++)
+			{
+				masked.at<float>(x, y) = src.at<float>(x, y) * mask.at<float>(x, y);
+			}
+		}	return masked;
+}
+
 
 /*-------------------------------- Frequency Domain Low Pass Filter ---------------------------*/
 
 
-void Add_Low_Frequency_Filter(const Mat &src, Mat &dst)
+void Add_Low_Frequency_Filter( Mat &src, Mat &dst)
 {
     src.copyTo(dst);
 
@@ -113,34 +121,70 @@ void Add_Low_Frequency_Filter(const Mat &src, Mat &dst)
     // cout << fLoat_Image << endl;
 
     // expand input image to optimal size
-	Mat padded;
-	int m = getOptimalDFTSize(fLoat_Image.rows);
-	int n = getOptimalDFTSize(fLoat_Image.cols);
-	copyMakeBorder(fLoat_Image, padded, 0, m - fLoat_Image.rows, 0, n - fLoat_Image.cols, BORDER_CONSTANT, Scalar::all(0));
-
+	// Mat padded;
+	// int m = getOptimalDFTSize(fLoat_Image.rows);
+	// int n = getOptimalDFTSize(fLoat_Image.cols);
+	// copyMakeBorder(fLoat_Image, padded, 0, m - fLoat_Image.rows, 0, n - fLoat_Image.cols, BORDER_CONSTANT, Scalar::all(0));
 
     Mat fourierImage;
-	calculateDFT(padded, fourierImage);
-
+	dft(fLoat_Image, fourierImage, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+	// dft(fImage, fourierTransform, DFT_SCALE|DFT_COMPLEX_OUTPUT);
 
     Mat real, imaginary;
 	Mat planes[] = { real, imaginary };
 
 	split(fourierImage, planes);
-	Mat mag_image;
-	magnitude(planes[0], planes[1], mag_image);
+
+	// shift each plane
+	// fourier_shifting(fourierImage, fourierImage);
+
+	// make mask to each splitted part
+	Mat mask = Filter_Construction(src,5);
+
+    Mat masked_real = Masking(planes[0],mask);
+	Mat masked_imaginary = Masking(planes[1],mask);
+
+	Mat masked_foureir;
+	Mat masked_planes[] = { masked_real, masked_imaginary };
+
+
+	merge(masked_planes, 2, masked_foureir);
+
+
+	// merge(masked_real,masked_imaginary,masked_foureir);
+
+
+	// Mat mag_image;
+	// magnitude(planes[0], planes[1], mag_image);
+
+
+	// calculate inverse fourier
+	Mat inverseFourier;
+	dft(masked_foureir, inverseFourier, DFT_INVERSE | DFT_REAL_OUTPUT);
+
+	Mat inverse_show;
+    inverseFourier.convertTo(inverse_show, CV_8U);
+
+	// plot inverse fourier
+	namedWindow("inverseFourier", WINDOW_AUTOSIZE);
+    imshow("inverseFourier", inverse_show);
+
+
 
 	// switch to a logarithmic scale
-	mag_image += Scalar::all(1);
-	log(mag_image, mag_image);
-	mag_image = mag_image(Rect(0, 0, mag_image.cols & -2, mag_image.rows & -2));
+	// mag_image += Scalar::all(1);
+	// log(mag_image, mag_image);
+	// mag_image = mag_image(Rect(0, 0, mag_image.cols & -2, mag_image.rows & -2));
 
-	Mat shifted_DFT;
-	fourier_shifting(mag_image, shifted_DFT);
+	// Mat shifted_DFT;
+	// fourier_shifting(mag_image, shifted_DFT);
 
-	normalize(shifted_DFT, shifted_DFT, 0, 1, NORM_MINMAX);
+	// normalize(shifted_DFT, shifted_DFT, 0, 1, NORM_MINMAX);
 
-     shifted_DFT.copyTo(dst);
+	// namedWindow("Fourier", WINDOW_AUTOSIZE);
+    // imshow("Fourier", shifted_DFT);
+
+    // shifted_DFT.copyTo(dst);
 
     // cout << "************** Img after fourier***************" << endl ;
     // cout << fourierImage << endl;
@@ -179,18 +223,5 @@ void Add_Low_Frequency_Filter(const Mat &src, Mat &dst)
 /*-------------------------------------------Hybrid Images -------------------------------------*/
 
 
-/*
-Mat Masking ( Mat &src, Mat &mask)
-{
-	// Mat masked;
-	Mat masked = Mat::zeros(Size(src.cols,src.rows),src.type());
-	for (int x = 0; x < src.rows; x++)
-		{
-			for (int  y = 0; y < src.cols; y++)
-			{
-				masked.at<uchar>(x, y) = src.at<uchar>(x, y) * mask.at<uchar>(x, y);
-			}
-		}	return masked;
-}
-*/
+
 
