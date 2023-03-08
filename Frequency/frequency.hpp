@@ -3,7 +3,11 @@
 
 #include "../Common.hpp"
 
-void Add_Low_Frequency_Filter(const Mat &src, Mat &dst);
+Mat Filter_Construction( Mat &scr, float Radius , float filter_flag);
+
+Mat fourier_shifting( Mat &fourier_input_img);
+
+Mat Apply_Fourier_Transform( Mat &src);
 
 Mat Apply_Shifting_to_Fourier_Img( Mat &src );
 
@@ -13,5 +17,6 @@ Mat Inverse_Fourier_Transform( Mat &src);
 
 Mat Add_Low_High_Frequency_Filter( Mat &src, float filterRadius , float flag);
 
+Mat Apply_Hybrid_Images( Mat &src1 ,Mat &src2 , Mat &dst1 , Mat &dst2);
 
 #endif

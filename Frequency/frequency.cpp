@@ -4,9 +4,13 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 
+
+
+
+
 /* --------------------------- filter construction ------------------------------*/
 
-Mat Filter_Construction( Mat &scr, float Radius)
+Mat Filter_Construction( Mat &scr, float Radius , float filter_flag)
 
 {
     // construction filter with same image size and with (1) values
@@ -111,7 +115,7 @@ Mat Apply_Filtering( Mat &src , float filterRadius, float flag)
 	return MergeImg;
     
 }
-
+	
 
 /* --------------------------- Calculate the inverse fourier Transform ------------------------------*/
 
@@ -128,7 +132,7 @@ Mat Apply_Filtering( Mat &src , float filterRadius, float flag)
 /*-------------------------------- Frequency Domain  Filters ---------------------------*/
 
 
-void Add_Low_Frequency_Filter(const Mat &src, Mat &dst)
+Mat Add_Low_High_Frequency_Filter( Mat &src, float filterRadius , float flag)
 {
 	Mat dst; 
     src.copyTo(dst);
@@ -147,15 +151,14 @@ void Add_Low_Frequency_Filter(const Mat &src, Mat &dst)
 	return OutputImage;
 }
 
-    // expand input image to optimal size
-	Mat padded;
-	int m = getOptimalDFTSize(fLoat_Image.rows);
-	int n = getOptimalDFTSize(fLoat_Image.cols);
-	copyMakeBorder(fLoat_Image, padded, 0, m - fLoat_Image.rows, 0, n - fLoat_Image.cols, BORDER_CONSTANT, Scalar::all(0));
 
 
-    Mat fourierImage;
-	calculateDFT(padded, fourierImage);
+/*-------------------------------------------Hybrid Images -------------------------------------*/
+
+Mat Apply_Hybrid_Images( Mat &src1 ,Mat &src2 , Mat &dst1 , Mat &dst2)
+{
+	src1.copyTo(dst1);
+	src2.copyTo(dst2);
 
 
 // resize images to start making hybrid 
@@ -166,31 +169,12 @@ void Add_Low_Frequency_Filter(const Mat &src, Mat &dst)
 	resize(dst1, resized_down_img1, Size(down_width, down_height), INTER_LINEAR);
 	resize(dst2, resized_down_img2, Size(down_width, down_height), INTER_LINEAR);
 
-	split(fourierImage, planes);
-	Mat mag_image;
-	magnitude(planes[0], planes[1], mag_image);
+// Apply Low and High pass filters to both images 
+	Mat Low_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img1 , 30, 1);
+	Mat High_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img2, 30 ,0);
 
-	// switch to a logarithmic scale
-	mag_image += Scalar::all(1);
-	log(mag_image, mag_image);
-	mag_image = mag_image(Rect(0, 0, mag_image.cols & -2, mag_image.rows & -2));
-
-	Mat shifted_DFT;
-	fourier_shifting(mag_image, shifted_DFT);
-
-	normalize(shifted_DFT, shifted_DFT, 0, 1, NORM_MINMAX);
-
-     shifted_DFT.copyTo(dst);
-
-    // cout << "************** Img after fourier***************" << endl ;
-    // cout << fourierImage << endl;
-
-	// Mat filter_construction = Filter_Construction(fourierImage ,5);
-
-    // filtering
-	// Mat complexIH;
-	// filtering(fourierImage, complexIH, filter_construction);
-
+	Mat Hybrid = Low_Frequency_Image+High_Frequency_Image;
+	
 
     Low_Frequency_Image.copyTo(dst1);
 	High_Frequency_Image.copyTo(dst2);
@@ -204,19 +188,15 @@ void Add_Low_Frequency_Filter(const Mat &src, Mat &dst)
 
 /*-------------------------------------------Report Addtional Function--------------------------*/
 
+    
+// switch to a logarithmic scale -----------------------------------------------------
+	// mag_image += Scalar::all(1);
+	// log(mag_image, mag_image);
+	// mag_image = mag_image(Rect(0, 0, mag_image.cols & -2, mag_image.rows & -2));
 
-/*
-Mat Masking ( Mat &src, Mat &mask)
-{
-	// Mat masked;
-	Mat masked = Mat::zeros(Size(src.cols,src.rows),src.type());
-	for (int x = 0; x < src.rows; x++)
-		{
-			for (int  y = 0; y < src.cols; y++)
-			{
-				masked.at<uchar>(x, y) = src.at<uchar>(x, y) * mask.at<uchar>(x, y);
-			}
-		}	return masked;
-}
-*/
+	// normalize(shifted_DFT, shifted_DFT, 0, 1, NORM_MINMAX);
+
+// Get the Magnitude of the image ----------------------------------------------------
+    //Mat mag_image;
+	//magnitude(planes[0], planes[1], mag_image);
 
