@@ -16,8 +16,6 @@ Mat Filter_Construction( Mat &scr, float Radius , float filter_flag)
     // construction filter with same image size and with (1) values
     Mat filter(scr.size(), CV_32F, Scalar(filter_flag));
 
-    // cout << filter << endl;
-
     // initialize the distance between the center and any point 
 	float Distance = 0;
 
@@ -67,10 +65,8 @@ Mat fourier_shifting( Mat &fourier_input_img)
 
 Mat Apply_Fourier_Transform( Mat &src)
 {
-	Mat InputImg;
-	src.copyTo(InputImg);
 	Mat fourierImage;
-	dft(InputImg, fourierImage, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+    dft(src, fourierImage, DFT_SCALE|DFT_COMPLEX_OUTPUT);
 
     return fourierImage;
 }
@@ -96,14 +92,10 @@ Mat Apply_Filtering( Mat &src , float filterRadius, float flag)
     Mat imaginary_shifted = fourier_shifting(planes[1]);
 
     Mat constructionFilter = Filter_Construction(fourierImgInput, filterRadius, flag);
-	Mat ConstructionFilter_copy;
-    constructionFilter.copyTo(ConstructionFilter_copy);
-
-    Mat planes_construction_filter[] = { ConstructionFilter_copy, ConstructionFilter_copy };
 
     Mat planes_out[] = { Mat::zeros(fourierImgInput.size(), CV_32F), Mat::zeros(fourierImgInput.size(), CV_32F) };
-    planes_out[0] = planes_construction_filter[0].mul(real_shifted);
-	planes_out[1] = planes_construction_filter[1].mul(imaginary_shifted);
+    planes_out[0] = constructionFilter.mul(real_shifted);
+    planes_out[1] = constructionFilter.mul(imaginary_shifted);
     
     Mat real_shifted_img = fourier_shifting(planes_out[0]);
     Mat imaginary_shifted_img = fourier_shifting(planes_out[1]);
@@ -124,33 +116,28 @@ Mat Apply_Filtering( Mat &src , float filterRadius, float flag)
     Mat inverseImage;
 	src.copyTo(inverseImage);
     dft(inverseImage, inverseImage, DFT_INVERSE|DFT_REAL_OUTPUT);
+
 	return inverseImage;
   } 
-
 
 
 /*-------------------------------- Frequency Domain  Filters ---------------------------*/
 
 
 Mat Add_Low_High_Frequency_Filter( Mat &src, float filterRadius , float flag)
-{
-	Mat dst; 
+{ 
+    Mat dst;
     src.copyTo(dst);
+    dst.convertTo(dst, CV_32F);
 
-    Mat fLoat_Image;
-    dst.convertTo(fLoat_Image, CV_32F);
-
-    Mat fourierImage = Apply_Fourier_Transform(fLoat_Image);	
-
+    Mat fourierImage = Apply_Fourier_Transform(dst);
     Mat FilteringImg = Apply_Filtering(fourierImage, filterRadius , flag);
-
     Mat OutputImage = Inverse_Fourier_Transform(FilteringImg);
 
 	OutputImage.convertTo(OutputImage, CV_8U);
 
 	return OutputImage;
 }
-
 
 
 /*-------------------------------------------Hybrid Images -------------------------------------*/
