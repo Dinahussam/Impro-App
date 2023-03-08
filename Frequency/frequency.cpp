@@ -65,93 +65,118 @@ Mat fourier_shifting( Mat &fourier_input_img)
 
 /* --------------------------- Calculate the fourier Transform ------------------------------*/
 
-void Apply_Fourier_Transform(const Mat &src, Mat &dst ,float flag)
+Mat Apply_Fourier_Transform( Mat &src)
 {
-	src.copyTo(dst);
-
+	Mat InputImg;
+	src.copyTo(InputImg);
 	Mat fourierImage;
-	dft(dst, fourierImage, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+	dft(InputImg, fourierImage, DFT_SCALE|DFT_COMPLEX_OUTPUT);
 
-	Mat real, imaginary;
-	Mat planes[] = { real, imaginary };
-	split(fourierImage, planes);
+    return fourierImage;
+}
 	
-    Mat real_shifted = fourier_shifting(planes[0]);
-    Mat imaginary_shifted = fourier_shifting(planes[1]);
-    Mat shifted_DFT_plane[] = {real_shifted , imaginary_shifted };
 	
 /* --------------------------------- Applying Filtering ---------------------------------------*/
 
+Mat Apply_Filtering( Mat &src , float filterRadius, float flag)
+{
 
-	Mat copy1;
-    Mat copy2;
-    Mat constructionFilter = Filter_Construction(dst,10, flag);
-    constructionFilter.copyTo(copy1);
-    constructionFilter.copyTo(copy2);
+	Mat fourierImgInput ;
+	src.copyTo(fourierImgInput);
+	Mat real, imaginary;
+	Mat planes[] = { real, imaginary };
+	split(fourierImgInput, planes);
+	
+    Mat real_shifted = fourier_shifting(planes[0]);
+    Mat imaginary_shifted = fourier_shifting(planes[1]);
 
-    Mat planes_construction_filter[] = { copy1, copy2 };
-    Mat planes_out[] = { Mat::zeros(dst.size(), CV_32F), Mat::zeros(dst.size(), CV_32F) };
+	Mat shifted_DFT_plane[] = {real_shifted , imaginary_shifted };
+
+    Mat constructionFilter = Filter_Construction(fourierImgInput, filterRadius, flag);
+	Mat ConstructionFilter_copy;
+    constructionFilter.copyTo(ConstructionFilter_copy);
+
+    Mat planes_construction_filter[] = { ConstructionFilter_copy, ConstructionFilter_copy };
+
+    Mat planes_out[] = { Mat::zeros(fourierImgInput.size(), CV_32F), Mat::zeros(fourierImgInput.size(), CV_32F) };
     planes_out[0] = planes_construction_filter[0].mul(shifted_DFT_plane[0]);
 	planes_out[1] = planes_construction_filter[1].mul(shifted_DFT_plane[1]);
     
-
     Mat real_shifted_img = fourier_shifting(planes_out[0]);
     Mat imaginary_shifted_img = fourier_shifting(planes_out[1]);
     Mat shifted_DFT_plane_img[] = {real_shifted_img ,imaginary_shifted_img };
 
-/* --------------------------- Calculate the inverse fourier Transform ------------------------------*/
-   
-    Mat inverseImage;
-    Mat MergeImg;
+	Mat MergeImg;
 	merge(shifted_DFT_plane_img, 2, MergeImg);
-    dft(MergeImg, inverseImage, DFT_INVERSE|DFT_REAL_OUTPUT);
 
-    Mat OutputImage;    
-    inverseImage.convertTo(OutputImage, CV_8U);
-    OutputImage.copyTo(dst);
-
+	return MergeImg;
+    
 }
+	
 
+/* --------------------------- Calculate the inverse fourier Transform ------------------------------*/
+
+  Mat Inverse_Fourier_Transform( Mat &src)
+  {
+    Mat inverseImage;
+	src.copyTo(inverseImage);
+    dft(inverseImage, inverseImage, DFT_INVERSE|DFT_REAL_OUTPUT);
+	return inverseImage;
+  } 
 
 
 
 /*-------------------------------- Frequency Domain  Filters ---------------------------*/
 
 
-void Add_Low_High_Frequency_Filter(const Mat &src, Mat &dst , float flag)
+Mat Add_Low_High_Frequency_Filter( Mat &src, float filterRadius , float flag)
 {
+	Mat dst; 
     src.copyTo(dst);
 
     Mat fLoat_Image;
     dst.convertTo(fLoat_Image, CV_32F);
 
-    Mat fourierImage;
-	Apply_Fourier_Transform(fLoat_Image,fourierImage,flag);
+    Mat fourierImage = Apply_Fourier_Transform(fLoat_Image);	
 
-	fourierImage.copyTo(dst);
+    Mat FilteringImg = Apply_Filtering(fourierImage, filterRadius , flag);
+
+    Mat OutputImage = Inverse_Fourier_Transform(FilteringImg);
+
+	OutputImage.convertTo(OutputImage, CV_8U);
+
+	return OutputImage;
 }
-
-
 
 
 
 /*-------------------------------------------Hybrid Images -------------------------------------*/
 
-void Apply_Hybrid_Images(const Mat &src1 ,Mat &src2 , Mat &dst1 , Mat &dst2)
+Mat Apply_Hybrid_Images( Mat &src1 ,Mat &src2 , Mat &dst1 , Mat &dst2)
 {
 	src1.copyTo(dst1);
 	src2.copyTo(dst2);
 
-	Mat Low_Frequency_Image;
-	Mat High_Frequency_Image;
 
-	Add_Low_High_Frequency_Filter(dst1 ,Low_Frequency_Image,1);
-	Add_Low_High_Frequency_Filter(dst2 ,High_Frequency_Image,0);
+// resize images to start making hybrid 
+	int down_width = 500;
+	int down_height = 500;
+	Mat resized_down_img1;
+	Mat resized_down_img2;
+	resize(dst1, resized_down_img1, Size(down_width, down_height), INTER_LINEAR);
+	resize(dst2, resized_down_img2, Size(down_width, down_height), INTER_LINEAR);
 
+// Apply Low and High pass filters to both images 
+	Mat Low_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img1 , 40, 1);
+	Mat High_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img2, 40 ,0);
 
+	Mat Hybrid = Low_Frequency_Image+High_Frequency_Image;
+	
 
     Low_Frequency_Image.copyTo(dst1);
 	High_Frequency_Image.copyTo(dst2);
+
+	return Hybrid ;
 }
 
 

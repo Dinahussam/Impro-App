@@ -107,7 +107,7 @@ int main()
 
 // Apply Low and High pass filters in frequency domain -------------------------------------
 
-//    Add_Low_High_Frequency_Filter(image2, InversImg);
+//    InversImg = Add_Low_High_Frequency_Filter(image2, 50 , 1);
 //     namedWindow("Original", WINDOW_AUTOSIZE);
 //     imshow("Original", image2);
 
@@ -116,11 +116,14 @@ int main()
     
 // Apply Hybrid Images -----------------------------------------------------------------------
 
-   Apply_Hybrid_Images(image ,image2 , Hybrid_low ,Hybrid_High);
+Mat Hybrid=  Apply_Hybrid_Images(image ,image2 , Hybrid_low ,Hybrid_High);
     namedWindow("Hybrid_low", WINDOW_AUTOSIZE);
     imshow("Hybrid_low", Hybrid_low);
     namedWindow("Hybrid_High", WINDOW_AUTOSIZE);
     imshow("Hybrid_High", Hybrid_High);
+
+    namedWindow("Hybrid", WINDOW_AUTOSIZE);
+    imshow("Hybrid", Hybrid);
 
 //Showing Median Filter Img ------------------------------------------------------------------    
     // hconcat(image2, image3, image3);
