@@ -70,19 +70,11 @@ Mat Apply_Fourier_Transform( Mat &src)
 
     return fourierImage;
 }
-
-/*------------------------------------- Apply shifting -------------------------------------*/
-
-
-	
 	
 /* --------------------------------- Applying Filtering ---------------------------------------*/
 
-Mat Apply_Filtering( Mat &src , float filterRadius, float flag)
+Mat Apply_Filtering( Mat &fourierImgInput , float filterRadius, float flag)
 {
-
-	Mat fourierImgInput ;
-	src.copyTo(fourierImgInput);
 
 	Mat real, imaginary;
 	Mat planes[] = { real, imaginary };
