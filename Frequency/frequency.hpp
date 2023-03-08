@@ -3,16 +3,15 @@
 
 #include "../Common.hpp"
 
-void Add_Low_Frequency_Filter( Mat &src, Mat &dst);
+void Add_Low_Frequency_Filter(const Mat &src, Mat &dst);
 
-void Add_High_Frequency_Filter(const Mat &src, Mat &dst);
+Mat Apply_Shifting_to_Fourier_Img( Mat &src );
 
-Mat Filter_Construction( Mat &scr, float Radius);
+Mat Apply_Filtering( Mat &src, Mat shifted_DFT_real, Mat shifted_DFT_imaginary, float filterRadius, float flag);
 
-void fourier_shifting(const Mat &fourier_input_img, Mat &fourier_output_img);
+Mat Inverse_Fourier_Transform( Mat &src);
 
-void calculateDFT(Mat &scr, Mat &dst);
+Mat Add_Low_High_Frequency_Filter( Mat &src, float filterRadius , float flag);
 
-Mat Masking ( Mat &src, Mat &mask);
 
 #endif
