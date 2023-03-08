@@ -6,23 +6,38 @@
 #include "Filters/prewitt.hpp"
 #include "Filters/robert.hpp"
 
+#include "Frequency/frequency.hpp"
+
 int main()
 {
-
     Mat image;
     Mat image2;
     Mat image3;
     Mat AvgFilterImg;
     Mat GaussianFilterImg;
+
+
+    Mat InversImg;
+    Mat fourier_output_img;
+    Mat fourierImg;
+
+    Mat src1;
+    Mat src2;
+    Mat Hybrid_low ;
+    Mat Hybrid_High;
+
 // --------------------------------------- Img Read ---------------------------------------
-    image = imread("C:\\Users\\Omar Saad\\Documents\\GitHub\\CV_task1_team15\\Images\\sudoku.png");
+    // image = imread("C:\\Users\\HP Probook\\Documents\\GitHub\\CV_task1_team15\\Images\\sudoku.png");
+
+    src1 = imread("C:\\Users\\HP Probook\\Documents\\GitHub\\CV_task1_team15\\Images\\lenna.png");
+    src2 = imread("C:\\Users\\HP Probook\\Documents\\GitHub\\CV_task1_team15\\Images\\sudoku.png");
 
 /* If image not found */
-    if (!image.data)                                                                          
-        {  
-        cout << "No image data \n";  
-        return -1;  
-        } 
+    // if (!image.data)                                                                          
+    //     {  
+    //     cout << "No image data \n";  
+    //     return -1;  
+    //     } 
 
 //------------------------------------------------------------------------------------------
     // float data[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};
@@ -55,14 +70,16 @@ int main()
     // imshow("Display", image4);
     // waitKey(0);
 
-/* Convert Img To Gray Scale */
-    Convert_To_Gray(image, image2);
-    // Mat padded_img = Padd_Mono(image2,5);
+/* Convert Img To Gray Scale ------------------------------------------------------------------------ */
+
+    Convert_To_Gray(src1, image);
+    Convert_To_Gray(src2, image2);
     
+    // Mat padded_img = Padd_Mono(image2,5);   
 
     // Mat sobel_x = Detect_Edges_Sobel_X(image2);
 
-    Mat robert = Robert_Edge(image2);
+    // Mat robert = Robert_Edge(image2);
 
 
     // imshow("Display", image2);
@@ -84,9 +101,26 @@ int main()
 
     // gaussian_Filter(image2, GaussianFilterImg);
 
-    Mat filtered = Gaussian_Filter(image2);
+    // Mat filtered = Gaussian_Filter(image2);
 
-    GaussianBlur(image2, image3, Size(5, 5), 0);
+    // GaussianBlur(image2, image3, Size(5, 5), 0);
+
+// Apply Low and High pass filters in frequency domain -------------------------------------
+
+//    Add_Low_High_Frequency_Filter(image2, InversImg);
+//     namedWindow("Original", WINDOW_AUTOSIZE);
+//     imshow("Original", image2);
+
+//     namedWindow("Fourier", WINDOW_AUTOSIZE);
+//     imshow("Fourier", InversImg);
+    
+// Apply Hybrid Images -----------------------------------------------------------------------
+
+   Apply_Hybrid_Images(image ,image2 , Hybrid_low ,Hybrid_High);
+    namedWindow("Hybrid_low", WINDOW_AUTOSIZE);
+    imshow("Hybrid_low", Hybrid_low);
+    namedWindow("Hybrid_High", WINDOW_AUTOSIZE);
+    imshow("Hybrid_High", Hybrid_High);
 
 //Showing Median Filter Img ------------------------------------------------------------------    
     // hconcat(image2, image3, image3);
@@ -100,21 +134,30 @@ int main()
 
 //Showing gaussian Filter Img ------------------------------------------------------------------
 
-    namedWindow("Original", WINDOW_AUTOSIZE);
-    imshow("Original", image2);
+    // namedWindow("Original", WINDOW_AUTOSIZE);
+    // imshow("Original", image2);
     // hconcat(image3, filtered, filtered);
-    namedWindow("Gaussian_Noise", WINDOW_AUTOSIZE);
-    imshow("Gaussian_Noise", image3);
+    // namedWindow("Gaussian_Noise", WINDOW_AUTOSIZE);
+    // imshow("Gaussian_Noise", image3);
 
-    namedWindow("Gaussian_Filter_Implmented", WINDOW_AUTOSIZE);
-    imshow("Gaussian_Filter_Implmented", filtered);
+    // namedWindow("Gaussian_Filter_Implmented", WINDOW_AUTOSIZE);
+    // imshow("Gaussian_Filter_Implmented", filtered);
 
-    
+
     // namedWindow("sobel_x", WINDOW_AUTOSIZE);
     // imshow("sobel_x", sobel_x);
 
-    namedWindow("robert", WINDOW_AUTOSIZE);
-    imshow("robert", robert);
+    // namedWindow("robert", WINDOW_AUTOSIZE);
+    // imshow("robert", robert);
+
+//Showing low and high pass filters ------------------------------------------------------------
+
+    // namedWindow("Original", WINDOW_AUTOSIZE);
+    // imshow("Original", image2);
+
+    // namedWindow("Inverse_Fourier", WINDOW_AUTOSIZE);
+    // imshow("Inverse_Fourier", InversImg);
     
+   
     waitKey(0);
 }

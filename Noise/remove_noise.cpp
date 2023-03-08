@@ -96,6 +96,8 @@ void Add_Average_Filter(const Mat &src, Mat &dst)
         }
     }
 }
+
+//-------------------------------- Gaussian_Filter(1) --------------------------------------
 void gaussian_Filter(const Mat &src, Mat &dst)
 {
     unsigned char data[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};
@@ -126,7 +128,7 @@ void gaussian_Filter(const Mat &src, Mat &dst)
     }
 }
 
-/*---------------------------------- Gaussian filter ----------------------------------*/
+/*---------------------------------- Gaussian filter(2) ----------------------------------*/
 
 void Add_Gaussian_Filter(const Mat &src, Mat &dst, int image_type)
 {

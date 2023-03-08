@@ -10,11 +10,11 @@
 
 /* --------------------------- filter construction ------------------------------*/
 
-Mat Filter_Construction( Mat &scr, float Radius)
+Mat Filter_Construction( Mat &scr, float Radius , float filter_flag)
 
 {
     // construction filter with same image size and with (1) values
-	Mat filter(scr.size(), CV_32F, Scalar(1));
+	Mat filter(scr.size(), CV_32F, Scalar(filter_flag));
 
     // cout << filter << endl;
 
@@ -29,7 +29,7 @@ Mat Filter_Construction( Mat &scr, float Radius)
 
 				if (Distance > Radius)
 				{
-					filter.at<float>(x, y) = 0;
+					filter.at<float>(x, y) = 1-filter_flag;
 				}
 			}
 		}
@@ -38,9 +38,9 @@ Mat Filter_Construction( Mat &scr, float Radius)
 
 /* --------------------------- fourier output shifting ------------------------------*/
 
-void fourier_shifting(const Mat &fourier_input_img, Mat &fourier_output_img)
+Mat fourier_shifting( Mat &fourier_input_img)
 {
-	fourier_output_img = fourier_input_img.clone();
+	Mat fourier_output_img = fourier_input_img.clone();
 	int cx = fourier_output_img.cols / 2;
 	int cy = fourier_output_img.rows / 2;
 
@@ -59,117 +59,76 @@ void fourier_shifting(const Mat &fourier_input_img, Mat &fourier_output_img)
 	right_up.copyTo(switch_variable);
 	left_down.copyTo(right_up);
 	switch_variable.copyTo(left_down);
+
+    return fourier_output_img;
 }
 
 /* --------------------------- Calculate the fourier Transform ------------------------------*/
 
-void calculateDFT(Mat &scr, Mat &dst)
+void Apply_Fourier_Transform(const Mat &src, Mat &dst ,float flag)
 {
-	// define mat consists of two mat, one for real values and the other for complex values
-	Mat planes[] = { scr, Mat::zeros(scr.size(), CV_32F) };
-	Mat complexImg;
-	merge(planes, 2, complexImg);
-    // cout<<"output----------------------------"<<endl;
-    // cout<<complexImg<<endl;
-	dft(complexImg, complexImg);
-	complexImg.copyTo(dst);
+	src.copyTo(dst);
+
+	Mat fourierImage;
+	dft(dst, fourierImage, DFT_SCALE|DFT_COMPLEX_OUTPUT);
+
+	Mat real, imaginary;
+	Mat planes[] = { real, imaginary };
+	split(fourierImage, planes);
+	
+    Mat real_shifted = fourier_shifting(planes[0]);
+    Mat imaginary_shifted = fourier_shifting(planes[1]);
+    Mat shifted_DFT_plane[] = {real_shifted , imaginary_shifted };
+	
+/* --------------------------------- Applying Filtering ---------------------------------------*/
+
+
+	Mat copy1;
+    Mat copy2;
+    Mat constructionFilter = Filter_Construction(dst,10, flag);
+    constructionFilter.copyTo(copy1);
+    constructionFilter.copyTo(copy2);
+
+    Mat planes_construction_filter[] = { copy1, copy2 };
+    Mat planes_out[] = { Mat::zeros(dst.size(), CV_32F), Mat::zeros(dst.size(), CV_32F) };
+    planes_out[0] = planes_construction_filter[0].mul(shifted_DFT_plane[0]);
+	planes_out[1] = planes_construction_filter[1].mul(shifted_DFT_plane[1]);
+    
+
+    Mat real_shifted_img = fourier_shifting(planes_out[0]);
+    Mat imaginary_shifted_img = fourier_shifting(planes_out[1]);
+    Mat shifted_DFT_plane_img[] = {real_shifted_img ,imaginary_shifted_img };
+
+/* --------------------------- Calculate the inverse fourier Transform ------------------------------*/
+   
+    Mat inverseImage;
+    Mat MergeImg;
+	merge(shifted_DFT_plane_img, 2, MergeImg);
+    dft(MergeImg, inverseImage, DFT_INVERSE|DFT_REAL_OUTPUT);
+
+    Mat OutputImage;    
+    inverseImage.convertTo(OutputImage, CV_8U);
+    OutputImage.copyTo(dst);
+
 }
 
 
-/* --------------------------- Applying Filtering ------------------------------*/
-
-void filtering(Mat &scr, Mat &dst, Mat &constructionFilter)
-{
-	// fourier_shifting(constructionFilter, constructionFilter);
-	Mat planesH[] = { Mat_<float>(constructionFilter.clone()), Mat_<float>(constructionFilter.clone()) };
-
-	Mat planes_dft[] = { scr, Mat::zeros(scr.size(), CV_32F) };
-	split(scr, planes_dft);
-
-	Mat planes_out[] = { Mat::zeros(scr.size(), CV_32F), Mat::zeros(scr.size(), CV_32F) };
-	planes_out[0] = planesH[0].mul(planes_dft[0]);
-	planes_out[1] = planesH[1].mul(planes_dft[1]);
-
-	merge(planes_out, 2, dst);
-
-}
 
 
+/*-------------------------------- Frequency Domain  Filters ---------------------------*/
 
-/*-------------------------------- Frequency Domain Low Pass Filter ---------------------------*/
 
-
-void Add_Low_Frequency_Filter(const Mat &src, Mat &dst)
+void Add_Low_High_Frequency_Filter(const Mat &src, Mat &dst , float flag)
 {
     src.copyTo(dst);
-
-    // cout << "************** Img before convertion for data type***************" << endl ;
-    // cout << dst << endl;
 
     Mat fLoat_Image;
     dst.convertTo(fLoat_Image, CV_32F);
 
-    // cout << "************** Img after convertion for data type***************" << endl ;
-    // cout << fLoat_Image << endl;
-
-    // expand input image to optimal size
-	Mat padded;
-	int m = getOptimalDFTSize(fLoat_Image.rows);
-	int n = getOptimalDFTSize(fLoat_Image.cols);
-	copyMakeBorder(fLoat_Image, padded, 0, m - fLoat_Image.rows, 0, n - fLoat_Image.cols, BORDER_CONSTANT, Scalar::all(0));
-
-
     Mat fourierImage;
-	calculateDFT(padded, fourierImage);
+	Apply_Fourier_Transform(fLoat_Image,fourierImage,flag);
 
-
-    Mat real, imaginary;
-	Mat planes[] = { real, imaginary };
-
-	split(fourierImage, planes);
-	Mat mag_image;
-	magnitude(planes[0], planes[1], mag_image);
-
-	// switch to a logarithmic scale
-	mag_image += Scalar::all(1);
-	log(mag_image, mag_image);
-	mag_image = mag_image(Rect(0, 0, mag_image.cols & -2, mag_image.rows & -2));
-
-	Mat shifted_DFT;
-	fourier_shifting(mag_image, shifted_DFT);
-
-	normalize(shifted_DFT, shifted_DFT, 0, 1, NORM_MINMAX);
-
-     shifted_DFT.copyTo(dst);
-
-    // cout << "************** Img after fourier***************" << endl ;
-    // cout << fourierImage << endl;
-
-	// Mat filter_construction = Filter_Construction(fourierImage ,5);
-
-    // filtering
-	// Mat complexIH;
-	// filtering(fourierImage, complexIH, filter_construction);
-
-
-    // Mat inverseImage;
-    // dft(fourierImage, inverseImage, DFT_INVERSE|DFT_REAL_OUTPUT);
-
-    // cout << "************** Img after inverse fourier***************" << endl ;
-    // cout << inverseImage << endl;
-
-    // normalize(inverseImage, inverseImage, 0, 1, NORM_MINMAX);
-
-    // Mat OutputImage;
-    // inverseImage.convertTo(OutputImage, CV_8U);
-
-    // dst.copyTo(OutputImage);
-
-    // Print type and channels
-    // cout << "*************************" << endl ;
-    // cout << "Type: " << OutputImage.type() << endl;
-    // cout << "Channels: " << OutputImage.channels() << endl;
-    
+	fourierImage.copyTo(dst);
 }
 
 
@@ -178,19 +137,39 @@ void Add_Low_Frequency_Filter(const Mat &src, Mat &dst)
 
 /*-------------------------------------------Hybrid Images -------------------------------------*/
 
-
-/*
-Mat Masking ( Mat &src, Mat &mask)
+void Apply_Hybrid_Images(const Mat &src1 ,Mat &src2 , Mat &dst1 , Mat &dst2)
 {
-	// Mat masked;
-	Mat masked = Mat::zeros(Size(src.cols,src.rows),src.type());
-	for (int x = 0; x < src.rows; x++)
-		{
-			for (int  y = 0; y < src.cols; y++)
-			{
-				masked.at<uchar>(x, y) = src.at<uchar>(x, y) * mask.at<uchar>(x, y);
-			}
-		}	return masked;
+	src1.copyTo(dst1);
+	src2.copyTo(dst2);
+
+	Mat Low_Frequency_Image;
+	Mat High_Frequency_Image;
+
+	Add_Low_High_Frequency_Filter(dst1 ,Low_Frequency_Image,1);
+	Add_Low_High_Frequency_Filter(dst2 ,High_Frequency_Image,0);
+
+
+
+    Low_Frequency_Image.copyTo(dst1);
+	High_Frequency_Image.copyTo(dst2);
 }
-*/
+
+
+
+
+
+/*-------------------------------------------Report Addtional Function--------------------------*/
+
+    
+// switch to a logarithmic scale -----------------------------------------------------
+	// mag_image += Scalar::all(1);
+	// log(mag_image, mag_image);
+	// mag_image = mag_image(Rect(0, 0, mag_image.cols & -2, mag_image.rows & -2));
+
+	// normalize(shifted_DFT, shifted_DFT, 0, 1, NORM_MINMAX);
+
+// Get the Magnitude of the image ----------------------------------------------------
+    //Mat mag_image;
+	//magnitude(planes[0], planes[1], mag_image);
+
 
