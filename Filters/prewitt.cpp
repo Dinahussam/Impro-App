@@ -17,3 +17,11 @@ Mat Detect_Edges_Prewitt_Y(const Mat &src)
     Mat prewitt_y_img = Convolute_2d(src, kernel_prewitt_y, PREWITT_DETECTION, 1);
     return prewitt_y_img;
 }
+
+Mat Detect_Edges_Prewitt(const Mat &src)
+{
+    Mat prewitt_x_img = Detect_Edges_Prewitt_X(src);
+    Mat prewitt_y_img = Detect_Edges_Prewitt_Y(src);
+    Mat prewitt_img = prewitt_x_img + prewitt_y_img;
+    return prewitt_img;
+}

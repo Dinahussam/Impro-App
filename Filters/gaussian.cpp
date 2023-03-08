@@ -22,9 +22,12 @@ Mat Gaussian_Filter_new(const Mat &src)
     
     Mat gaussian_kernel = Mat(5, 5, CV_32F, gaussian_data);
 
+    cout << "BEfor Convolution***************************************************" << endl ;
     Mat convoluted = Convolute_2d(src, gaussian_kernel,159,2);
+    cout << "After Convolution--------------------------------------------------*" << endl ;
 
-    // convoluted.convertTo(convoluted, CV_8U);
+    // print convoluted
+    // cout << convoluted << endl;
+
     return convoluted;
-
 }

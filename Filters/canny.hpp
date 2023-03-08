@@ -14,7 +14,7 @@ Mat Hysteresis (Mat &thresholded);
 
 Mat Supression( Mat &magnitude_gradient,  Mat &phase_gradient);
 
-Mat Detect_Edges_Canny( Mat &src);
+Mat Detect_Edges_Canny(const Mat &src , float lowThresholdRatio = 0.05, float highThresholdRatio = 0.09);
 
 
 #endif

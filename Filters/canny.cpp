@@ -1,6 +1,6 @@
 #include "canny.hpp"
 
-Mat Double_Threshoulding(Mat &suppressed, float lowThresholdRatio/*  = 0.05 */, float highThresholdRatio /* = 0.09 */)
+Mat Double_Threshoulding(Mat &suppressed, float lowThreshold/*  = 0.05 */, float highThreshold /* = 0.09 */)
 {
     Mat thresholded = Mat::zeros(Size(suppressed.cols, suppressed.rows), suppressed.type());
 
@@ -8,8 +8,11 @@ Mat Double_Threshoulding(Mat &suppressed, float lowThresholdRatio/*  = 0.05 */, 
     double maxVal;
     minMaxLoc(suppressed, NULL, &maxVal, NULL, NULL);
 
-    float highThreshold = highThresholdRatio * maxVal;
-    float lowThreshold = highThreshold * lowThresholdRatio;
+    // float highThreshold = highThresholdRatio * maxVal;
+    // float lowThreshold = highThreshold * lowThresholdRatio;
+
+    // lowThreshold = 30;
+    // highThreshold = 80;
 
     for (int i = 0; i < suppressed.rows - 1; i++)
     {
@@ -34,9 +37,7 @@ Mat Double_Threshoulding(Mat &suppressed, float lowThresholdRatio/*  = 0.05 */, 
 
 Mat Hysteresis (Mat &thresholded)
 {
-    
     Mat hysteresis = thresholded.clone();
-
     for (int i = 1; i < thresholded.rows - 1; i++)
     {
         for (int j = 1; j < thresholded.cols - 1; j++)
@@ -112,10 +113,11 @@ Mat Supression( Mat &magnitude_gradient,  Mat &phase_gradient)
 }
 
 
-Mat Detect_Edges_Canny( Mat &src)
+Mat Detect_Edges_Canny( const Mat &src,  float lowThresholdRatio /* = 0.05 */, float highThresholdRatio /* 0.09 */ ) 
 {
     // FIRST SMOOTH IMAGE
     Mat blurred = Gaussian_Filter_new(src);
+    cout << "****************************** After blur ****************************" << endl;
 
     // THEN calculate sobel magnitude and phase gradients
     Mat magnitude_gradient = Detect_Edges_Sobel_Magnitude_Gradient(blurred);
@@ -126,29 +128,29 @@ Mat Detect_Edges_Canny( Mat &src)
     Mat suppressed = Supression(magnitude_gradient, phase_gradient);
 
     // THEN APPLY THRESHOLDING
-    Mat thresholded = Double_Threshoulding(suppressed);
+    Mat thresholded = Double_Threshoulding(suppressed,lowThresholdRatio,highThresholdRatio);
 
     // THEN APPLY HYSTERESIS
     Mat canny_edges = Hysteresis(thresholded);
 
 
-    // namedWindow("blurred", WINDOW_AUTOSIZE);
-    // imshow("blurred", blurred);
+    namedWindow("blurred", WINDOW_AUTOSIZE);
+    imshow("blurred", blurred);
 
-    // namedWindow("Sobel_Magnitude_Gradient", WINDOW_AUTOSIZE);
-    // imshow("Sobel_Magnitude_Gradient", magnitude_gradient);
+    namedWindow("Sobel_Magnitude_Gradient", WINDOW_AUTOSIZE);
+    imshow("Sobel_Magnitude_Gradient", magnitude_gradient);
 
-    // namedWindow("Sobel_Phase_Gradient", WINDOW_AUTOSIZE);
-    // imshow("Sobel_Phase_Gradient", phase_gradient);
+    namedWindow("Sobel_Phase_Gradient", WINDOW_AUTOSIZE);
+    imshow("Sobel_Phase_Gradient", phase_gradient);
 
-    // namedWindow("suppressed", WINDOW_AUTOSIZE);
-    // imshow("suppressed", suppressed);
+    namedWindow("suppressed", WINDOW_AUTOSIZE);
+    imshow("suppressed", suppressed);
 
-    // namedWindow("thresholded", WINDOW_AUTOSIZE);
-    // imshow("thresholded", thresholded);
+    namedWindow("thresholded", WINDOW_AUTOSIZE);
+    imshow("thresholded", thresholded);
 
-    // namedWindow("hysteresis", WINDOW_AUTOSIZE);
-    // imshow("hysteresis", canny_edges);
+    namedWindow("hysteresis", WINDOW_AUTOSIZE);
+    imshow("hysteresis", canny_edges);
 
     return canny_edges;
 }

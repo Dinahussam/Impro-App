@@ -4,21 +4,21 @@
  *                      Functions Definitions                                               *
  *******************************************************************************************/
 
-Mat Detect_Edges_Sobel_X(const Mat &src)
+Mat Detect_Edges_Sobel_X(const Mat &src , int data_type)
 {
     float sobel_x[9] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
     Mat kernel_sobel_x = Mat(3, 3, CV_32F, sobel_x);
-    Mat convoluted_x = Convolute_2d(src, kernel_sobel_x, SOBEL_DETECTION, 1);
+    Mat convoluted_x = Convolute_2d(src, kernel_sobel_x, SOBEL_DETECTION, 1, data_type);
     return convoluted_x;
 }
 
 /*****************************************************************************************************************************************/
 
-Mat Detect_Edges_Sobel_Y(const Mat &src)
+Mat Detect_Edges_Sobel_Y(const Mat &src , int data_type )
 {
     float sobel_y[9] = {-1, -2, -1, 0, 0, 0, 1, 2, 1};
     Mat kernel_sobel_y = Mat(3, 3, CV_32F, sobel_y);
-    Mat convoluted_y = Convolute_2d(src, kernel_sobel_y, SOBEL_DETECTION, 1);
+    Mat convoluted_y = Convolute_2d(src, kernel_sobel_y, SOBEL_DETECTION, 1 , data_type);
     return convoluted_y;
 }
 
@@ -70,10 +70,11 @@ Mat Detect_Edges_Sobel_Magnitude_Gradient(const Mat &src)
 
 Mat Detect_Edges_Sobel_Phase_Gradient(Mat &src)
 {
+    // Mat fImage;
+    src.convertTo(src, CV_32FC1);
 
-    
-    Mat sobel_x = Detect_Edges_Sobel_X(src);
-    Mat sobel_y = Detect_Edges_Sobel_Y(src);
+    Mat sobel_x = Detect_Edges_Sobel_X(src,FLOAT_FLAG);
+    Mat sobel_y = Detect_Edges_Sobel_Y(src,FLOAT_FLAG);
 
     Mat phase_gradient = Mat::zeros(Size(sobel_x.cols, sobel_x.rows), CV_32FC1);
     for (int i = 0; i < phase_gradient.rows; i++)
@@ -89,10 +90,10 @@ Mat Detect_Edges_Sobel_Phase_Gradient(Mat &src)
                     phase_gradient.at<Vec3b>(i, j)[c] = (uchar)atan2(sobel_y.at<Vec3b>(i, j)[c], sobel_x.at<Vec3b>(i, j)[c]);
                 }
             }
-            else if (src.type() == 0)
+            else if ((src.type() == 0) || (src.type() == 5))
             {
                 // Mat phase_gradient = Mat::zeros(Size(sobel_x.cols, sobel_x.rows), src.type());
-                phase_gradient.at<float>(i, j) = atan2(sobel_y.at<uchar>(i, j), sobel_x.at<uchar>(i, j));
+                phase_gradient.at<float>(i, j) = atan2(sobel_y.at<float>(i, j), sobel_x.at<float>(i, j));
                 // sobel.at<uchar>(i, j) = (uchar)atan2(sobel_x.at<uchar>(i, j), sobel_y.at<uchar>(i, j));
             }
             else
@@ -102,7 +103,5 @@ Mat Detect_Edges_Sobel_Phase_Gradient(Mat &src)
             }
         }
     }
-    // print sobel
-    // cout << sobel << endl;
     return phase_gradient;
 }
