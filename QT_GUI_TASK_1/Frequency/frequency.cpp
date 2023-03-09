@@ -143,8 +143,8 @@ Mat Apply_Hybrid_Images( Mat &src1 ,Mat &src2)
 
 
 // resize images to start making hybrid 
-	int down_width = 500;
-	int down_height = 500;
+    int down_width = 512;
+    int down_height = 512;
 	Mat resized_down_img1;
 	Mat resized_down_img2;
     resize(dst1, resized_down_img1, Size(down_width, down_height), INTER_LINEAR);

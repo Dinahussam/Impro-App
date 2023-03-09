@@ -81,11 +81,15 @@ void MainWindow::on_AverageFilterButton_clicked()
 void MainWindow::on_GrayScale_clicked()
 {
     if(checkImage(inputImage)) return;
-
-    cv::resize(inputMat, inputMat, cv::Size(512,512),0,0);
+    cout<< inputImage.format()<<endl;
+    cv::resize(inputMat, inputMat, cv::Size(512,512),0,0,INTER_LINEAR);
+    cout<< inputImage.format()<<endl;
     Convert_To_Gray(inputMat, filterOutputMat);
     updateImage(filterOutputMat, ui->filter_outputImage, 0);
+
 }
+
+
 
 
 void MainWindow::on_GaussianFilterButton_clicked()
@@ -228,6 +232,7 @@ void MainWindow::on_GlobalThresholdButton_clicked()
 void MainWindow::on_UploadeImage1_clicked()
 {
     UploadImage(hybridImage1, hybridImage1Mat);
+    cv::resize(hybridImage1Mat,hybridImage1Mat, cv::Size(512, 512),INTER_LINEAR);
     updateFrequencyResponse(hybridImage1Mat, freqImage1Mat, ui->freqOutputImage1, freqImage1Slider, image1_H_L);
     updateImage(hybridImage1Mat, ui->hybridInputImage1, 1);
 }
@@ -236,6 +241,7 @@ void MainWindow::on_UploadeImage1_clicked()
 void MainWindow::on_UploadeImage2_clicked()
 {
     UploadImage(hybridImage2, hybridImage2Mat);
+    cv::resize(hybridImage2Mat,hybridImage2Mat, cv::Size(512, 512),INTER_LINEAR);
     updateFrequencyResponse(hybridImage2Mat, freqImage2Mat, ui->freqOutputImage2, freqImage2Slider, image2_H_L);
     updateImage(hybridImage2Mat,  ui->hybridInputImage2, 1);
 }
@@ -339,8 +345,6 @@ void MainWindow::updateFrequencyResponse(Mat &inputMat, Mat &freqMat, QLabel* im
     freqMat = Add_Low_High_Frequency_Filter(freqMat, sliderValue, high_low_flag);
     image->setPixmap(QPixmap::fromImage(QImage(freqMat.data, freqMat.cols, freqMat.rows, freqMat.step, QImage::Format_Grayscale8)));
 }
-
-
 
 
 
