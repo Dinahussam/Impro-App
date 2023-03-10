@@ -1,5 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#define COMMON_H
 
 #include <QMainWindow>
 #include <gaussiannoiseparameters.h>
@@ -8,13 +9,23 @@
 #include <thresholdwindow.h>
 #include <cannyparameters.h>
 
+#include <iostream>
+#include <time.h>
+#include <opencv2/opencv.hpp>
+#include <cmath>
+
+
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include "opencv2/core/core.hpp"
+
 #include <QLabel>
 #include <QImageReader>
+#include <QtCharts>
 
+
+using namespace std;
 using namespace cv;
 
 namespace Ui {
@@ -38,6 +49,11 @@ public:
     Mat filterOutputMat = Mat::zeros(1, 1, CV_64F);
     Mat edgeDetectionOutputMat = Mat::zeros(1, 1, CV_64F);
     Mat thresholdOutputMat = Mat::zeros(1, 1, CV_64F);
+
+// ------------- Histogram variables ----------------------------------
+    map <int,int> histoMap;
+    vector<int> bars[6];
+    vector<int> cummulativeHist;
 
 // ------------- Hybrid variables ----------------------------------
 
@@ -90,6 +106,7 @@ private slots:
 
     void on_GlobalThresholdButton_clicked();
 
+
 // ----------------------- Hybrid Tab -------------------
     void on_Image1FSlider_valueChanged(int value);
 
@@ -115,6 +132,8 @@ private slots:
     void on_HybridButton_clicked();
 
     void on_pushButton_clicked();
+
+    void Histogram(Mat &inputMat);
 
 
 private:

@@ -1,24 +1,26 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
+
 #include "Noise/noise.hpp"
 #include "Noise/remove_noise.hpp"
 #include "Filters/gaussian.hpp"
 #include "Filters/edge_detection.hpp"
 #include "Frequency/frequency.hpp"
 #include "Threshold/Thresholding.hpp"
-#include "imageClass.hpp"
+#include "Histogram/Histogram.hpp"
 
-
+#include <iostream>
 #include <QFileDialog>
 #include <QImageReader>
 #include <QImage>
 #include <QPixmap>
-#include <iostream>
+#include <QtCharts>
 #include <QMessageBox>
-
-using namespace cv;
-using namespace std;
+#include <QChartView>
+#include <QBarSet>
+#include <QBarSeries>
 
 
 
@@ -374,10 +376,10 @@ void MainWindow::updateFrequencyResponse(Mat &inputMat, Mat &freqMat, QLabel* im
     image->setPixmap(QPixmap::fromImage(QImage(freqMat.data, freqMat.cols, freqMat.rows, freqMat.step, QImage::Format_Grayscale8)));
 }
 
-
-
-
-
+void MainWindow::Histogram(Mat &inputMat){
+    calculate_histogram(inputMat, histoMap, cummulativeHist);
+    RGB_histo(inputMat, bars);
+}
 
 
 

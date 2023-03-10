@@ -17,5 +17,6 @@ void Add_Average_Filter(const Mat &src, Mat &dst);
 
 void Add_Gaussian_Filter(const Mat &src, Mat &dst);
 
+void RGB_histo(Mat img, vector<int> bars[6]);
 
 #endif
