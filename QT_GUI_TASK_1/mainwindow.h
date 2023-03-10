@@ -6,6 +6,7 @@
 #include <saltpepperparameters.h>
 #include <uniformnoiseparameters.h>
 #include <thresholdwindow.h>
+#include <cannyparameters.h>
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/highgui.hpp>
@@ -107,7 +108,7 @@ private slots:
 // --------------------- Helper Functions ----------------
     bool checkImage(QImage &image);
 
-    void UploadImage(QImage &image, Mat &imageMat);
+    void UploadImage(QImage &image, Mat &imageMat, bool flag);
 
     void updateImage(Mat &inputMat,  QLabel* image, bool rgb_flag);
 

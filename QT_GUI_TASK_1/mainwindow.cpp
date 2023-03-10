@@ -38,9 +38,12 @@ MainWindow::~MainWindow()
 }
 
 
+// ----------------------------------------------------------- BROWSE BUTTON -----------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------------------------------
+
 void MainWindow::on_BrowseButton_clicked()
 {
-    UploadImage(inputImage, inputMat);
+    UploadImage(inputImage, inputMat, true);
 
     Convert_To_Gray(inputMat, filterOutputMat);
     Convert_To_Gray(inputMat, edgeDetectionOutputMat);
@@ -82,7 +85,6 @@ void MainWindow::on_GrayScale_clicked()
 {
     if(checkImage(inputImage)) return;
 
-    cv::resize(inputMat, inputMat, cv::Size(512,512),0,0);
     Convert_To_Gray(inputMat, filterOutputMat);
     updateImage(filterOutputMat, ui->filter_outputImage, 0);
 }
@@ -170,6 +172,9 @@ void MainWindow::on_SobelButton_clicked()
 {
     if(checkImage(inputImage)) return;
     Convert_To_Gray(inputMat, edgeDetectionOutputMat);
+
+
+
     edgeDetectionOutputMat = Detect_Edges_Sobel(edgeDetectionOutputMat);
     updateImage(edgeDetectionOutputMat, ui->EdgeDetection_outputImage, 0);
 }
@@ -178,8 +183,15 @@ void MainWindow::on_SobelButton_clicked()
 void MainWindow::on_CannyButton_clicked()
 {
     if(checkImage(inputImage)) return;
+
+    CannyParameters cannyParameters;
+    cannyParameters.setModal(true);
+    cannyParameters.exec();
+
+    if(cannyParameters.flag) return;
+
     Convert_To_Gray(inputMat, edgeDetectionOutputMat);
-    edgeDetectionOutputMat = Detect_Edges_Canny(edgeDetectionOutputMat, 30, 70);
+    edgeDetectionOutputMat = Detect_Edges_Canny(edgeDetectionOutputMat, cannyParameters.LowThresholdValue, cannyParameters.HighThresholdValue);
     updateImage(edgeDetectionOutputMat, ui->EdgeDetection_outputImage, 0);
 }
 
@@ -227,7 +239,9 @@ void MainWindow::on_GlobalThresholdButton_clicked()
 
 void MainWindow::on_UploadeImage1_clicked()
 {
-    UploadImage(hybridImage1, hybridImage1Mat);
+    UploadImage(hybridImage1, hybridImage1Mat, false);
+    if(hybridImage1.isNull()) return;
+
     updateFrequencyResponse(hybridImage1Mat, freqImage1Mat, ui->freqOutputImage1, freqImage1Slider, image1_H_L);
     updateImage(hybridImage1Mat, ui->hybridInputImage1, 1);
 }
@@ -235,7 +249,9 @@ void MainWindow::on_UploadeImage1_clicked()
 
 void MainWindow::on_UploadeImage2_clicked()
 {
-    UploadImage(hybridImage2, hybridImage2Mat);
+    UploadImage(hybridImage2, hybridImage2Mat, false);
+    if(hybridImage2.isNull()) return;
+
     updateFrequencyResponse(hybridImage2Mat, freqImage2Mat, ui->freqOutputImage2, freqImage2Slider, image2_H_L);
     updateImage(hybridImage2Mat,  ui->hybridInputImage2, 1);
 }
@@ -244,6 +260,11 @@ void MainWindow::on_Image1FSlider_valueChanged(int value)
 {
     image1_H_L = value ^ 1;
     ui->Image2FSlider->setSliderPosition(image1_H_L);
+
+    if(hybridImage1.isNull()) return;
+    updateFrequencyResponse(hybridImage1Mat, freqImage1Mat, ui->freqOutputImage1, freqImage1Slider, image1_H_L);
+
+
 }
 
 
@@ -251,11 +272,17 @@ void MainWindow::on_Image2FSlider_valueChanged(int value)
 {
     image2_H_L = value ^ 1;
     ui->Image1FSlider->setSliderPosition(image2_H_L);
+
+    if(hybridImage2.isNull()) return;
+    updateFrequencyResponse(hybridImage2Mat, freqImage2Mat, ui->freqOutputImage2, freqImage2Slider, image2_H_L);
+
 }
 
 void MainWindow::on_freqOutputImage1Slider_valueChanged(int value)
 {
     freqImage1Slider = value;
+
+    if(hybridImage1.isNull()) return;
     updateFrequencyResponse(hybridImage1Mat, freqImage1Mat, ui->freqOutputImage1, freqImage1Slider, image1_H_L);
 
 }
@@ -263,12 +290,15 @@ void MainWindow::on_freqOutputImage1Slider_valueChanged(int value)
 void MainWindow::on_freqOutputImage2Slider_valueChanged(int value)
 {
     freqImage2Slider = value;
+
+    if(hybridImage2.isNull()) return;
     updateFrequencyResponse(hybridImage2Mat, freqImage2Mat, ui->freqOutputImage2, freqImage2Slider, image2_H_L);
 }
 
 
 void MainWindow::on_HybridButton_clicked()
 {
+    if(hybridImage2.isNull() && hybridImage1.isNull()) return;
     finalHybridImageMat =  Apply_Hybrid_Images(freqImage1Mat, freqImage2Mat);
     updateImage(finalHybridImageMat,  ui->finalHybridImage, 0);
 }
@@ -290,20 +320,22 @@ bool MainWindow::checkImage(QImage &image)
 }
 
 
-void MainWindow::UploadImage(QImage &image, Mat &imageMat)
+void MainWindow::UploadImage(QImage &image, Mat &imageMat, bool flag)
 {
     reader.setFileName(QFileDialog::getOpenFileName(this,tr("Open image")));
     image = reader.read();
 
-    if(!image.isNull()){
-    ui-> BrowseButton -> setText("Updated");
+    if(!image.isNull() && flag){
+    ui-> BrowseButton -> setText("Uploaded");
     ui-> BrowseButton -> setStyleSheet("QPushButton{border-radius: 10px; text-align: left; font: 900 12pt 'Segoe UI Black'; color: green} QPushButton:hover:!pressed{background-color: qlineargradient(x1: 0.5, y1: 1, x2: 0.5, y2: 1, stop: 0 #dadbde, stop: 1 #f6f7fa)}");
     ui-> BrowseButton -> setDisabled(true);
     ui-> pushButton-> setDisabled(false);
     }
-
     image = image.convertToFormat(QImage::Format_BGR888);
     imageMat = Mat(image.height(), image.width(), CV_8UC3, image.bits(), image.bytesPerLine());
+
+    if(image.isNull()) return;
+    cv::resize(imageMat, imageMat, cv::Size(512,512),0,0);
 
 
 }
