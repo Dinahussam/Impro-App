@@ -14,7 +14,7 @@ Mat Filter_Construction( Mat &scr, float Radius , float filter_flag)
 
 {
     // construction filter with same image size and with (1) values
-    Mat filter(scr.size(), CV_32F, Scalar(filter_flag));
+    Mat filter(scr.size(), CV_32F, Scalar(1- filter_flag));
 
     // initialize the distance between the center and any point 
 	float Distance = 0;
@@ -27,7 +27,7 @@ Mat Filter_Construction( Mat &scr, float Radius , float filter_flag)
 
 				if (Distance > Radius)
 				{
-                    filter.at<float>(x, y) = 1- filter_flag;
+                    filter.at<float>(x, y) = filter_flag;
 				}
 			}
 		}

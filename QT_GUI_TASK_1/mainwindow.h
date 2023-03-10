@@ -44,15 +44,15 @@ public:
     QImage hybridImage1;
     Mat hybridImage1Mat = Mat::zeros(1, 1, CV_64F);
     Mat freqImage1Mat = Mat::zeros(1, 1, CV_64F);
-    int freqImage1Slider;
-    bool image1_H_L;
+    int freqImage1Slider = 0;
+    bool image1_H_L = true;
 
 
     QImage hybridImage2;
     Mat hybridImage2Mat = Mat::zeros(1, 1, CV_64F);
     Mat freqImage2Mat = Mat::zeros(1, 1, CV_64F);
-    int freqImage2Slider;
-    bool image2_H_L;
+    int freqImage2Slider = 0;
+    bool image2_H_L = false;
 
     Mat finalHybridImageMat = Mat::zeros(1, 1, CV_64F);
 
