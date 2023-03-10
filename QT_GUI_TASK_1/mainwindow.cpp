@@ -84,10 +84,12 @@ void MainWindow::on_AverageFilterButton_clicked()
 void MainWindow::on_GrayScale_clicked()
 {
     if(checkImage(inputImage)) return;
-
     Convert_To_Gray(inputMat, filterOutputMat);
     updateImage(filterOutputMat, ui->filter_outputImage, 0);
+
 }
+
+
 
 
 void MainWindow::on_GaussianFilterButton_clicked()
@@ -371,8 +373,6 @@ void MainWindow::updateFrequencyResponse(Mat &inputMat, Mat &freqMat, QLabel* im
     freqMat = Add_Low_High_Frequency_Filter(freqMat, sliderValue, high_low_flag);
     image->setPixmap(QPixmap::fromImage(QImage(freqMat.data, freqMat.cols, freqMat.rows, freqMat.step, QImage::Format_Grayscale8)));
 }
-
-
 
 
 
