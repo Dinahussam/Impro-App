@@ -16,11 +16,7 @@
 #include <QImageReader>
 #include <QImage>
 #include <QPixmap>
-#include <QtCharts>
 #include <QMessageBox>
-#include <QChartView>
-#include <QBarSet>
-#include <QBarSeries>
 
 
 
@@ -31,6 +27,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     ui->pushButton->setDisabled(true);
 
+    initializeHistograms(ui->RedHistPDF);
+    initializeHistograms(ui->RedHistCDF);
+    initializeHistograms(ui->BlueHistPDF);
+    initializeHistograms(ui->BlueHistCDF);
+    initializeHistograms(ui->GreenHistPDF);
+    initializeHistograms(ui->GreenHistCDF);
+
+    ui->EqualizeImage->setHidden(true);
+    ui->EqualizeLabel_2->setHidden(true);
 }
 
 
@@ -47,8 +52,20 @@ void MainWindow::on_BrowseButton_clicked()
 {
     UploadImage(inputImage, inputMat, true);
 
+    if(inputImage.isNull()) return;
+
     Convert_To_Gray(inputMat, filterOutputMat);
     Convert_To_Gray(inputMat, edgeDetectionOutputMat);
+
+    Histogram(inputMat, ui->RedHistPDF, "red", Qt::red, "PDF");
+    Histogram(inputMat, ui->RedHistCDF, "red", Qt::red, "CDF");
+
+    Histogram(inputMat, ui->BlueHistPDF, "blue", Qt::blue, "PDF");
+    Histogram(inputMat, ui->BlueHistCDF, "blue", Qt::blue, "CDF");
+
+    Histogram(inputMat, ui->GreenHistPDF, "green", Qt::green, "PDF");
+    Histogram(inputMat, ui->GreenHistCDF, "green", Qt::green, "CDF");
+
 
 
     updateImage(inputMat, ui->filter_inputImage, 1);
@@ -215,6 +232,9 @@ void MainWindow::on_LocalThresholdButton_clicked()
     Convert_To_Gray(inputMat, thresholdOutputMat);
     local_adaptive_threshold(thresholdOutputMat, thresholdOutputMat);
     updateImage(thresholdOutputMat, ui->Threshold_OutputImage, 0);
+
+    ui->EqualizeImage->setHidden(true);
+    ui->EqualizeLabel_2->setHidden(true);
 }
 
 
@@ -232,9 +252,128 @@ void MainWindow::on_GlobalThresholdButton_clicked()
 
     global_threshold(thresholdOutputMat, thresholdOutputMat, thresholdInput.ThresholdValue);
     updateImage(thresholdOutputMat, ui->Threshold_OutputImage, 0);
+    ui->EqualizeImage->setHidden(true);
+    ui->EqualizeLabel_2->setHidden(true);
+}
+
+void MainWindow::on_EqualizeButton_clicked()
+{
+    if(checkImage(inputImage)) return;
+
+    ui->EqualizeImage->setHidden(false);
+    ui->EqualizeLabel_2->setHidden(false);
+
+    Mat equalizedImageMat = Mat::zeros(1, 1, CV_64F);
+
+    Convert_To_Gray(inputMat, equalizedOutputMat);
+    equalizedImageMat = Equalize_img(equalizedOutputMat);
+    updateImage(equalizedImageMat, ui->Threshold_OutputImage, 0);
+
+
+    Histogram(equalizedImageMat, ui->EqualizeImage, "blue", Qt::black, "PDF");
 }
 
 
+// ----------------------------------------------------------- HISTOGRAM FUNCTIONS ------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------------
+
+void MainWindow::Histogram(Mat &inputMat, QCustomPlot* HistWidget, String color, QColor brushColor, String graph_type){
+
+    vector<double> barsPDF[6];
+    vector<double> barsCDF[3];
+
+    RGB_histo(inputMat, barsPDF, barsCDF);
+
+
+    QList<double> x = QList<double>();
+    QList<double> y = QList<double>();
+
+
+    if(color == "blue" && graph_type == "PDF"){
+        x.reserve(barsPDF[0].size());
+        std::copy(barsPDF[0].begin(), barsPDF[0].end(), std::back_inserter(x));
+        y.reserve(barsPDF[1].size());
+        std::copy(barsPDF[1].begin(), barsPDF[1].end(), std::back_inserter(y));
+    }
+    else if(color == "green" && graph_type == "PDF"){
+        x.reserve(barsPDF[2].size());
+        std::copy(barsPDF[2].begin(), barsPDF[2].end(), std::back_inserter(x));
+        y.reserve(barsPDF[3].size());
+        std::copy(barsPDF[3].begin(), barsPDF[3].end(), std::back_inserter(y));
+    }
+    else if(color == "red" && graph_type == "PDF"){
+        x.reserve(barsPDF[4].size());
+        std::copy(barsPDF[4].begin(), barsPDF[4].end(), std::back_inserter(x));
+        y.reserve(barsPDF[5].size());
+        std::copy(barsPDF[5].begin(), barsPDF[5].end(), std::back_inserter(y));
+    }
+    else if(color == "blue" && graph_type == "CDF"){
+        x.reserve(barsPDF[0].size());
+        std::copy(barsPDF[0].begin(), barsPDF[0].end(), std::back_inserter(x));
+        y.reserve(barsCDF[0].size());
+        std::copy(barsCDF[0].begin(), barsCDF[0].end(), std::back_inserter(y));
+    }
+    else if(color == "green" && graph_type == "CDF"){
+        x.reserve(barsPDF[2].size());
+        std::copy(barsPDF[2].begin(), barsPDF[2].end(), std::back_inserter(x));
+        y.reserve(barsCDF[1].size());
+        std::copy(barsCDF[1].begin(), barsCDF[1].end(), std::back_inserter(y));
+    }
+    else if(color == "red" && graph_type == "CDF"){
+        x.reserve(barsPDF[4].size());
+        std::copy(barsPDF[4].begin(), barsPDF[4].end(), std::back_inserter(x));
+        y.reserve(barsCDF[2].size());
+        std::copy(barsCDF[2].begin(), barsCDF[2].end(), std::back_inserter(y));
+    }
+
+
+
+    QCPBars *barsPDFChart = new QCPBars( HistWidget->xAxis, HistWidget->yAxis);
+    barsPDFChart->setWidth(9/(double)x.size());
+    barsPDFChart->setData(x, y);
+    barsPDFChart->setPen(QPen(brushColor));
+    barsPDFChart->setBrush(brushColor);
+
+    HistWidget->yAxis->setRange(0, *(max_element(y.begin(),y.end())));
+    HistWidget->xAxis->setRange(0, 260);
+
+    HistWidget->replot();
+}
+
+
+void MainWindow::initializeHistograms(QCustomPlot* HistWidget){
+
+
+    // set some pens, brushes and backgrounds:
+     HistWidget->xAxis->setBasePen(QPen(Qt::black, 1));
+     HistWidget->yAxis->setBasePen(QPen(Qt::black, 1));
+     HistWidget->xAxis->setTickPen(QPen(Qt::black, 1));
+     HistWidget->yAxis->setTickPen(QPen(Qt::black, 1));
+     HistWidget->xAxis->setSubTickPen(QPen(Qt::black, 1));
+     HistWidget->yAxis->setSubTickPen(QPen(Qt::black, 1));
+     HistWidget->xAxis->setTickLabelColor(Qt::black);
+     HistWidget->yAxis->setTickLabelColor(Qt::black);
+     HistWidget->xAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+     HistWidget->yAxis->grid()->setPen(QPen(QColor(140, 140, 140), 1, Qt::DotLine));
+     HistWidget->xAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+     HistWidget->yAxis->grid()->setSubGridPen(QPen(QColor(80, 80, 80), 1, Qt::DotLine));
+     HistWidget->xAxis->grid()->setSubGridVisible(true);
+     HistWidget->yAxis->grid()->setSubGridVisible(true);
+     HistWidget->xAxis->grid()->setZeroLinePen(Qt::NoPen);
+     HistWidget->yAxis->grid()->setZeroLinePen(Qt::NoPen);
+     HistWidget->xAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+     HistWidget->yAxis->setUpperEnding(QCPLineEnding::esSpikeArrow);
+
+
+    QLinearGradient plotGradient;
+    plotGradient.setStart(0, 0);
+    plotGradient.setFinalStop(0, 350);
+    plotGradient.setColorAt(0, Qt::white);
+    plotGradient.setColorAt(1, QColor(127,127,127));
+    HistWidget->setBackground(plotGradient);
+    HistWidget->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
+
+}
 
 
 
@@ -335,11 +474,12 @@ void MainWindow::UploadImage(QImage &image, Mat &imageMat, bool flag)
     ui-> BrowseButton -> setDisabled(true);
     ui-> pushButton-> setDisabled(false);
     }
+
     image = image.convertToFormat(QImage::Format_BGR888);
     imageMat = Mat(image.height(), image.width(), CV_8UC3, image.bits(), image.bytesPerLine());
 
     if(image.isNull()) return;
-    cv::resize(imageMat, imageMat, cv::Size(512,512),0,0);
+    cv::resize(imageMat, imageMat, cv::Size(512,512), 0, 0);
 
 
 }
@@ -350,12 +490,24 @@ void MainWindow::on_pushButton_clicked()
     ui-> BrowseButton -> setStyleSheet("QPushButton{border-radius: 10px; text-align: left; font: 900 12pt 'Segoe UI Black';} QPushButton:hover:!pressed{background-color: qlineargradient(x1: 0.5, y1: 1, x2: 0.5, y2: 1, stop: 0 #dadbde, stop: 1 #f6f7fa)}");
     ui->BrowseButton->setEnabled(true);
     ui->pushButton->setDisabled(true);
+
     ui->filter_inputImage->clear();
     ui->filter_outputImage->clear();
+
     ui->EdgeDetection_inputImage->clear();
     ui->EdgeDetection_outputImage->clear();
+
     ui->Threshold_InputImage->clear();
     ui->Threshold_OutputImage->clear();
+
+    ui->RedHistPDF->clearPlottables(); ui->RedHistPDF->replot();
+    ui->RedHistCDF->clearPlottables(); ui->RedHistCDF->replot();
+
+    ui->BlueHistPDF->clearPlottables(); ui->BlueHistPDF->replot();
+    ui->BlueHistCDF->clearPlottables(); ui->BlueHistCDF->replot();
+
+    ui->GreenHistPDF->clearPlottables();ui->GreenHistPDF->replot();
+    ui->GreenHistCDF->clearPlottables(); ui->GreenHistCDF->replot();
 
 }
 
@@ -375,13 +527,6 @@ void MainWindow::updateFrequencyResponse(Mat &inputMat, Mat &freqMat, QLabel* im
     freqMat = Add_Low_High_Frequency_Filter(freqMat, sliderValue, high_low_flag);
     image->setPixmap(QPixmap::fromImage(QImage(freqMat.data, freqMat.cols, freqMat.rows, freqMat.step, QImage::Format_Grayscale8)));
 }
-
-void MainWindow::Histogram(Mat &inputMat){
-    calculate_histogram(inputMat, histoMap, cummulativeHist);
-    RGB_histo(inputMat, bars);
-}
-
-
 
 
 

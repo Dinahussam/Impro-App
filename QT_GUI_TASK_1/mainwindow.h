@@ -8,6 +8,7 @@
 #include <uniformnoiseparameters.h>
 #include <thresholdwindow.h>
 #include <cannyparameters.h>
+#include <qcustomplot.h>
 
 #include <iostream>
 #include <time.h>
@@ -49,11 +50,14 @@ public:
     Mat filterOutputMat = Mat::zeros(1, 1, CV_64F);
     Mat edgeDetectionOutputMat = Mat::zeros(1, 1, CV_64F);
     Mat thresholdOutputMat = Mat::zeros(1, 1, CV_64F);
+    Mat equalizedOutputMat = Mat::zeros(1, 1, CV_64F);
 
 // ------------- Histogram variables ----------------------------------
     map <int,int> histoMap;
-    vector<int> bars[6];
     vector<int> cummulativeHist;
+
+    QList<double> x = QList<double>();
+    QList<double> y = QList<double>();
 
 // ------------- Hybrid variables ----------------------------------
 
@@ -106,6 +110,10 @@ private slots:
 
     void on_GlobalThresholdButton_clicked();
 
+// ----------------------- Histogram Tab ----------------
+    void Histogram(Mat &inputMat,  QCustomPlot* HistWidget, String color, QColor brushColor, String graph_type);
+
+    void initializeHistograms(QCustomPlot* HistWidget);
 
 // ----------------------- Hybrid Tab -------------------
     void on_Image1FSlider_valueChanged(int value);
@@ -133,8 +141,9 @@ private slots:
 
     void on_pushButton_clicked();
 
-    void Histogram(Mat &inputMat);
 
+
+    void on_EqualizeButton_clicked();
 
 private:
     Ui::MainWindow *ui;

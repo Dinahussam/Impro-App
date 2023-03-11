@@ -58,7 +58,7 @@ QTabBar::tab:selected {
 </string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>3</number>
     </property>
     <property name="iconSize">
      <size>
@@ -475,104 +475,12 @@ border-color: transparent</string>
      <attribute name="title">
       <string>Histogram</string>
      </attribute>
-     <widget class="QLabel" name="grayHistogramBars">
+     <widget class="QLabel" name="A6">
       <property name="geometry">
        <rect>
-        <x>60</x>
-        <y>40</y>
-        <width>550</width>
-        <height>260</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 4px solid black;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="grayHistogramBars_2">
-      <property name="geometry">
-       <rect>
-        <x>760</x>
-        <y>40</y>
-        <width>550</width>
-        <height>260</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 4px solid black;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="grayHistogramBars_3">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>350</y>
-        <width>550</width>
-        <height>260</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 4px solid black;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="grayHistogramBars_4">
-      <property name="geometry">
-       <rect>
-        <x>760</x>
-        <y>350</y>
-        <width>550</width>
-        <height>260</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 4px solid black;
-</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="scaledContents">
-       <bool>true</bool>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-     <widget class="QLabel" name="Label1">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
+        <x>20</x>
         <y>10</y>
-        <width>551</width>
+        <width>400</width>
         <height>31</height>
        </rect>
       </property>
@@ -583,18 +491,139 @@ color: black;
 background-color:transparent;</string>
       </property>
       <property name="text">
-       <string>Gray Histogram</string>
+       <string>Red PDF</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="Label1_2">
+     <widget class="QCustomPlot" name="RedHistPDF" native="true">
       <property name="geometry">
        <rect>
-        <x>760</x>
+        <x>20</x>
+        <y>50</y>
+        <width>400</width>
+        <height>255</height>
+       </rect>
+      </property>
+      <widget class="QLabel" name="redHist">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>400</width>
+         <height>255</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 4px solid black;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QCustomPlot" name="RedHistCDF" native="true">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>370</y>
+        <width>400</width>
+        <height>255</height>
+       </rect>
+      </property>
+      <widget class="QLabel" name="redHist_2">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>400</width>
+         <height>255</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 4px solid black;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="A5">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>330</y>
+        <width>400</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+color: black;
+background-color:transparent;</string>
+      </property>
+      <property name="text">
+       <string>Red CDF</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QCustomPlot" name="BlueHistPDF" native="true">
+      <property name="geometry">
+       <rect>
+        <x>491</x>
+        <y>50</y>
+        <width>400</width>
+        <height>255</height>
+       </rect>
+      </property>
+      <widget class="QLabel" name="blueHist">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>400</width>
+         <height>255</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 4px solid black;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="A4">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
         <y>10</y>
-        <width>551</width>
+        <width>400</width>
         <height>31</height>
        </rect>
       </property>
@@ -605,18 +634,18 @@ color: black;
 background-color:transparent;</string>
       </property>
       <property name="text">
-       <string>Colored Histogram</string>
+       <string>Blue PDF</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="Label1_3">
+     <widget class="QLabel" name="A3">
       <property name="geometry">
        <rect>
-        <x>760</x>
-        <y>320</y>
-        <width>551</width>
+        <x>490</x>
+        <y>330</y>
+        <width>400</width>
         <height>31</height>
        </rect>
       </property>
@@ -627,18 +656,51 @@ color: black;
 background-color:transparent;</string>
       </property>
       <property name="text">
-       <string>Distribution Curve</string>
+       <string>Blue CDF</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
-     <widget class="QLabel" name="Label1_4">
+     <widget class="QCustomPlot" name="BlueHistCDF" native="true">
       <property name="geometry">
        <rect>
-        <x>60</x>
-        <y>320</y>
-        <width>551</width>
+        <x>490</x>
+        <y>370</y>
+        <width>400</width>
+        <height>255</height>
+       </rect>
+      </property>
+      <widget class="QLabel" name="blueHist_2">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>400</width>
+         <height>255</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 4px solid black;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="A1">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>10</y>
+        <width>400</width>
         <height>31</height>
        </rect>
       </property>
@@ -649,7 +711,95 @@ color: black;
 background-color:transparent;</string>
       </property>
       <property name="text">
-       <string>Distribution Curve</string>
+       <string>Green PDF</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QCustomPlot" name="GreenHistPDF" native="true">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>50</y>
+        <width>400</width>
+        <height>255</height>
+       </rect>
+      </property>
+      <widget class="QLabel" name="greenHist">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>400</width>
+         <height>255</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 4px solid black;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QCustomPlot" name="GreenHistCDF" native="true">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>370</y>
+        <width>400</width>
+        <height>255</height>
+       </rect>
+      </property>
+      <widget class="QLabel" name="greenHist_2">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>400</width>
+         <height>255</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">border: 4px solid black;
+</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLabel" name="A">
+      <property name="geometry">
+       <rect>
+        <x>970</x>
+        <y>330</y>
+        <width>401</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+color: black;
+background-color:transparent;</string>
+      </property>
+      <property name="text">
+       <string>Green CDF</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -1152,14 +1302,47 @@ background-color:transparent;</string>
         <set>Qt::AlignCenter</set>
        </property>
       </widget>
+      <widget class="QCustomPlot" name="EqualizeImage" native="true">
+       <property name="geometry">
+        <rect>
+         <x>280</x>
+         <y>307</y>
+         <width>251</width>
+         <height>255</height>
+        </rect>
+       </property>
+       <widget class="QLabel" name="EqualizeLabel_2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>251</width>
+          <height>255</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: 3px solid black;
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="scaledContents">
+         <bool>true</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </widget>
      </widget>
      <widget class="QWidget" name="LocalThershold" native="true">
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>150</y>
+        <y>100</y>
         <width>241</width>
-        <height>191</height>
+        <height>121</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1170,7 +1353,7 @@ border-radius: 5px;</string>
        <property name="geometry">
         <rect>
          <x>50</x>
-         <y>100</y>
+         <y>50</y>
          <width>151</width>
          <height>51</height>
         </rect>
@@ -1198,7 +1381,7 @@ QPushButton:hover:!pressed{
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>30</y>
+         <y>10</y>
          <width>241</width>
          <height>31</height>
         </rect>
@@ -1222,9 +1405,9 @@ border-color: transparent</string>
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>370</y>
+        <y>230</y>
         <width>241</width>
-        <height>191</height>
+        <height>121</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -1235,7 +1418,7 @@ border-radius: 5px;</string>
        <property name="geometry">
         <rect>
          <x>50</x>
-         <y>100</y>
+         <y>50</y>
          <width>151</width>
          <height>51</height>
         </rect>
@@ -1263,7 +1446,7 @@ QPushButton:hover:!pressed{
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>30</y>
+         <y>10</y>
          <width>241</width>
          <height>31</height>
         </rect>
@@ -1277,6 +1460,136 @@ border-color: transparent</string>
        </property>
        <property name="text">
         <string>Global Threshold</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="Normalize" native="true">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>360</y>
+        <width>241</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 2px solid;
+border-radius: 5px;</string>
+      </property>
+      <widget class="QPushButton" name="NormalizeButton">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>50</y>
+         <width>151</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+border-style: solid;
+border-width: 2px;
+border-radius: 10px;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 20px;
+color: black;
+background-color: rgb(246, 247, 250);
+}
+
+QPushButton:hover:!pressed{
+	background-color: qlineargradient(x1: 0.5, y1: 1, x2: 0.5, y2: 1, stop: 0 #dadbde, stop: 1 #f6f7fa);
+}</string>
+       </property>
+       <property name="text">
+        <string>Apply</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="NormalizeLabel">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>10</y>
+         <width>241</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+color: black;
+background-color:transparent;
+border-color: transparent</string>
+       </property>
+       <property name="text">
+        <string>Normalize</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="Equalize" native="true">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>490</y>
+        <width>241</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 2px solid;
+border-radius: 5px;</string>
+      </property>
+      <widget class="QPushButton" name="EqualizeButton">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>50</y>
+         <width>151</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{
+border-style: solid;
+border-width: 2px;
+border-radius: 10px;
+font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 20px;
+color: black;
+background-color: rgb(246, 247, 250);
+}
+
+QPushButton:hover:!pressed{
+	background-color: qlineargradient(x1: 0.5, y1: 1, x2: 0.5, y2: 1, stop: 0 #dadbde, stop: 1 #f6f7fa);
+}</string>
+       </property>
+       <property name="text">
+        <string>Apply</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="EqualizeLabel">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>10</y>
+         <width>241</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+color: black;
+background-color:transparent;
+border-color: transparent</string>
+       </property>
+       <property name="text">
+        <string>Equalize</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -1840,6 +2153,14 @@ QPushButton:hover:!pressed{
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="Icons.qrc"/>
  </resources>

@@ -1,6 +1,6 @@
 #include "Histogram.hpp"
 
-void calculate_histogram (Mat img_grayscale, map<int, int>& histo, vector<int>& cumulative_histo){
+void calculate_histogram (Mat img_grayscale, map<int, int>& histo, vector<double>& cumulative_histo){
     for (int row = 0; row  < img_grayscale.rows; ++row ) {
         for (int col = 0; col < img_grayscale.cols; ++col) {
             int search = (int)img_grayscale.at<uchar>(row,col);
@@ -15,7 +15,7 @@ void calculate_histogram (Mat img_grayscale, map<int, int>& histo, vector<int>& 
 
     int accumalator = 0;
     for (auto itr = histo.begin(); itr != histo.end(); itr++){
-                accumalator += int(itr->first);
+                accumalator += int(itr->second);
                 cumulative_histo.push_back(accumalator);
          }
 }
@@ -59,9 +59,9 @@ vector<int> normalize_vector(vector <int> data){
 }
 
 Mat Equalize_img(Mat &image){
-    Mat hist;
+
     map<int, int> histo;
-    vector<int> cumulative_histo;
+    vector<double> cumulative_histo;
     map<int, int> new_level;
     Mat output_image = image.clone();
 
@@ -87,28 +87,29 @@ Mat Equalize_img(Mat &image){
     return output_image;
 }
 
-void RGB_histo(Mat img, vector<int> bars[6]){
+void RGB_histo(Mat img, vector<double> barsPDF[6], vector<double> barsCDF[3]){
         vector<Mat> bgr_planes;
         split(img, bgr_planes);
-        vector<int> y;
+        int CDFindex = 0;
 
         map<int, int> myMap;
         vector<string> col = {"b", "g", "r"};
         for(int i = 0; i < (int)bgr_planes.size(); i++){
             string cor = col[i];
-            calculate_histogram(bgr_planes[i], myMap, y);
+            calculate_histogram(bgr_planes[i], myMap, barsCDF[CDFindex]);
+            CDFindex++;
             for (auto itr = myMap.begin(); itr != myMap.end(); itr++){
                 if(cor == "b"){
-                    bars[0].push_back(itr->first);
-                    bars[1].push_back(itr->second);
+                    barsPDF[0].push_back(itr->first);
+                    barsPDF[1].push_back(itr->second);
                 }
                 if(cor == "g"){
-                    bars[2].push_back(itr->first);
-                    bars[3].push_back(itr->second);
+                    barsPDF[2].push_back(itr->first);
+                    barsPDF[3].push_back(itr->second);
                 }
                 if(cor == "r"){
-                    bars[4].push_back(itr->first);
-                    bars[5].push_back(itr->second);
+                    barsPDF[4].push_back(itr->first);
+                    barsPDF[5].push_back(itr->second);
                 }
             }
         }
