@@ -134,7 +134,7 @@ Mat Add_Low_High_Frequency_Filter( Mat &src, float filterRadius , float flag)
 
 /*-------------------------------------------Hybrid Images -------------------------------------*/
 
-Mat Apply_Hybrid_Images( Mat &src1 ,Mat &src2)
+Mat Apply_Hybrid_Images( Mat &src1 ,Mat &src2, bool H_L_Flag)
 {
     Mat dst1;
     Mat dst2;
@@ -151,8 +151,8 @@ Mat Apply_Hybrid_Images( Mat &src1 ,Mat &src2)
     resize(dst2, resized_down_img2, Size(down_width, down_height), INTER_LINEAR);
 
 // Apply Low and High pass filters to both images 
-	Mat Low_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img1 , 30, 1);
-	Mat High_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img2, 30 ,0);
+    Mat Low_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img1 , 30, H_L_Flag);
+    Mat High_Frequency_Image = Add_Low_High_Frequency_Filter(resized_down_img2, 30 , !H_L_Flag);
 
 	Mat Hybrid = Low_Frequency_Image+High_Frequency_Image;
 	

@@ -50,6 +50,7 @@ public:
     Mat filterOutputMat = Mat::zeros(1, 1, CV_64F);
     Mat edgeDetectionOutputMat = Mat::zeros(1, 1, CV_64F);
     Mat thresholdOutputMat = Mat::zeros(1, 1, CV_64F);
+    Mat normalizedOutputMat = Mat::zeros(1, 1, CV_64F);
     Mat equalizedOutputMat = Mat::zeros(1, 1, CV_64F);
 
 // ------------- Histogram variables ----------------------------------
@@ -144,6 +145,8 @@ private slots:
 
 
     void on_EqualizeButton_clicked();
+
+    void on_NormalizeButton_clicked();
 
 private:
     Ui::MainWindow *ui;

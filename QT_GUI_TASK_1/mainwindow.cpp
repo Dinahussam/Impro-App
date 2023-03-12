@@ -228,19 +228,22 @@ void MainWindow::on_CannyButton_clicked()
 void MainWindow::on_LocalThresholdButton_clicked()
 {
     if(checkImage(inputImage)) return;
+    ui->EqualizeImage->setHidden(true);
+    ui->EqualizeLabel_2->setHidden(true);
 
     Convert_To_Gray(inputMat, thresholdOutputMat);
     local_adaptive_threshold(thresholdOutputMat, thresholdOutputMat);
     updateImage(thresholdOutputMat, ui->Threshold_OutputImage, 0);
 
-    ui->EqualizeImage->setHidden(true);
-    ui->EqualizeLabel_2->setHidden(true);
+
 }
 
 
 void MainWindow::on_GlobalThresholdButton_clicked()
 {
     if(checkImage(inputImage)) return;
+    ui->EqualizeImage->setHidden(true);
+    ui->EqualizeLabel_2->setHidden(true);
 
     Convert_To_Gray(inputMat, thresholdOutputMat);
 
@@ -252,9 +255,21 @@ void MainWindow::on_GlobalThresholdButton_clicked()
 
     global_threshold(thresholdOutputMat, thresholdOutputMat, thresholdInput.ThresholdValue);
     updateImage(thresholdOutputMat, ui->Threshold_OutputImage, 0);
+
+}
+
+void MainWindow::on_NormalizeButton_clicked()
+{
+    if(checkImage(inputImage)) return;
+
     ui->EqualizeImage->setHidden(true);
     ui->EqualizeLabel_2->setHidden(true);
+
+    Convert_To_Gray(inputMat, normalizedOutputMat);
+    normalizedOutputMat = normalize_image(normalizedOutputMat);
+    updateImage(normalizedOutputMat, ui->Threshold_OutputImage, 0);
 }
+
 
 void MainWindow::on_EqualizeButton_clicked()
 {
@@ -263,14 +278,12 @@ void MainWindow::on_EqualizeButton_clicked()
     ui->EqualizeImage->setHidden(false);
     ui->EqualizeLabel_2->setHidden(false);
 
-    Mat equalizedImageMat = Mat::zeros(1, 1, CV_64F);
-
     Convert_To_Gray(inputMat, equalizedOutputMat);
-    equalizedImageMat = Equalize_img(equalizedOutputMat);
-    updateImage(equalizedImageMat, ui->Threshold_OutputImage, 0);
+    equalizedOutputMat = Equalize_img(equalizedOutputMat);
+    updateImage(equalizedOutputMat, ui->Threshold_OutputImage, 0);
 
 
-    Histogram(equalizedImageMat, ui->EqualizeImage, "blue", Qt::black, "PDF");
+    Histogram(equalizedOutputMat, ui->EqualizeImage, "blue", Qt::black, "PDF");
 }
 
 
@@ -399,26 +412,26 @@ void MainWindow::on_UploadeImage2_clicked()
     updateImage(hybridImage2Mat,  ui->hybridInputImage2, 1);
 }
 
+
 void MainWindow::on_Image1FSlider_valueChanged(int value)
 {
-    image1_H_L = value ^ 1;
-    ui->Image2FSlider->setSliderPosition(image1_H_L);
+    image2_H_L = value ^ 1;
+    ui->Image2FSlider->setSliderPosition(image2_H_L);
 
     if(hybridImage1.isNull()) return;
-    updateFrequencyResponse(hybridImage1Mat, freqImage1Mat, ui->freqOutputImage1, freqImage1Slider, image1_H_L);
+    updateFrequencyResponse(hybridImage1Mat, freqImage1Mat, ui->freqOutputImage1, freqImage1Slider, value);
 
-
+    imshow("Image1", freqImage1Mat);
 }
 
 
 void MainWindow::on_Image2FSlider_valueChanged(int value)
 {
-    image2_H_L = value ^ 1;
-    ui->Image1FSlider->setSliderPosition(image2_H_L);
+    image1_H_L = value ^ 1;
+    ui->Image1FSlider->setSliderPosition(image1_H_L);
 
     if(hybridImage2.isNull()) return;
-    updateFrequencyResponse(hybridImage2Mat, freqImage2Mat, ui->freqOutputImage2, freqImage2Slider, image2_H_L);
-
+    updateFrequencyResponse(hybridImage2Mat, freqImage2Mat, ui->freqOutputImage2, freqImage2Slider, value);
 }
 
 void MainWindow::on_freqOutputImage1Slider_valueChanged(int value)
@@ -442,7 +455,7 @@ void MainWindow::on_freqOutputImage2Slider_valueChanged(int value)
 void MainWindow::on_HybridButton_clicked()
 {
     if(hybridImage2.isNull() && hybridImage1.isNull()) return;
-    finalHybridImageMat =  Apply_Hybrid_Images(freqImage1Mat, freqImage2Mat);
+    finalHybridImageMat =  Apply_Hybrid_Images(freqImage1Mat, freqImage2Mat, image1_H_L);
     updateImage(finalHybridImageMat,  ui->finalHybridImage, 0);
 }
 
@@ -527,6 +540,8 @@ void MainWindow::updateFrequencyResponse(Mat &inputMat, Mat &freqMat, QLabel* im
     freqMat = Add_Low_High_Frequency_Filter(freqMat, sliderValue, high_low_flag);
     image->setPixmap(QPixmap::fromImage(QImage(freqMat.data, freqMat.cols, freqMat.rows, freqMat.step, QImage::Format_Grayscale8)));
 }
+
+
 
 
 
