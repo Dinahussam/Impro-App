@@ -147,6 +147,7 @@ void MainWindow::on_GaussianNoiseButton_clicked()
 
     if(gaussianParameters.flag) return;
 
+    cout << gaussianParameters.noiseIntenisty << endl;
     Add_Gaussian_Noise(filterOutputMat, filterOutputMat, gaussianParameters.gaussianMeanValue, gaussianParameters.gaussianSTDValue, gaussianParameters.noiseIntenisty);
     updateImage(filterOutputMat, ui->filter_outputImage, 0);
 }

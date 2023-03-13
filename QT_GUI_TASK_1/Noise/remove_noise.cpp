@@ -100,17 +100,3 @@ void Add_Average_Filter(const Mat &src, Mat &dst, int kernalSize)
     }
 }
 
-
-/*---------------------------------- Gaussian filter ----------------------------------*/
-
-void Add_Gaussian_Filter(const Mat &src, Mat &dst, int kernalSize)
-{
-
-    unsigned char kernel_data[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};
-
-    Mat gaussian_kernel = Create_Kernel(3, kernel_data, 0);
-    cout << gaussian_kernel << endl;
-
-    dst = Convolute_2d(src, gaussian_kernel,1,1);
-    cout << gaussian_kernel << endl;
-}

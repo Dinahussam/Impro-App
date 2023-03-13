@@ -23,7 +23,6 @@
 
 #include <QLabel>
 #include <QImageReader>
-#include <QtCharts>
 
 
 using namespace std;

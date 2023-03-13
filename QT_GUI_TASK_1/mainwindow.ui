@@ -58,7 +58,7 @@ QTabBar::tab:selected {
 </string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <property name="iconSize">
      <size>
@@ -536,7 +536,7 @@ color: black;
 background-color:transparent;</string>
       </property>
       <property name="text">
-       <string>Red PDF</string>
+       <string>Red DF</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -679,7 +679,7 @@ color: black;
 background-color:transparent;</string>
       </property>
       <property name="text">
-       <string>Blue PDF</string>
+       <string>Blue DF</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -756,7 +756,7 @@ color: black;
 background-color:transparent;</string>
       </property>
       <property name="text">
-       <string>Green PDF</string>
+       <string>Green DF</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>

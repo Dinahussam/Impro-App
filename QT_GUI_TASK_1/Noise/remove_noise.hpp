@@ -15,7 +15,6 @@ void Add_Median_Filter(const Mat &src, Mat &dst, int kernalSize);
 
 void Add_Average_Filter(const Mat &src, Mat &dst, int kernalSize);
 
-void Add_Gaussian_Filter(const Mat &src, Mat &dst, int kernalSize);
 
 
 #endif

@@ -17,7 +17,7 @@ public:
 
     int gaussianMeanValue;
     int gaussianSTDValue;
-    int noiseIntenisty;
+    float noiseIntenisty;
     bool flag;
 
 private slots:
