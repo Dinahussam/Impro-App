@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+
+    inputImageptr = &inputImage;
     ui->setupUi(this);
     ui->pushButton->setDisabled(true);
 
@@ -36,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->EqualizeImage->setHidden(true);
     ui->EqualizeLabel_2->setHidden(true);
+    ui->GlobalThresholdSlider->setHidden(true);
 }
 
 
@@ -80,25 +83,6 @@ void MainWindow::on_BrowseButton_clicked()
 // ----------------------------------------------------------- FILTERING & NOISE TAB -----------------------------------------------------------
 // ---------------------------------------------------------------------------------------------------------------------------------------------
 
-void MainWindow::on_MedianFilterButton_clicked()
-{
-    if(checkImage(inputImage)) return;
-
-    Add_Median_Filter(filterOutputMat, filterOutputMat);
-    updateImage(filterOutputMat, ui->filter_outputImage, 0);
-
-}
-
-
-
-void MainWindow::on_AverageFilterButton_clicked()
-{
-    if(checkImage(inputImage)) return;
-
-    Add_Average_Filter(filterOutputMat, filterOutputMat);
-    updateImage(filterOutputMat, ui->filter_outputImage, 0);
-}
-
 
 void MainWindow::on_GrayScale_clicked()
 {
@@ -109,15 +93,33 @@ void MainWindow::on_GrayScale_clicked()
 }
 
 
+void MainWindow::on_MedianFilterButton_clicked()
+{
+    if(checkImage(inputImage)) return;
 
+    Add_Median_Filter(filterOutputMat, filterOutputMat, kernalSize);
+    updateImage(filterOutputMat, ui->filter_outputImage, 0);
+
+}
+
+
+void MainWindow::on_AverageFilterButton_clicked()
+{
+    if(checkImage(inputImage)) return;
+
+    Add_Average_Filter(filterOutputMat, filterOutputMat, kernalSize);
+    updateImage(filterOutputMat, ui->filter_outputImage, 0);
+}
 
 void MainWindow::on_GaussianFilterButton_clicked()
 {
     if(checkImage(inputImage)) return;
 
-    filterOutputMat = Gaussian_Filter(filterOutputMat);
+    filterOutputMat = Gaussian_Filter(filterOutputMat, kernalSize);
     updateImage(filterOutputMat, ui->filter_outputImage, 0);
 }
+
+
 
 
 void MainWindow::on_SaltPepperNoiseButton_clicked()
@@ -163,8 +165,16 @@ void MainWindow::on_UniformNoiseButton_clicked()
     updateImage(filterOutputMat, ui->filter_outputImage, 0);
 }
 
+void MainWindow::on_Radio3x3Kernal_clicked()
+{
+    kernalSize = 3;
+}
 
 
+void MainWindow::on_Radio5x5Kernal_clicked()
+{
+    kernalSize = 5;
+}
 
 
 // ----------------------------------------------------------- EDGE DETECTION TAB ------------------------------------------------------
@@ -184,7 +194,7 @@ void MainWindow::on_RobetButton_clicked()
 {
     if(checkImage(inputImage)) return;
     Convert_To_Gray(inputMat, edgeDetectionOutputMat);
-    edgeDetectionOutputMat = Robert_Edge(edgeDetectionOutputMat);
+    edgeDetectionOutputMat = Detect_Edges_Robert(edgeDetectionOutputMat);
     updateImage(edgeDetectionOutputMat, ui->EdgeDetection_outputImage, 0);
 }
 
@@ -230,6 +240,7 @@ void MainWindow::on_LocalThresholdButton_clicked()
     if(checkImage(inputImage)) return;
     ui->EqualizeImage->setHidden(true);
     ui->EqualizeLabel_2->setHidden(true);
+    ui->GlobalThresholdSlider->setHidden(true);
 
     Convert_To_Gray(inputMat, thresholdOutputMat);
     local_adaptive_threshold(thresholdOutputMat, thresholdOutputMat);
@@ -242,21 +253,29 @@ void MainWindow::on_LocalThresholdButton_clicked()
 void MainWindow::on_GlobalThresholdButton_clicked()
 {
     if(checkImage(inputImage)) return;
+
     ui->EqualizeImage->setHidden(true);
     ui->EqualizeLabel_2->setHidden(true);
+    ui->GlobalThresholdSlider->setHidden(false);
 
     Convert_To_Gray(inputMat, thresholdOutputMat);
 
-    ThresholdWindow thresholdInput;
-    thresholdInput.setModal(true);
-    thresholdInput.exec();
 
-    if(thresholdInput.flag) return;
-
-    global_threshold(thresholdOutputMat, thresholdOutputMat, thresholdInput.ThresholdValue);
+    thresholdOutputMat = global_threshold(thresholdOutputMat, thresholdOutputMat, globalThresholdSliderValue);
     updateImage(thresholdOutputMat, ui->Threshold_OutputImage, 0);
 
 }
+
+void MainWindow::on_GlobalThresholdSlider_valueChanged(int value)
+{
+    Convert_To_Gray(inputMat, thresholdOutputMat);
+
+    globalThresholdSliderValue = value;
+    thresholdOutputMat = global_threshold(thresholdOutputMat, thresholdOutputMat, globalThresholdSliderValue);
+
+    updateImage(thresholdOutputMat, ui->Threshold_OutputImage, 0);
+}
+
 
 void MainWindow::on_NormalizeButton_clicked()
 {
@@ -264,6 +283,7 @@ void MainWindow::on_NormalizeButton_clicked()
 
     ui->EqualizeImage->setHidden(true);
     ui->EqualizeLabel_2->setHidden(true);
+    ui->GlobalThresholdSlider->setHidden(true);
 
     Convert_To_Gray(inputMat, normalizedOutputMat);
     normalizedOutputMat = normalize_image(normalizedOutputMat);
@@ -277,6 +297,7 @@ void MainWindow::on_EqualizeButton_clicked()
 
     ui->EqualizeImage->setHidden(false);
     ui->EqualizeLabel_2->setHidden(false);
+    ui->GlobalThresholdSlider->setHidden(true);
 
     Convert_To_Gray(inputMat, equalizedOutputMat);
     equalizedOutputMat = Equalize_img(equalizedOutputMat);
@@ -284,6 +305,7 @@ void MainWindow::on_EqualizeButton_clicked()
 
 
     Histogram(equalizedOutputMat, ui->EqualizeImage, "blue", Qt::black, "PDF");
+
 }
 
 
@@ -499,6 +521,7 @@ void MainWindow::UploadImage(QImage &image, Mat &imageMat, bool flag)
 
 void MainWindow::on_pushButton_clicked()
 {
+    inputImage =  QImage();
     ui-> BrowseButton -> setText("Update Image");
     ui-> BrowseButton -> setStyleSheet("QPushButton{border-radius: 10px; text-align: left; font: 900 12pt 'Segoe UI Black';} QPushButton:hover:!pressed{background-color: qlineargradient(x1: 0.5, y1: 1, x2: 0.5, y2: 1, stop: 0 #dadbde, stop: 1 #f6f7fa)}");
     ui->BrowseButton->setEnabled(true);
@@ -522,6 +545,10 @@ void MainWindow::on_pushButton_clicked()
     ui->GreenHistPDF->clearPlottables();ui->GreenHistPDF->replot();
     ui->GreenHistCDF->clearPlottables(); ui->GreenHistCDF->replot();
 
+    ui->EqualizeImage->setHidden(true);
+    ui->EqualizeLabel_2->setHidden(true);
+    ui->GlobalThresholdSlider->setHidden(true);
+
 }
 
 void MainWindow::updateImage(Mat &inputMat,  QLabel* image, bool rgb_flag){
@@ -540,6 +567,14 @@ void MainWindow::updateFrequencyResponse(Mat &inputMat, Mat &freqMat, QLabel* im
     freqMat = Add_Low_High_Frequency_Filter(freqMat, sliderValue, high_low_flag);
     image->setPixmap(QPixmap::fromImage(QImage(freqMat.data, freqMat.cols, freqMat.rows, freqMat.step, QImage::Format_Grayscale8)));
 }
+
+
+
+
+
+
+
+
 
 
 

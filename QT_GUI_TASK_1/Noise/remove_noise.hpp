@@ -11,11 +11,11 @@ void Bubble_Sort(unsigned char array[], unsigned char size);
 
 Mat Create_Kernel(int kernel_size, unsigned char *kernel_data, int image_type);
 
-void Add_Median_Filter(const Mat &src, Mat &dst);
+void Add_Median_Filter(const Mat &src, Mat &dst, int kernalSize);
 
-void Add_Average_Filter(const Mat &src, Mat &dst);
+void Add_Average_Filter(const Mat &src, Mat &dst, int kernalSize);
 
-void Add_Gaussian_Filter(const Mat &src, Mat &dst);
+void Add_Gaussian_Filter(const Mat &src, Mat &dst, int kernalSize);
 
 
 #endif

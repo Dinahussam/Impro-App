@@ -4,9 +4,6 @@
 #include "../Common.hpp"
 #include "convolution.hpp"
 
-Mat Gaussian_Filter(const Mat &src);
-
-Mat Gaussian_Filter_new(const Mat &src);
-
+Mat Gaussian_Filter(const Mat &src, int kernel_size = 3);
 
 #endif

@@ -40,29 +40,32 @@ Mat Create_Kernel(int kernel_size, unsigned char *kernel_data, int image_type)
 
 /*---------------------------------- Median filter ----------------------------------*/
 
-void Add_Median_Filter(const Mat &src, Mat &dst)
+void Add_Median_Filter(const Mat &src, Mat &dst, int kernalSize)
 {
-    unsigned char window[9];
+    int ctr=0;
+    int padding = kernalSize/2;
+    int windowSize = kernalSize*kernalSize;
+    int medianIndex = (windowSize-1)/2;
 
     src.copyTo(dst);
 
-    for (int row = 1; row < src.rows - 1; row++)
+    unsigned char window[windowSize];
+    for (int row = padding; row < src.rows - padding; row++)
     {
-        for (int col = 1; col < src.cols - 1; col++)
+        for (int col = padding; col < src.cols - padding; col++)
         {
-            window[0] = src.at<uchar>(row - 1, col - 1);
-            window[1] = src.at<uchar>(row - 1, col);
-            window[2] = src.at<uchar>(row - 1, col + 1);
-            window[3] = src.at<uchar>(row, col - 1);
-            window[4] = src.at<uchar>(row, col);
-            window[5] = src.at<uchar>(row, col + 1);
-            window[6] = src.at<uchar>(row + 1, col - 1);
-            window[7] = src.at<uchar>(row + 1, col);
-            window[8] = src.at<uchar>(row + 1, col + 1);
+            ctr = 0;
+            for(int i = row - padding; i <= row + padding; i++){
 
-            Bubble_Sort(window, 9);
+                for(int j = col - padding; j<= col + padding; j++){
 
-            unsigned char median = window[4];
+                    window[ctr] = src.at<uchar>(i,j);
+                    ctr++;
+                }
+            }
+            Bubble_Sort(window, windowSize);
+
+            unsigned char median = window[medianIndex];
 
             dst.at<uchar>(row, col) = median;
         }
@@ -71,64 +74,36 @@ void Add_Median_Filter(const Mat &src, Mat &dst)
 
 /*---------------------------------- Average filter ----------------------------------*/
 
-void Add_Average_Filter(const Mat &src, Mat &dst)
+void Add_Average_Filter(const Mat &src, Mat &dst, int kernalSize)
 {
 
     src.copyTo(dst);
     cout << src.rows << endl;
     cout << src.cols << endl;
-    for (int i = 0; i < src.rows - 3; i++)
+    for (int i = 0; i < src.rows - kernalSize; i++)
     {
-        for (int j = 0; j < src.cols - 3; j++)
+        for (int j = 0; j < src.cols - kernalSize; j++)
         {
             Scalar intensity1 = 0;
             Scalar intensity2;
-            for (int p = 0; p < 3; p++)
+            for (int p = 0; p < kernalSize; p++)
             {
 
-                for (int q = 0; q < 3; q++)
+                for (int q = 0; q < kernalSize; q++)
                 {
                     intensity1 = src.at<uchar>(i + p, j + q);
                     intensity2.val[0] += intensity1.val[0];
                 }
             }
-            dst.at<uchar>(i + (3 - 1) / 2, j + (3 - 1) / 2) = intensity2.val[0] / (3 * 3);
+            dst.at<uchar>(i + (kernalSize - 1) / 2, j + (kernalSize - 1) / 2) = intensity2.val[0] / (kernalSize * kernalSize);
         }
     }
 }
-//void gaussian_Filter(const Mat &src, Mat &dst)
-//{
-//    unsigned char data[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};
-//    unsigned char data_index = 0;
-//    src.copyTo(dst);
-//    cout << src.rows << endl;
-//    cout << src.cols << endl;
-//    for (int i = 0; i < src.rows - 3; i++)
-//    {
-//        for (int j = 0; j < src.cols - 3; j++)
-//        {
-//            Scalar intensity1 = 0;
-//            Scalar intensity2;
-//            for (int p = 0; p < 3; p++)
-//            {
 
-//                for (int q = 0; q < 3; q++)
-//                {
-
-//                    intensity1 = data[data_index] * src.at<uchar>(i + p, j + q);
-
-//                    intensity2.val[0] += intensity1.val[0];
-//                    data_index++;
-//                }
-//            }
-//            dst.at<uchar>(i + (3 - 1) / 2, j + (3 - 1) / 2) = intensity2.val[0] / (16);
-//        }
-//    }
-//}
 
 /*---------------------------------- Gaussian filter ----------------------------------*/
 
-void Add_Gaussian_Filter(const Mat &src, Mat &dst)
+void Add_Gaussian_Filter(const Mat &src, Mat &dst, int kernalSize)
 {
 
     unsigned char kernel_data[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};

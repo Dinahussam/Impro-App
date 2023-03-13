@@ -58,7 +58,7 @@ QTabBar::tab:selected {
 </string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>3</number>
     </property>
     <property name="iconSize">
      <size>
@@ -228,20 +228,22 @@ QPushButton:hover:!pressed{
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>100</y>
+        <y>130</y>
         <width>241</width>
-        <height>251</height>
+        <height>221</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">border: 2px solid;
-border-radius: 5px;</string>
+       <string notr="true">QWidget{
+border: 2px solid;
+border-radius: 5px;
+}</string>
       </property>
       <widget class="QPushButton" name="AverageFilterButton">
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>130</y>
+         <y>90</y>
          <width>221</width>
          <height>51</height>
         </rect>
@@ -269,7 +271,7 @@ QPushButton:hover:!pressed{
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>70</y>
+         <y>30</y>
          <width>221</width>
          <height>51</height>
         </rect>
@@ -297,7 +299,7 @@ QPushButton:hover:!pressed{
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>190</y>
+         <y>150</y>
          <width>221</width>
          <height>51</height>
         </rect>
@@ -321,27 +323,47 @@ QPushButton:hover:!pressed{
         <string>Gaussian Filter</string>
        </property>
       </widget>
-      <widget class="QLabel" name="FilterLabel">
+      <widget class="QRadioButton" name="Radio3x3Kernal">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>10</y>
-         <width>241</width>
-         <height>31</height>
+         <x>60</x>
+         <y>5</y>
+         <width>50</width>
+         <height>20</height>
         </rect>
        </property>
        <property name="styleSheet">
         <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-font-size: 30px;
+font-size: 15px;
 color: black;
 background-color:transparent;
 border-color: transparent</string>
        </property>
        <property name="text">
-        <string>Filters</string>
+        <string>3x3</string>
        </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="Radio5x5Kernal">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>5</y>
+         <width>50</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 15px;
+color: black;
+background-color:transparent;
+border-color: transparent</string>
+       </property>
+       <property name="text">
+        <string>5x5</string>
        </property>
       </widget>
      </widget>
@@ -349,9 +371,9 @@ border-color: transparent</string>
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>360</y>
+        <y>400</y>
         <width>241</width>
-        <height>251</height>
+        <height>211</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -362,7 +384,7 @@ border-radius: 5px;</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>130</y>
+         <y>80</y>
          <width>221</width>
          <height>51</height>
         </rect>
@@ -390,7 +412,7 @@ QPushButton:hover:!pressed{
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>70</y>
+         <y>20</y>
          <width>221</width>
          <height>51</height>
         </rect>
@@ -418,7 +440,7 @@ QPushButton:hover:!pressed{
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>190</y>
+         <y>140</y>
          <width>221</width>
          <height>51</height>
         </rect>
@@ -442,29 +464,52 @@ QPushButton:hover:!pressed{
         <string>Gaussian Noise</string>
        </property>
       </widget>
-      <widget class="QLabel" name="NoiseLabel">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>10</y>
-         <width>241</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+     </widget>
+     <widget class="QLabel" name="FilterLabel">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>90</y>
+        <width>241</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 font-size: 30px;
 color: black;
 background-color:transparent;
 border-color: transparent</string>
-       </property>
-       <property name="text">
-        <string>Noise</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
+      </property>
+      <property name="text">
+       <string>Filters</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="NoiseLabel">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>360</y>
+        <width>241</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+color: black;
+background-color:transparent;
+border-color: transparent</string>
+      </property>
+      <property name="text">
+       <string>Noise</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="HistogramTab">
@@ -1334,6 +1379,22 @@ background-color:transparent;</string>
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
+      </widget>
+      <widget class="QSlider" name="GlobalThresholdSlider">
+       <property name="geometry">
+        <rect>
+         <x>590</x>
+         <y>70</y>
+         <width>16</width>
+         <height>131</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
       </widget>
      </widget>
      <widget class="QWidget" name="LocalThershold" native="true">

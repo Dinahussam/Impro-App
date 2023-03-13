@@ -9,6 +9,15 @@
  *                              Functions Prototypes                           *
  *******************************************************************************/
 
+
+/*************************************************************************************************
+ ******************                        Gradients                                  ****************
+ *************************************************************************************************/
+
+Mat Magnitude_Gradient (const Mat &gradient_x , const Mat &gradient_y);
+
+Mat Phase_Gradient (const Mat &gradient_x , const Mat &gradient_y);
+
 /*************************************************************************************************
  ******************                        SOBEL                                  ****************
  *************************************************************************************************/
@@ -19,21 +28,19 @@ Mat Detect_Edges_Sobel_Y(const Mat &src ,int data_type = UCHAR_FLAG);
 
 Mat Detect_Edges_Sobel(const Mat &src );
 
-Mat Detect_Edges_Sobel_Magnitude_Gradient(const Mat &src);
+Mat Sobel_Phase_Gradient (const Mat &src);
 
-Mat Detect_Edges_Sobel_Phase_Gradient(Mat &src);
 
 /*************************************************************************************************
  ******************                        ROBERT                                  ****************
  *************************************************************************************************/
-
-Mat Robert_Edge(const Mat &src);
 
 Mat Detect_Edges_Robert_X(const Mat &src);
 
 Mat Detect_Edges_Robert_Y(const Mat &src);
 
 Mat Detect_Edges_Robert(const Mat &src);
+
 
 
 /*************************************************************************************************
@@ -50,15 +57,16 @@ Mat Detect_Edges_Prewitt(const Mat &src);
  ******************                        CANNY                                  ****************
  *************************************************************************************************/
 
+#define WEAK_EDGE  40
+#define STRONG_EDGE  255
+
 Mat Double_Threshoulding(Mat &suppressed, float lowThresholdRatio = 0.05, float highThresholdRatio = 0.09);
 
 Mat Hysteresis (Mat &thresholded);
 
-Mat Supression( Mat &magnitude_gradient,  Mat &phase_gradient);
-
 Mat Detect_Edges_Canny(const Mat &src , float lowThresholdRatio = 0.05, float highThresholdRatio = 0.09);
 
-
+Mat Supression_Non_Max(Mat &magnitude_gradient, Mat &phase_gradient);
 
 
 #endif

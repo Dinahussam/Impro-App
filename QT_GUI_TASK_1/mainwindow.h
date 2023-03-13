@@ -44,11 +44,18 @@ public:
     QImageReader reader;
 
 // ------------ Filer/Noise/Threshold Output Images ----------------
+    QImage *inputImageptr;
     QImage inputImage;
+
+
     Mat inputMat = Mat::zeros(1, 1, CV_64F);
 
+
+    int kernalSize = 3;
     Mat filterOutputMat = Mat::zeros(1, 1, CV_64F);
     Mat edgeDetectionOutputMat = Mat::zeros(1, 1, CV_64F);
+
+    int globalThresholdSliderValue = 0;
     Mat thresholdOutputMat = Mat::zeros(1, 1, CV_64F);
     Mat normalizedOutputMat = Mat::zeros(1, 1, CV_64F);
     Mat equalizedOutputMat = Mat::zeros(1, 1, CV_64F);
@@ -111,6 +118,8 @@ private slots:
 
     void on_GlobalThresholdButton_clicked();
 
+    void on_GlobalThresholdSlider_valueChanged(int value);
+
 // ----------------------- Histogram Tab ----------------
     void Histogram(Mat &inputMat,  QCustomPlot* HistWidget, String color, QColor brushColor, String graph_type);
 
@@ -147,6 +156,12 @@ private slots:
     void on_EqualizeButton_clicked();
 
     void on_NormalizeButton_clicked();
+
+    void on_Radio3x3Kernal_clicked();
+
+    void on_Radio5x5Kernal_clicked();
+
+
 
 private:
     Ui::MainWindow *ui;
