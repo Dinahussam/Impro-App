@@ -52,19 +52,34 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ```
-xxxx
-├─  xxxxxx
-│  ├─  xxxxxxx 
-│  ├─  xxxxxxx
-│  ├─  xxxxxx
-│  ├─  xxxxxx
-│  ├─  xxxxxx
-│  ├─ xxxxxx
-│  └─  xxxxx
-├─  xxxxx
-├─  xxxxx
-├─  README.md
-└─  requirements.txt
+QT_GUI_TASK_1
+├─  Filters
+│  ├─ add_noise 
+│  ├─ convolution
+│  ├─  edge_detection
+│  ├─  helper_functions
+│  └─  remove_noise
+├─  Frequency
+│  └─  frequency
+├─  Histogram
+│  └─ Histogram
+├─  Threshold
+│  └─ Thresholding
+├─  UI
+│  ├─ cannyparameters 
+│  ├─ gaussiannoiseparameters
+│  ├─ qcustomplot
+│  ├─ saltpepperparameters
+│  ├─ thresholdwindow
+│  └─  uniformnoiseparameters
+├─  Forms
+├─  Icons
+├─  Images
+├─  Common
+├─  imageClass
+├─  main
+├─  mainwindow
+└─ README.md
 ```
 
 ### Quick Preview
