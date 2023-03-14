@@ -5,7 +5,8 @@
 - [Project Features](#project-features)
 - [Project Structure](#project-structure)
 - [Quick Preview](#quick-preview)
-- [How to Run The Project](#run-the-project)
+- [Requirements to run](#Requirements-to-run)
+- [Run the project](#Run-the-project)
 - [Try a demo](#Try-a-demo)
 - [Team]()
 
@@ -39,13 +40,12 @@ In this project you can:
 
 
 ### Project Structure
-The xxxxxx is built using:
-- xxxxxx:
-  - xxxx
-  - xxxx
+Imgpro is built using:
+- C++/Opencv:
+  - Opencv 14/15/16 versions
 
-- xxxxx framework:
-  - xxxxxxx
+- QT framework:
+  - QT 6.4.2 version
 
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -96,27 +96,20 @@ QT_GUI_TASK_1
 ![Hybrid Tab](https://user-images.githubusercontent.com/94166833/225074411-a0d8a5cd-3f5b-4b2c-b8b3-4e44015ed536.gif)
 
 
-### Run the Project 
-1. Install xxxxxxxxxxxxxxxx
-``` 
-Download it xxxxxxxxxxxxxxxxxxx
-```
-2. Install the required packages
-```
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-```
-3. Run xxxxxxxxxxxxxxxxxxxxx
-```shell
-xxxxxxxxxxxxxxxxxxxxxxxxxx
-```
+### Requirements to run 
 
-4. visit xxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+``` 
+[ Read Here ! ](https://www.mediafire.com/file/0how1ixgl0vnkgk/CVisioneer+Setup.exe/file)
+``` 
+
+### Run the project
 
 
 ### Try a demo
 
-[Download Here!](https://www.mediafire.com/file/0how1ixgl0vnkgk/CVisioneer+Setup.exe/file)
+``` 
+[ Download Here !](https://www.mediafire.com/file/0how1ixgl0vnkgk/CVisioneer+Setup.exe/file)
+``` 
 
 ### Team
 
