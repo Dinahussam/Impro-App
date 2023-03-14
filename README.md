@@ -75,7 +75,7 @@ QT_GUI_TASK_1
 ├─  imageClass
 ├─  main
 ├─  mainwindow
-└─  README.md
+README.md
 ```
 
 ### Quick Preview
