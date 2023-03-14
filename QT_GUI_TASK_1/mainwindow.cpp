@@ -48,8 +48,7 @@ MainWindow::~MainWindow()
 }
 
 
-// ----------------------------------------------------------- BROWSE BUTTON -----------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------------------------------
+
 
 void MainWindow::on_BrowseButton_clicked()
 {
@@ -79,9 +78,13 @@ void MainWindow::on_BrowseButton_clicked()
 
 
 
+// ------------------------------------------------ FILTERING & NOISE TAB --------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------------------
 
-// ----------------------------------------------------------- FILTERING & NOISE TAB -----------------------------------------------------------
-// ---------------------------------------------------------------------------------------------------------------------------------------------
+
+/*******************************************************************************
+ *                                Filtering                                    *
+ *******************************************************************************/
 
 
 void MainWindow::on_GrayScale_clicked()
@@ -120,7 +123,9 @@ void MainWindow::on_GaussianFilterButton_clicked()
 }
 
 
-
+/*******************************************************************************
+ *                                Noise                                        *
+ *******************************************************************************/
 
 void MainWindow::on_SaltPepperNoiseButton_clicked()
 {
@@ -236,6 +241,11 @@ void MainWindow::on_CannyButton_clicked()
 // ----------------------------------------------------------- THRESHOLD TAB ------------------------------------------------------
 // --------------------------------------------------------------------------------------------------------------------------------
 
+
+
+/*******************************************************************************
+ *                                Local Threshold                              *
+ *******************************************************************************/
 void MainWindow::on_LocalThresholdButton_clicked()
 {
     if(checkImage(inputImage)) return;
@@ -250,7 +260,9 @@ void MainWindow::on_LocalThresholdButton_clicked()
 
 }
 
-
+/*******************************************************************************
+ *                               Global Threshold                              *
+ *******************************************************************************/
 void MainWindow::on_GlobalThresholdButton_clicked()
 {
     if(checkImage(inputImage)) return;
@@ -277,6 +289,9 @@ void MainWindow::on_GlobalThresholdSlider_valueChanged(int value)
     updateImage(thresholdOutputMat, ui->Threshold_OutputImage, 0);
 }
 
+/*******************************************************************************
+ *                               Normalization                                 *
+ *******************************************************************************/
 
 void MainWindow::on_NormalizeButton_clicked()
 {
@@ -292,6 +307,9 @@ void MainWindow::on_NormalizeButton_clicked()
 }
 
 
+/*******************************************************************************
+ *                               Equalization                                  *
+ *******************************************************************************/
 void MainWindow::on_EqualizeButton_clicked()
 {
     if(checkImage(inputImage)) return;
@@ -310,7 +328,7 @@ void MainWindow::on_EqualizeButton_clicked()
 }
 
 
-// ----------------------------------------------------------- HISTOGRAM FUNCTIONS ------------------------------------------------------
+// ----------------------------------------------------------- HISTOGRAM FUNCTIONS ---------------------------------------------------
 // -----------------------------------------------------------------------------------------------------------------------------------
 
 void MainWindow::Histogram(Mat &inputMat, QCustomPlot* HistWidget, String color, QColor brushColor, String graph_type){
@@ -436,6 +454,9 @@ void MainWindow::on_UploadeImage2_clicked()
 }
 
 
+/*******************************************************************************
+ *                               UI_Slider Output                              *
+ *******************************************************************************/
 void MainWindow::on_Image1FSlider_valueChanged(int value)
 {
     image2_H_L = value ^ 1;
@@ -443,8 +464,6 @@ void MainWindow::on_Image1FSlider_valueChanged(int value)
 
     if(hybridImage1.isNull()) return;
     updateFrequencyResponse(hybridImage1Mat, freqImage1Mat, ui->freqOutputImage1, freqImage1Slider, value);
-
-    imshow("Image1", freqImage1Mat);
 }
 
 
