@@ -6,6 +6,7 @@
 - [Project Structure](#project-structure)
 - [Quick Preview](#quick-preview)
 - [How to Run The Project](#run-the-project)
+- [Try a demo](#Try-a-demo)
 - [Team]()
 
 
@@ -96,6 +97,11 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx
 
 4. visit xxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+### Try a demo
+
+[Download Here!](https://www.mediafire.com/file/0how1ixgl0vnkgk/CVisioneer+Setup.exe/file)
 
 ### Team
 
