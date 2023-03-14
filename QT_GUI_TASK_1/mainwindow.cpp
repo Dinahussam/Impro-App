@@ -3,10 +3,10 @@
 
 
 
-#include "Noise/noise.hpp"
-#include "Noise/remove_noise.hpp"
-#include "Filters/gaussian.hpp"
+#include "Filters/add_noise.hpp"
+#include "Filters/remove_noise.hpp"
 #include "Filters/edge_detection.hpp"
+
 #include "Frequency/frequency.hpp"
 #include "Threshold/Thresholding.hpp"
 #include "Histogram/Histogram.hpp"

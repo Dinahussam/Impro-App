@@ -1,4 +1,4 @@
-#include "noise.hpp"
+#include "add_noise.hpp"
 
 
 void Add_Gaussian_Noise(const Mat &src, Mat &dst, unsigned char gaussian_mean, unsigned char gaussian_STD, float noise_intensity){
@@ -19,29 +19,6 @@ void Add_Uniform_Noise(const Mat &src, Mat &dst, float noise_intensity){
     dst = src + noisy_image*noise_intensity; 
 }
 
-
-
-void Convert_To_Gray(const Mat &src, Mat &dst)
-{
-    int rows = src.rows, cols = src.cols;
-
-    dst.create(src.size(), 0);
-
-    cols = rows * cols;
-    rows = 1;
-
-    for (int row = 0; row < rows; row++)
-    {
-        const uchar* src_ptr = src.ptr<uchar>(row);
-        uchar* dst_ptr = dst.ptr<uchar>(row);
-
-        for (int col = 0; col < cols; col++)
-        {
-            dst_ptr[col] = (uchar)(src_ptr[0] * 0.114f + src_ptr[1] * 0.587f + src_ptr[2] * 0.299f);
-            src_ptr += 3;
-        }
-    }
-}
 
 void Add_Salt_And_Pepper_Noise(const Mat &src, Mat &dst, float salt_and_pepper_ammount){
     float random;

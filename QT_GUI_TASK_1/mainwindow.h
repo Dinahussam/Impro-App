@@ -1,14 +1,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#define COMMON_H
+//#define COMMON_H
 
 #include <QMainWindow>
-#include <gaussiannoiseparameters.h>
-#include <saltpepperparameters.h>
-#include <uniformnoiseparameters.h>
-#include <thresholdwindow.h>
-#include <cannyparameters.h>
-#include <qcustomplot.h>
+#include <UI/gaussiannoiseparameters.h>
+#include <UI/saltpepperparameters.h>
+#include <UI/uniformnoiseparameters.h>
+#include <UI/thresholdwindow.h>
+#include <UI/cannyparameters.h>
+#include <UI/qcustomplot.h>
 
 #include <iostream>
 #include <time.h>

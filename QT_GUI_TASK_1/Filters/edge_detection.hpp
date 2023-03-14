@@ -2,16 +2,18 @@
 #define EDGE_DETECTION
 
 #include "convolution.hpp"
-#include "gaussian.hpp"
+#include "remove_noise.hpp"
+#include"helper_functions.hpp"
 
 
-/*******************************************************************************
- *                              Functions Prototypes                           *
- *******************************************************************************/
 
+
+/************************************************************************************************************
+ *                                    Functions Prototypes                                                  *
+ ************************************************************************************************************/
 
 /*************************************************************************************************
- ******************                        Gradients                                  ****************
+ ******************                        Gradients                                  ************
  *************************************************************************************************/
 
 Mat Magnitude_Gradient (const Mat &gradient_x , const Mat &gradient_y);
@@ -60,11 +62,11 @@ Mat Detect_Edges_Prewitt(const Mat &src);
 #define WEAK_EDGE  40
 #define STRONG_EDGE  255
 
-Mat Double_Threshoulding(Mat &suppressed, float lowThresholdRatio = 0.05, float highThresholdRatio = 0.09);
+Mat Double_Threshoulding(Mat &suppressed, float lowThreshold, float highThreshold);
 
 Mat Hysteresis (Mat &thresholded);
 
-Mat Detect_Edges_Canny(const Mat &src , float lowThresholdRatio = 0.05, float highThresholdRatio = 0.09);
+Mat Detect_Edges_Canny(const Mat &src , float lowThreshold, float highThreshold);
 
 Mat Supression_Non_Max(Mat &magnitude_gradient, Mat &phase_gradient);
 

@@ -3,40 +3,32 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-/*------------------------------- Helper Functions -----------------------------------*/
-
-void Swap_Elements(unsigned char *first_element, unsigned char *second_element)
+/*---------------------------------- Gaussian filter ----------------------------------*/
+Mat Gaussian_Filter(const Mat &src, int kernel_size)
 {
-    unsigned char temp = *first_element;
-    *first_element = *second_element;
-    *second_element = temp;
-}
-
-void Bubble_Sort(unsigned char array[], unsigned char size)
-{
-    int first_index, second_index;
-    for (first_index = 0; first_index < size - 1; first_index++)
-        for (second_index = 0; second_index < size - first_index - 1; second_index++)
-            if (array[second_index] > array[second_index + 1])
-                Swap_Elements(&array[second_index], &array[second_index + 1]);
-}
-
-Mat Create_Kernel(int kernel_size, unsigned char *kernel_data, int image_type)
-{
-    Mat kernel = Mat::zeros(Size(kernel_size, kernel_size), image_type);
-    int data_index = 0;
-    cout << "-------------" << endl;
-    for (int row = 0; row < kernel_size; row++)
+    if (kernel_size == 3)
     {
-        for (int col = 0; col < kernel_size; col++)
-        {
-            kernel.at<uchar>(row, col) = kernel_data[data_index];
-            data_index++;
-        }
+        float gaussian_data[9] = {1, 2, 1, 2, 4, 2, 1, 2, 1};
+        Mat gaussian_kernel = Mat(3, 3, CV_32F, gaussian_data);
+        Mat blurred = Convolute_2d(src, gaussian_kernel, GAUSSIAN_FILTER_3, 1);
+        return blurred;
     }
-    cout << data_index << endl;
-    return kernel;
+    else if (kernel_size == 5)
+    {
+    float gaussian_data[25] = {1, 4, 7, 4, 1, 4, 16, 26, 16, 4, 7, 26, 41, 26, 7, 4, 16, 26, 16, 4, 1, 4, 7, 4, 1};
+    Mat gaussian_kernel = Mat(5, 5, CV_32F, gaussian_data);
+    Mat blurred = Convolute_2d(src, gaussian_kernel, GAUSSIAN_FILTER_5, 2);
+    return blurred;
+    }
+    else
+    {
+        cout << "Invalid kernel size" << endl;
+        return src;
+    }
 }
+
+
+
 
 /*---------------------------------- Median filter ----------------------------------*/
 
@@ -88,7 +80,6 @@ void Add_Average_Filter(const Mat &src, Mat &dst, int kernalSize)
             Scalar intensity2;
             for (int p = 0; p < kernalSize; p++)
             {
-
                 for (int q = 0; q < kernalSize; q++)
                 {
                     intensity1 = src.at<uchar>(i + p, j + q);
