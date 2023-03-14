@@ -56,11 +56,11 @@ QT_GUI_TASK_1
 ├─  Filters
 │  ├─ add_noise 
 │  ├─ convolution
-│  ├─  edge_detection
-│  ├─  helper_functions
-│  └─  remove_noise
+│  ├─ edge_detection
+│  ├─ helper_functions
+│  └─ remove_noise
 ├─  Frequency
-│  └─  frequency
+│  └─ frequency
 ├─  Histogram
 │  └─ Histogram
 ├─  Threshold
@@ -71,7 +71,7 @@ QT_GUI_TASK_1
 │  ├─ qcustomplot
 │  ├─ saltpepperparameters
 │  ├─ thresholdwindow
-│  └─  uniformnoiseparameters
+│  └─ uniformnoiseparameters
 ├─  Forms
 ├─  Icons
 ├─  Images
@@ -79,7 +79,7 @@ QT_GUI_TASK_1
 ├─  imageClass
 ├─  main
 ├─  mainwindow
-└─ README.md
+└─  README.md
 ```
 
 ### Quick Preview
@@ -124,7 +124,7 @@ Second Semester - Biomedical Computer Vision (SBE3230) class project created by:
 
 | Team Members' Names                                  | Section | B.N. |
 |------------------------------------------------------|:-------:|:----:|
-| [Dina Hussam](https://github.com/Dinahussam)        |    1    |  28  |
+| [Dina Hussam](https://github.com/Dinahussam)         |    1    |  28  |
 | [Omar Ahmed ](https://github.com/omaranwar21)        |    2    |  2   |
 | [Omar saad ](https://github.com/Omar-Saad-ELGharbawy)|    2    |  3   |
 | [Mohamed Ahmed](https://github.com/MohamedAIsmail)   |    2    |  16  |
