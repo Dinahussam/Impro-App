@@ -94,7 +94,7 @@ README.md
 
 ### Requirements to run 
 
-[ Qt Setup and openCV ](https://github.com/Dinahussam/Impro-App/files/10972282/Qt.Setup.and.openCV.pdf))
+[ Qt Setup and openCV ](https://github.com/Dinahussam/Impro-App/files/10972282/Qt.Setup.and.openCV.pdf)
 
 
 ### Run the project
