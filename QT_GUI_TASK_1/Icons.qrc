@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Icons/UploadIcon.png</file>
+        <file>Icons/FilterIcon.png</file>
+        <file>Icons/DropDownIcon.png</file>
+        <file>Icons/NoiseIcon.png</file>
+        <file>Icons/Histogram.png</file>
+        <file>Icons/convert_color_to_gray.png</file>
+        <file>Icons/edge_detection.png</file>
+        <file>Icons/Threshold.jpg</file>
+        <file>Icons/hybrid.png</file>
+        <file>Icons/close.png</file>
+    </qresource>
+</RCC>
