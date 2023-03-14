@@ -94,7 +94,7 @@ README.md
 
 ### Requirements to run 
 
-[ Read Here ! ](https://www.mediafire.com/file/0how1ixgl0vnkgk/CVisioneer+Setup.exe/file)
+[ Qt Setup and openCV ](https://github.com/Dinahussam/Impro-App/files/10972282/Qt.Setup.and.openCV.pdf))
 
 
 ### Run the project
