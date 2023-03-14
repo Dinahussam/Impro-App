@@ -103,7 +103,7 @@ Second Semester - Biomedical Computer Vision (SBE3230) class project created by:
 
 | Team Members' Names                                  | Section | B.N. |
 |------------------------------------------------------|:-------:|:----:|
-| [Dina Hussam](https://github.com/Dinahussam))        |    1    |  28  |
+| [Dina Hussam](https://github.com/Dinahussam)        |    1    |  28  |
 | [Omar Ahmed ](https://github.com/omaranwar21)        |    2    |  2   |
 | [Omar saad ](https://github.com/Omar-Saad-ELGharbawy)|    2    |  3   |
 | [Mohamed Ahmed](https://github.com/MohamedAIsmail)   |    2    |  16  |
