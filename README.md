@@ -23,11 +23,11 @@ In this project you can:
   - Gaussian filter.
   - Median filter.
 - [x] Detect edges in the image using:
-  - Sobel edge detectors.
+  - Sobel edge detector.
   - Roberts edge detector.
   - Prewitt edge detector.
   - Canny edge detector.
-- [x] Draw histograms and distribution curves for the uploaded image.
+- [x] Draw Histograms and Distribution curves for the uploaded image.
 - [x] Equalize and Normalize the image.
 - [x] Create Local, and Global thresholding.
 - [x] Transform the image from color to gray scale image and plot Red, Green, and Blue histograms with their cumulative curves.
