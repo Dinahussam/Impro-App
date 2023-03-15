@@ -17,7 +17,7 @@ It’s an image processing implementation functions project implemented in C++ w
 ### Project Features
 In this project you can:
 - [x] Add different types of noise to the image:
-  - Salt and Paper noise.
+  - Salt and Papper noise.
   - Uniform noise.
   - Gaussian noise.
 - [x] Using different types of filtering:
