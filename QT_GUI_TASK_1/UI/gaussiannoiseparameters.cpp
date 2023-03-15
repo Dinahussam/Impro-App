@@ -30,7 +30,7 @@ void GaussianNoiseParameters::on_pushButton_clicked()
     else{
         gaussianMeanValue = ui->GaussianMeanValue->text().toInt();
         gaussianSTDValue = ui->GaussianSTDValue->text().toInt();
-        noiseIntenisty = ui ->NoiseIntenistyValue->text().toInt();
+        noiseIntenisty = ui ->NoiseIntenistyValue->text().toFloat();
         flag = false;
         this->close();
     }
