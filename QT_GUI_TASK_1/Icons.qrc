@@ -10,5 +10,9 @@
         <file>Icons/Threshold.jpg</file>
         <file>Icons/hybrid.png</file>
         <file>Icons/close.png</file>
+        <file>Icons/alpha.png</file>
+        <file>Icons/beta.png</file>
+        <file>Icons/gamma.png</file>
+        <file>Icons/Snake.png</file>
     </qresource>
 </RCC>

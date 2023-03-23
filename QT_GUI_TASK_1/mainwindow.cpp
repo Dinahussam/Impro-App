@@ -10,6 +10,7 @@
 #include "Frequency/frequency.hpp"
 #include "Threshold/Thresholding.hpp"
 #include "Histogram/Histogram.hpp"
+#include "ActiveContour/activecontour.h"
 
 #include <iostream>
 #include <QFileDialog>
@@ -25,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
 
-    inputImageptr = &inputImage;
+
     ui->setupUi(this);
     ui->pushButton->setDisabled(true);
 
@@ -37,8 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
     initializeHistograms(ui->GreenHistCDF);
 
     ui->EqualizeImage->setHidden(true);
-    ui->EqualizeLabel_2->setHidden(true);
     ui->GlobalThresholdSlider->setHidden(true);
+
+
 }
 
 
@@ -59,20 +61,23 @@ void MainWindow::on_BrowseButton_clicked()
     Convert_To_Gray(inputMat, filterOutputMat);
     Convert_To_Gray(inputMat, edgeDetectionOutputMat);
 
+
+
     Histogram(inputMat, ui->RedHistPDF, "red", Qt::red, "PDF");
     Histogram(inputMat, ui->RedHistCDF, "red", Qt::red, "CDF");
-
     Histogram(inputMat, ui->BlueHistPDF, "blue", Qt::blue, "PDF");
     Histogram(inputMat, ui->BlueHistCDF, "blue", Qt::blue, "CDF");
-
     Histogram(inputMat, ui->GreenHistPDF, "green", Qt::green, "PDF");
     Histogram(inputMat, ui->GreenHistCDF, "green", Qt::green, "CDF");
-
 
 
     updateImage(inputMat, ui->filter_inputImage, 1);
     updateImage(inputMat, ui->EdgeDetection_inputImage, 1);
     updateImage(inputMat, ui->Threshold_InputImage, 1);
+    updateImage(inputMat, ui->activeContourInputImage, 1);
+
+    updateImage(inputMat, ui->activeContourOutputImage, 1);
+
     updateImage(filterOutputMat, ui->filter_outputImage, 0);
 }
 
@@ -187,7 +192,7 @@ void MainWindow::on_Radio5x5Kernal_clicked()
 // -------------------------------------------------------------------------------------------------------------------------------------
 
 
-void MainWindow::on_PrewittButton_clicked()
+void MainWindow::on_prewittButton_clicked()
 {
     if(checkImage(inputImage)) return;
     Convert_To_Gray(inputMat, edgeDetectionOutputMat);
@@ -196,7 +201,7 @@ void MainWindow::on_PrewittButton_clicked()
 }
 
 
-void MainWindow::on_RobetButton_clicked()
+void MainWindow::on_robertButton_clicked()
 {
     if(checkImage(inputImage)) return;
     Convert_To_Gray(inputMat, edgeDetectionOutputMat);
@@ -205,7 +210,7 @@ void MainWindow::on_RobetButton_clicked()
 }
 
 
-void MainWindow::on_SobelButton_clicked()
+void MainWindow::on_sobelButton_clicked()
 {
     if(checkImage(inputImage)) return;
     Convert_To_Gray(inputMat, edgeDetectionOutputMat);
@@ -217,7 +222,7 @@ void MainWindow::on_SobelButton_clicked()
 }
 
 
-void MainWindow::on_CannyButton_clicked()
+void MainWindow::on_cannyButton_clicked()
 {
     if(checkImage(inputImage)) return;
 
@@ -250,7 +255,6 @@ void MainWindow::on_LocalThresholdButton_clicked()
 {
     if(checkImage(inputImage)) return;
     ui->EqualizeImage->setHidden(true);
-    ui->EqualizeLabel_2->setHidden(true);
     ui->GlobalThresholdSlider->setHidden(true);
 
     Convert_To_Gray(inputMat, thresholdOutputMat);
@@ -268,7 +272,6 @@ void MainWindow::on_GlobalThresholdButton_clicked()
     if(checkImage(inputImage)) return;
 
     ui->EqualizeImage->setHidden(true);
-    ui->EqualizeLabel_2->setHidden(true);
     ui->GlobalThresholdSlider->setHidden(false);
 
     Convert_To_Gray(inputMat, thresholdOutputMat);
@@ -298,7 +301,6 @@ void MainWindow::on_NormalizeButton_clicked()
     if(checkImage(inputImage)) return;
 
     ui->EqualizeImage->setHidden(true);
-    ui->EqualizeLabel_2->setHidden(true);
     ui->GlobalThresholdSlider->setHidden(true);
 
     Convert_To_Gray(inputMat, normalizedOutputMat);
@@ -315,7 +317,6 @@ void MainWindow::on_EqualizeButton_clicked()
     if(checkImage(inputImage)) return;
 
     ui->EqualizeImage->setHidden(false);
-    ui->EqualizeLabel_2->setHidden(false);
     ui->GlobalThresholdSlider->setHidden(true);
 
     Convert_To_Gray(inputMat, equalizedOutputMat);
@@ -501,8 +502,45 @@ void MainWindow::on_HybridButton_clicked()
     updateImage(finalHybridImageMat,  ui->finalHybridImage, 0);
 }
 
+// ----------------------------------------------------------- Active Contour Tab ------------------------------------------------------
+// -----------------------------------------------------------------------------------------------------------------------------------
 
 
+
+void MainWindow::on_alphaSlider_valueChanged(int value)
+{
+    alpha = value/10.0;
+
+    if(inputImage.isNull()) return;
+    updateActiveContour(inputMat, activeContourOutputMat);
+
+}
+
+
+void MainWindow::on_betaSlider_valueChanged(int value)
+{
+    beta = value/10.0;
+
+    if(inputImage.isNull()) return;
+    updateActiveContour(inputMat, activeContourOutputMat);
+}
+
+
+void MainWindow::on_gammaSlider_valueChanged(int value)
+{
+    gamma = value/10.0;
+
+    if(inputImage.isNull()) return;
+    updateActiveContour(inputMat, activeContourOutputMat);
+}
+
+void MainWindow::on_contourRadiusSlider_valueChanged(int value)
+{
+    radius = value;
+
+    if(inputImage.isNull()) return;
+    updateActiveContour(inputMat, activeContourOutputMat);
+}
 
 
 // ----------------------------------------------------------- HELPER FUNCTIONS ------------------------------------------------------
@@ -542,7 +580,7 @@ void MainWindow::UploadImage(QImage &image, Mat &imageMat, bool flag)
 void MainWindow::on_pushButton_clicked()
 {
     inputImage =  QImage();
-    ui-> BrowseButton -> setText("Update Image");
+    ui-> BrowseButton -> setText("Upload Image");
     ui-> BrowseButton -> setStyleSheet("QPushButton{border-radius: 10px; text-align: left; font: 900 12pt 'Segoe UI Black';} QPushButton:hover:!pressed{background-color: qlineargradient(x1: 0.5, y1: 1, x2: 0.5, y2: 1, stop: 0 #dadbde, stop: 1 #f6f7fa)}");
     ui->BrowseButton->setEnabled(true);
     ui->pushButton->setDisabled(true);
@@ -566,8 +604,10 @@ void MainWindow::on_pushButton_clicked()
     ui->GreenHistCDF->clearPlottables(); ui->GreenHistCDF->replot();
 
     ui->EqualizeImage->setHidden(true);
-    ui->EqualizeLabel_2->setHidden(true);
     ui->GlobalThresholdSlider->setHidden(true);
+
+    ui->activeContourInputImage->clear();
+    ui->activeContourOutputImage->clear();
 
 }
 
@@ -587,6 +627,14 @@ void MainWindow::updateFrequencyResponse(Mat &inputMat, Mat &freqMat, QLabel* im
     freqMat = Add_Low_High_Frequency_Filter(freqMat, sliderValue, high_low_flag);
     image->setPixmap(QPixmap::fromImage(QImage(freqMat.data, freqMat.cols, freqMat.rows, freqMat.step, QImage::Format_Grayscale8)));
 }
+
+void MainWindow::updateActiveContour(Mat &inputMat, Mat &outputMat){
+
+    active_Contour_Model(inputMat, outputMat, Point(xCoordinate, yCoordinate), radius, numIterations, alpha, beta, gamma);
+    updateImage(outputMat, ui->activeContourOutputImage, 1);
+}
+
+
 
 
 
