@@ -9,7 +9,6 @@
 #include <UI/thresholdwindow.h>
 #include <UI/cannyparameters.h>
 #include <UI/qcustomplot.h>
-#include <UI/clickablelabel.h>
 
 #include <iostream>
 #include <time.h>
@@ -84,23 +83,9 @@ public:
 
     Mat finalHybridImageMat = Mat::zeros(1, 1, CV_64F);
 
-// ------------- Active Contour variables ----------------------------------
-
-    Mat activeContourOutputMat = Mat::zeros(1, 1, CV_64F);
-
-    int radius = 1;
-    int numIterations = 300;
-    float alpha = 0;
-    float beta = 1.0;
-    float gamma = 0;
-
-    int xCoordinate = 300;
-    int yCoordinate = 300;
 
 
-    Ui::MainWindow *ui;
 
-    void updateImage(Mat &inputMat,  QLabel* image, bool rgb_flag);
 
 private slots:
 
@@ -120,13 +105,13 @@ private slots:
 
     void on_UniformNoiseButton_clicked();
 
-    void on_prewittButton_clicked();
+    void on_PrewittButton_clicked();
 
-    void on_robertButton_clicked();
+    void on_RobetButton_clicked();
 
-    void on_sobelButton_clicked();
+    void on_SobelButton_clicked();
 
-    void on_cannyButton_clicked();
+    void on_CannyButton_clicked();
 
     void on_LocalThresholdButton_clicked();
 
@@ -159,6 +144,8 @@ private slots:
 
     void UploadImage(QImage &image, Mat &imageMat, bool flag);
 
+    void updateImage(Mat &inputMat,  QLabel* image, bool rgb_flag);
+
     void on_HybridButton_clicked();
 
     void on_pushButton_clicked();
@@ -175,18 +162,8 @@ private slots:
 
 
 
-    void on_alphaSlider_valueChanged(int value);
-
-    void on_betaSlider_valueChanged(int value);
-
-    void on_gammaSlider_valueChanged(int value);
-
-    void updateActiveContour(Mat &inputMat, Mat &outputMat);
-
-    void on_contourRadiusSlider_valueChanged(int value);
-
 private:
-
+    Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H
